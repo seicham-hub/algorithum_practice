@@ -1,33 +1,53 @@
-// もう一度取り組む02/08
+// もう一度取り組む02/09
 
-#include <iostream>
-
+#include <stdio.h>
+#include <algorithm>
 using namespace std;
 
 int main(){
+    int array[3];
+    // %d int,short型　%c char型 %s char*(文字列)　%f float型 %lf double型
+    for (int i=0;i<3;i++) scanf("%d",&array[i]);
 
-    int a,b,c,buf;
+    for (int i=2;i>0; i--){
 
-    if(a >b){
-        buf = a;
-        a = b;
-        b = buf;
-    }
-    if(b>c){
-        buf = b;
-        b =c;
-        c = buf;
-    }
-    if(a>b){
-        buf = a;
-        a = b;
-        b = buf;
-        
-    }
-    cout << a << " " << b << " " << c<< endl;
+        for (int j =0;j<i ;j++){
+            if (array[j] > array[j+1]) swap(array[j],array[j+1]);
+        };
+    };
 
-    return 0;
+    printf("%d %d %d\n",array[0],array[1],array[2]);
 }
+
+
+// #include <iostream>
+
+// using namespace std;
+
+// int main(){
+
+//     int a,b,c,buf;
+
+//     if(a >b){
+//         buf = a;
+//         a = b;
+//         b = buf;
+//     }
+//     if(b>c){
+//         buf = b;
+//         b =c;
+//         c = buf;
+//     }
+//     if(a>b){
+//         buf = a;
+//         a = b;
+//         b = buf;
+        
+//     }
+//     cout << a << " " << b << " " << c<< endl;
+
+//     return 0;
+// }
 
 // int max (int q,int r){
 //     if (q>r) return q;
