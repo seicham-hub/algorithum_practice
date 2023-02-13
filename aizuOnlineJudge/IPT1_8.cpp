@@ -7,18 +7,37 @@
 using namespace std;
 
 int main(){
-    int array[3];
-    cin >> array[0] >> array[1] >> array[2];
 
+    int array[3];
+    cin >> array[0]>>array[1] >> array[2];
 
     for (int i=2;i>0;i--){
-        for(int j=0;j<i;j++){
-            if (array[j]>array[j+1]) swap(array[j],array[j+1]);
+        for (int j =0;j<i;j++){
+            if (array[j] > array[j+1]) swap(array[j],array[j+1]);
         }
     }
 
-    cout <<array[0]<<" "<<array[1]<<" "<<array[2] << endl;
+    cout  << array[0] <<array[1] << array[2]<<endl;
 }
+
+// #include <iostream>
+// #include <algorithm>
+
+// using namespace std;
+
+// int main(){
+//     int array[3];
+//     cin >> array[0] >> array[1] >> array[2];
+
+
+//     for (int i=2;i>0;i--){
+//         for(int j=0;j<i;j++){
+//             if (array[j]>array[j+1]) swap(array[j],array[j+1]);
+//         }
+//     }
+
+//     cout <<array[0]<<" "<<array[1]<<" "<<array[2] << endl;
+// }
 
 // #include <stdio.h>
 // #include <algorithm>
