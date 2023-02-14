@@ -1,5 +1,5 @@
 // TODO:もう一度取り組む0213
-
+// ITP1_5_C:   Print a Chessboard
 
 #include <stdio.h>
 #include <algorithm>

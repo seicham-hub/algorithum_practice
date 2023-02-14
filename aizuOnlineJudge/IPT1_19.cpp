@@ -1,4 +1,5 @@
 // TODO:0213もう一度取り組む
+// 	ITP1_5_B:   Print a Frame
 
 # include <stdio.h>
 # include <algorithm>

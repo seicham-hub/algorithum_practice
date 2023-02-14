@@ -1,4 +1,7 @@
+// ITP1_4_D:   Min, Max and Sum
 //0213もう一度
+
+
 #include <stdio.h>
 #include <algorithm>
 

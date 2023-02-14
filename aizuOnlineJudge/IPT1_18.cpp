@@ -1,3 +1,4 @@
+// ITP1_5_A:   Print a Rectangle
 #include <stdio.h>
 #include <algorithm>
 
