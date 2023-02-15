@@ -1,27 +1,55 @@
 // TODO:もう一度取り組む0213
 // ITP1_5_C:   Print a Chessboard
 
-#include <stdio.h>
-#include <algorithm>
+# include <stdio.h>
+# include <algorithm>
 
 using namespace std;
 
 int main(){
     int H,W;
+
     while(true){
+
         scanf("%d %d",&H,&W);
-        if(H == 0 && W == 0) break;
+        if(H ==0 && W ==0) break;
 
         for (int i=0;i<H;i++){
             for (int j=0;j<W;j++){
-                if ((i+j)%2 == 0) printf("#");
+                if ((i+j)%2 ==0) printf("#");
                 else printf(".");
             }
             printf("\n");
         }
         printf("\n");
+
     }
+
+    return 0;
 }
+
+
+// #include <stdio.h>
+// #include <algorithm>
+
+// using namespace std;
+
+// int main(){
+//     int H,W;
+//     while(true){
+//         scanf("%d %d",&H,&W);
+//         if(H == 0 && W == 0) break;
+
+//         for (int i=0;i<H;i++){
+//             for (int j=0;j<W;j++){
+//                 if ((i+j)%2 == 0) printf("#");
+//                 else printf(".");
+//             }
+//             printf("\n");
+//         }
+//         printf("\n");
+//     }
+// }
 
 
 // # include <iostream>
