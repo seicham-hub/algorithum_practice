@@ -1,35 +1,70 @@
 //Finding Missing Cards
 // 0214もう一度
 
-# include <stdio.h>
+// scanfを使用する際の注意点
+// 最後の改行文字がバッファの中に残る
+// 何か入力した後にエンターを押して一文字だけ入力する場合に改行文字（空白）が出力されてしまう。
 
+// voidは戻り値がないことを表す
+
+#include <stdio.h>
 using namespace std;
 
-int main(){
-    char mark;
-    int n,S[14],H[14],C[14],D[14],tmp;
-    for(int i=0;i<14;i++) S[i] =H[i] =C[i] =D[i] =0;
-    scanf("%d",&n);
-
-
-    for (int i=0;i<n;i++){
-        scanf("%c %d",&mark,&n);
-        
+void outPut(int Array[],char mark){
+    for (int i=1;i<=13;i++){
+        if (Array[i] ==0) printf("%c %d\n",mark,i);
     }
 }
+
+int main() {
+
+    char mark[2];
+    int n,S[14],H[14],C[14],D[14],tmp;
+    for (int i=0;i<14;i++) S[i] = H[i] =C[i] =D[i] =0;
+    scanf("%d",&n);
+
+    for (int i =0;i<n;i++){
+        scanf("%s %d",mark,&tmp);
+        printf("%c %d\n",mark[0],i);
+        switch(mark[0]){
+            case 'S':
+                S[tmp] = 1;
+                break;  
+            case 'H':
+                H[tmp] = 1;
+                break;
+            case 'C':
+                C[tmp] = 1;
+                break;
+            case 'D':
+                D[tmp] = 1;
+                break;
+
+        }
+    }
+
+
+    outPut(S,'S');
+    outPut(H,'H');
+    outPut(C,'C');
+    outPut(D,'D');
+
+
+}
+
+
+
+
 
 // # include <iostream>
 // using namespace std;
 
 // int main(){
-//     int n,tmp,S[14],H[14],C[14],D[14];
+//     int n,tmp,S[13],H[13],C[13],D[13];
 //     char mark;
 
-//     for (int i=0;i<14;i++){
-//         S[i] =0;
-//         H[i] =0;
-//         C[i] = 0;
-//         D[i] = 0;
+//     for (int i=0;i<13;i++){
+//         S[i] = H[i] = C[i] = D[i] =false;
 //     }
 
 //     cin >> n;
@@ -40,32 +75,14 @@ int main(){
 
 //         switch(mark){
 //             case 'S':
-//                 S[tmp] =1;
-//                 break;
+//                 S[tmp] =true;
 //             case 'H':
-//                 H[tmp] =1;
-//                 break;
+//                 H[tmp] =true;
 //             case 'C':
-//                 C[tmp] =1;
-//                 break;
+//                 C[tmp] =true;
 //             case 'D':
-//                 D[tmp] =1;
-//                 break;
+//                 D[tmp] =true;
 //         }
-//     }
-
-
-//     for (int i=1;i<14;i++){
-//         if (!S[i]) cout << "S" << " " << i << endl;
-//     }
-//     for (int i=1;i<14;i++){
-//         if (!H[i]) cout << "H" << " " << i << endl;
-//     }
-//     for (int i=1;i<14;i++){
-//         if (!C[i]) cout << "C" << " " << i << endl;
-//     }
-//     for (int i=1;i<14;i++){
-//         if (!D[i]) cout << "D" << " " << i << endl;
 //     }
 
 //     return 0;
