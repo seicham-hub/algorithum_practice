@@ -1,20 +1,48 @@
 // Counting Characters
 // 0315もう一度
+// 0316もう一度
 
-#include <stdio.h>
+#include <iostream>
+#include <map>
+
+using namespace std;
 
 int main()
 {
-    int countTable[256] = {0};
-    char ch;
 
+    int ch;
+
+    map<int, int> mp = {};
     while ((ch = getchar()) != EOF)
     {
-        countTable[ch]++;
+        if (ch >= 'a' && ch <= 'z')
+            mp[ch] += 1;
+
+        else if (ch >= 'A' && ch <= 'Z')
+            mp[ch + 'a' - 'A'] += 1;
     }
-    for (int i = 'A'; i <= 'Z'; i++)
-        printf("%c : %d", i, countTable[i] + countTable[i - 32]);
+
+    for (int i = 'a'; i <= 'z'; i++)
+    {
+        cout << (char)i << " : " << mp[i] << endl;
+    }
+    return 0;
 }
+
+// #include <stdio.h>
+
+// int main()
+// {
+//     int countTable[256] = {0};
+//     char ch;
+
+//     while ((ch = getchar()) != EOF)
+//     {
+//         countTable[ch]++;
+//     }
+//     for (int i = 'A'; i <= 'Z'; i++)
+//         printf("%c : %d", i, countTable[i] + countTable[i - 32]);
+// }
 
 // #include <iostream>
 // #include <map>
