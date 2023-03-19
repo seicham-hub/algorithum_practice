@@ -3,6 +3,7 @@
 // 0316もう一度
 
 #include <iostream>
+#include <stdio.h>
 #include <map>
 
 using namespace std;
@@ -11,23 +12,47 @@ int main()
 {
 
     int ch;
-
     map<int, int> mp = {};
+
     while ((ch = getchar()) != EOF)
     {
-        if (ch >= 'a' && ch <= 'z')
-            mp[ch] += 1;
-
-        else if (ch >= 'A' && ch <= 'Z')
-            mp[ch + 'a' - 'A'] += 1;
+        mp[ch] += 1;
     }
 
     for (int i = 'a'; i <= 'z'; i++)
     {
-        cout << (char)i << " : " << mp[i] << endl;
+        cout << (char)i << " : " << mp[i] + mp[i + 'A' - 'a'] << endl;
     }
+
     return 0;
 }
+
+// #include <iostream>
+// #include <map>
+
+// using namespace std;
+
+// int main()
+// {
+
+//     int ch;
+
+//     map<int, int> mp = {};
+//     while ((ch = getchar()) != EOF)
+//     {
+//         if (ch >= 'a' && ch <= 'z')
+//             mp[ch] += 1;
+
+//         else if (ch >= 'A' && ch <= 'Z')
+//             mp[ch + 'a' - 'A'] += 1;
+//     }
+
+//     for (int i = 'a'; i <= 'z'; i++)
+//     {
+//         cout << (char)i << " : " << mp[i] << endl;
+//     }
+//     return 0;
+// }
 
 // #include <stdio.h>
 

@@ -2,36 +2,71 @@
 
 // 0316もう一度
 
+// 空白文字で区切られる（スペース、タブ、改行）
+
 #include <iostream>
 #include <stdio.h>
 #include <string>
 using namespace std;
+
 int main()
 {
 
-    string W, Ti = "";
     int result = 0;
-    char currentC;
+    string W, Ti;
 
     cin >> W;
     cin >> Ti;
 
     while (Ti != "END_OF_TEXT")
     {
-
         for (int i = 0; i < Ti.size(); i++)
         {
             if (Ti[i] >= 'A' && Ti[i] <= 'Z')
                 Ti[i] += 'a' - 'A';
         }
+
         if (Ti == W)
-            result += 1;
+            result++;
 
         cin >> Ti;
     }
 
     cout << result << endl;
+
+    return 0;
 }
+
+// #include <iostream>
+// #include <stdio.h>
+// #include <string>
+// using namespace std;
+// int main()
+// {
+
+//     string W, Ti = "";
+//     int result = 0;
+//     char currentC;
+
+//     cin >> W;
+//     cin >> Ti;
+
+//     while (Ti != "END_OF_TEXT")
+//     {
+
+//         for (int i = 0; i < Ti.size(); i++)
+//         {
+//             if (Ti[i] >= 'A' && Ti[i] <= 'Z')
+//                 Ti[i] += 'a' - 'A';
+//         }
+//         if (Ti == W)
+//             result += 1;
+
+//         cin >> Ti;
+//     }
+
+//     cout << result << endl;
+// }
 
 // なぜかタイムアウトエラー　getcharはstdio.hインクルード必要
 // #include <iostream>
