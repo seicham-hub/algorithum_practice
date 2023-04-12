@@ -1,20 +1,21 @@
 // 0411もう一度
 
 #include <bits/stdc++.h>
+
 using namespace std;
 
 int main()
 {
     int n, y;
+
     cin >> n >> y;
 
-    for (int i = 0; i <= n; i++)
+    for (int i = n; i >= 0; i--)
     {
-        for (int j = 0; j < n - i; j++)
+        for (int j = n - i; j >= 0; j--)
         {
             int k = n - i - j;
-            int total = 10000 * i + 5000 * j + 1000 * k;
-            if (total == y)
+            if (10000 * i + 5000 * j + 1000 * k == y)
             {
                 cout << i << " " << j << " " << k << endl;
                 return 0;
@@ -23,8 +24,35 @@ int main()
     }
 
     cout << "-1 -1 -1" << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, y;
+//     cin >> n >> y;
+
+//     for (int i = 0; i <= n; i++)
+//     {
+//         for (int j = 0; j < n - i; j++)
+//         {
+//             int k = n - i - j;
+//             int total = 10000 * i + 5000 * j + 1000 * k;
+//             if (total == y)
+//             {
+//                 cout << i << " " << j << " " << k << endl;
+//                 return 0;
+//             }
+//         }
+//     }
+
+//     cout << "-1 -1 -1" << endl;
+//     return 0;
+// }
 
 // 自分が書いたコード
 // n^3だからめちゃ遅い

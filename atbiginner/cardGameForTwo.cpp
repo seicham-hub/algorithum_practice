@@ -2,30 +2,61 @@
 // 0411もう一度
 
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
-int main(){
-
-    int N,aliceP=0,bobP=0;
+int main()
+{
+    int n, aliceP = 0, bobP = 0;
     vector<int> a;
-    cin >> N;
-    a.resize(N);
-    for(int i=0;i<N;i++) cin >>a[i] ;
 
-    sort(a.begin(),a.end(),greater<int>());
+    cin >> n;
+    a.resize(n);
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
-    for (int i=0;i<N;i++){
+    sort(a.begin(), a.end(), greater<int>());
 
-        if (i%2 ==0) aliceP += a[i];
-        else bobP += a[i];
+    for (int i = 0; i < n; i++)
+    {
+
+        if (i % 2 == 0)
+            aliceP += a[i];
+        else
+            bobP += a[i];
     }
-
-    cout << aliceP-bobP << endl;
+    cout << aliceP - bobP << endl;
 
     return 0;
 }
+
+// #include <iostream>
+// #include <algorithm>
+// #include <vector>
+// using namespace std;
+
+// int main(){
+
+//     int N,aliceP=0,bobP=0;
+//     vector<int> a;
+//     cin >> N;
+//     a.resize(N);
+//     for(int i=0;i<N;i++) cin >>a[i] ;
+
+//     sort(a.begin(),a.end(),greater<int>());
+
+//     for (int i=0;i<N;i++){
+
+//         if (i%2 ==0) aliceP += a[i];
+//         else bobP += a[i];
+//     }
+
+//     cout << aliceP-bobP << endl;
+
+//     return 0;
+// }
 
 // # include <iostream>
 // using namespace std;
@@ -36,7 +67,6 @@ int main(){
 //     for(int i=1;i<=N;i++) {
 //         cin >> ai[i];
 //     }
-
 
 //     for(int i=1;i<=N;i++){
 
@@ -57,6 +87,5 @@ int main(){
 
 //     cout << aliceP-bobP << endl;
 
-    
 //     return 0;
 // }
