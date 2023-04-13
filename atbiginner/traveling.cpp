@@ -8,29 +8,67 @@ using namespace std;
 
 int main()
 {
-    int N;
-    int t[110000], x[110000], y[110000];
-    cin >> N;
-    t[0] = x[0] = 0;
-    for (int i = 0; i < N; i++)
-        cin >> t[i + 1] >> x[i + 1] >> y[i + 1];
+    int n, x[110000] = {}, y[110000] = {}, t[110000] = {};
+    bool result = true;
 
-    bool can = true;
-    for (int i = 0; i < N; i++)
+    cin >> n;
+
+    for (int i = 1; i <= n; i++)
     {
-        int dt = t[i + 1] - t[i];
-        int dist = abs(x[i + 1] - x[i]);
-        if (dt < dist)
-            can = false;
-        if (dist % 2 != dt % 2)
-            can = false;
+        cin >> t[i] >> x[i] >> y[i];
     }
-    if (can)
+
+    for (int i = 1; i <= n; i++)
+    {
+        int canMoveDistance = t[i] - t[i - 1];
+        int dt = abs(x[i] - x[i - 1]) + abs(y[i] - y[i - 1]);
+
+        if (dt > canMoveDistance)
+        {
+            result = false;
+            break;
+        }
+
+        if (canMoveDistance % 2 != dt % 2)
+        {
+            result = false;
+            break;
+        }
+    }
+    if (result)
         cout << "Yes" << endl;
     else
         cout << "No" << endl;
-    return 0;
 }
+
+// #include <iostream>
+// using namespace std;
+
+// int main()
+// {
+//     int N;
+//     int t[110000], x[110000], y[110000];
+//     cin >> N;
+//     t[0] = x[0] = 0;
+//     for (int i = 0; i < N; i++)
+//         cin >> t[i + 1] >> x[i + 1] >> y[i + 1];
+
+//     bool can = true;
+//     for (int i = 0; i < N; i++)
+//     {
+//         int dt = t[i + 1] - t[i];
+//         int dist = abs(x[i + 1] - x[i]);
+//         if (dt < dist)
+//             can = false;
+//         if (dist % 2 != dt % 2)
+//             can = false;
+//     }
+//     if (can)
+//         cout << "Yes" << endl;
+//     else
+//         cout << "No" << endl;
+//     return 0;
+// }
 
 // 自分のコード
 
