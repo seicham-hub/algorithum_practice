@@ -14,7 +14,6 @@ using namespace std;
 
 int main()
 {
-
     string s, divide[] = {"dream", "dreamer", "erase", "eraser"};
     bool result = true;
 
@@ -29,17 +28,19 @@ int main()
 
     for (int i = 0; i < s.size();)
     {
-        bool canDivide = false;
+
+        bool can = false;
+
         for (int j = 0; j < 4; j++)
         {
             if (s.substr(i, divide[j].size()) == divide[j])
             {
+                can = true;
                 i += divide[j].size();
-                canDivide = true;
             }
         }
 
-        if (!canDivide)
+        if (!can)
         {
             result = false;
             break;
@@ -50,8 +51,56 @@ int main()
         cout << "YES" << endl;
     else
         cout << "NO" << endl;
+
     return 0;
 }
+
+// #include <iostream>
+// #include <string>
+// #include <algorithm>
+
+// using namespace std;
+
+// int main()
+// {
+
+//     string s, divide[] = {"dream", "dreamer", "erase", "eraser"};
+//     bool result = true;
+
+//     cin >> s;
+
+//     reverse(s.begin(), s.end());
+
+//     for (int i = 0; i < 4; i++)
+//     {
+//         reverse(divide[i].begin(), divide[i].end());
+//     }
+
+//     for (int i = 0; i < s.size();)
+//     {
+//         bool canDivide = false;
+//         for (int j = 0; j < 4; j++)
+//         {
+//             if (s.substr(i, divide[j].size()) == divide[j])
+//             {
+//                 i += divide[j].size();
+//                 canDivide = true;
+//             }
+//         }
+
+//         if (!canDivide)
+//         {
+//             result = false;
+//             break;
+//         }
+//     }
+
+//     if (result)
+//         cout << "YES" << endl;
+//     else
+//         cout << "NO" << endl;
+//     return 0;
+// }
 
 // #include <iostream>
 // #include <string>

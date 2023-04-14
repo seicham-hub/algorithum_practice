@@ -1,4 +1,7 @@
+
+// https://atcoder.jp/contests/abc122/tasks/abc122_b
 // 0413もう一度
+// 0414もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -6,23 +9,52 @@ using namespace std;
 int main()
 {
     string s;
-    int result = 0;
+    int maxLength = 0;
+
     cin >> s;
 
-    for (int i = 0; i < s.size(); i++)
+    for (int i = 0; i < s.size();)
     {
-        int bubunLn = 0;
-        while (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C')
+        int tmp_length = 0;
+        cout << i << endl;
+        while (i < s.size() && (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C'))
         {
-
-            bubunLn++;
+            tmp_length++;
             i++;
         }
-        result = max(result, bubunLn);
+        maxLength = max(maxLength, tmp_length);
+
+        if (tmp_length == 0)
+            i++;
     }
-    cout << result << endl;
+    cout << maxLength << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     string s;
+//     int result = 0;
+//     cin >> s;
+
+//     for (int i = 0; i < s.size(); i++)
+//     {
+//         int bubunLn = 0;
+//         while (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C')
+//         {
+
+//             bubunLn++;
+//             i++;
+//         }
+//         result = max(result, bubunLn);
+//     }
+//     cout << result << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
