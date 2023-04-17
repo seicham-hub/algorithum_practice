@@ -9,26 +9,52 @@ int main()
     int n, result = 0;
     cin >> n;
 
-    // for(int i=1;<=n;i+=2)とすれば奇数のみに絞れる
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i += 2)
     {
-
-        int yakusuQuantity = 0;
-        // j<=iとすれば商が0か気にしなくてよい
-        for (int j = 1; j <= n; j++)
+        int yakusuAmount = 0;
+        for (int j = 1; j <= i; j++)
         {
-
-            if (i / j != 0 && i % j == 0)
-            {
-
-                yakusuQuantity++;
-            }
+            if (i % j == 0)
+                yakusuAmount++;
         }
 
-        if (i % 2 == 1 && yakusuQuantity == 8)
+        if (yakusuAmount == 8)
             result++;
     }
-
     cout << result << endl;
     return 0;
 }
+
+// 自分で書いたコード
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, result = 0;
+//     cin >> n;
+
+//     // for(int i=1;<=n;i+=2)とすれば奇数のみに絞れる
+//     for (int i = 1; i <= n; i++)
+//     {
+
+//         int yakusuQuantity = 0;
+//         // j<=iとすれば商が0か気にしなくてよい
+//         for (int j = 1; j <= n; j++)
+//         {
+
+//             if (i / j != 0 && i % j == 0)
+//             {
+
+//                 yakusuQuantity++;
+//             }
+//         }
+
+//         if (i % 2 == 1 && yakusuQuantity == 8)
+//             result++;
+//     }
+
+//     cout << result << endl;
+//     return 0;
+// }

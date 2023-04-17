@@ -10,27 +10,57 @@ int main()
 {
     string s;
     int maxLength = 0;
-
     cin >> s;
 
     for (int i = 0; i < s.size();)
     {
-        int tmp_length = 0;
-        cout << i << endl;
-        while (i < s.size() && (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C'))
+
+        int tmpMax = 0;
+
+        while (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C')
         {
-            tmp_length++;
+            tmpMax++;
             i++;
         }
-        maxLength = max(maxLength, tmp_length);
 
-        if (tmp_length == 0)
+        if (tmpMax == 0)
             i++;
+
+        maxLength = max(tmpMax, maxLength);
     }
     cout << maxLength << endl;
-
     return 0;
 }
+
+// 0414実施分
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     string s;
+//     int maxLength = 0;
+
+//     cin >> s;
+
+//     for (int i = 0; i < s.size();)
+//     {
+//         int tmp_length = 0;
+//         cout << i << endl;
+//         while (i < s.size() && (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C'))
+//         {
+//             tmp_length++;
+//             i++;
+//         }
+//         maxLength = max(maxLength, tmp_length);
+
+//         if (tmp_length == 0)
+//             i++;
+//     }
+//     cout << maxLength << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
