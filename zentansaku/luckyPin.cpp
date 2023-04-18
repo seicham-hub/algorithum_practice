@@ -1,5 +1,6 @@
 // https://blog.hamayanhamayan.com/entry/2019/12/03/225048
 // 0417もう一度
+// 0418もう一度
 
 // 重複なしを考えるとき、以前出てきた数字は無視すればよい(02352789のとき023,025,027,028,029はすべて前半の2をとればよい)
 
@@ -11,17 +12,17 @@ int main()
 
     int n, next_index[30005][10], result = 0;
     string s;
-
     cin >> n >> s;
 
-    for (int i = 0; i < 10; i++)
+    // ありえない外れ値作成
+    for (int i = 0; i <= 9; i++)
     {
         next_index[n][i] = n;
     }
 
     for (int i = n - 1; i >= 0; i--)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j <= 9; j++)
         {
             next_index[i][j] = next_index[i + 1][j];
         }
@@ -34,14 +35,16 @@ int main()
         {
             for (int k = 0; k <= 9; k++)
             {
-                int nowIndex = next_index[0][i];
-                nowIndex++;
-                nowIndex = next_index[min(nowIndex, n)][j];
-                nowIndex++;
-                nowIndex = next_index[min(nowIndex, n)][k];
+                int curIndex = next_index[0][i];
+                curIndex++;
+                curIndex = next_index[min(curIndex, n)][j];
+                curIndex++;
+                curIndex = next_index[min(curIndex, n)][k];
 
-                if (nowIndex < n)
+                if (curIndex < n)
+                {
                     result++;
+                }
             }
         }
     }
@@ -50,6 +53,54 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     int n, next_index[30005][10], result = 0;
+//     string s;
+
+//     cin >> n >> s;
+
+//     for (int i = 0; i < 10; i++)
+//     {
+//         next_index[n][i] = n;
+//     }
+
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         for (int j = 0; j < 10; j++)
+//         {
+//             next_index[i][j] = next_index[i + 1][j];
+//         }
+//         next_index[i][s[i] - '0'] = i;
+//     }
+
+//     for (int i = 0; i <= 9; i++)
+//     {
+//         for (int j = 0; j <= 9; j++)
+//         {
+//             for (int k = 0; k <= 9; k++)
+//             {
+//                 int nowIndex = next_index[0][i];
+//                 nowIndex++;
+//                 nowIndex = next_index[min(nowIndex, n)][j];
+//                 nowIndex++;
+//                 nowIndex = next_index[min(nowIndex, n)][k];
+
+//                 if (nowIndex < n)
+//                     result++;
+//             }
+//         }
+//     }
+
+//     cout << result << endl;
+
+//     return 0;
+// }
 
 // 0417解答
 // #include <bits/stdc++.h>
