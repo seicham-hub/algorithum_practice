@@ -1,22 +1,30 @@
 // https://atcoder.jp/contests/abc128/tasks/abc128_c
+// 0418もう一度
+// 0419もう一度
 
 // 解けなかった...→一つの電球が点灯しているとき次の電球は？のループしか思いつかない、どう書けば実装できるか思いつかない
 // 初めにあり得る電球のONOFFパターンすべてを持っておく！
 
-#include <iostream>
-#include <vector>
+// *
+// 4/19解きなおし
+// *
+// ひとつの電球のスイッチのonoff状態は最大2^10通りなので、これをM個全探索すると(2^10)^10 =2^100無理
+// スイッチの状態からではなく、すべてのスイッチの状態を全探索する。
+#include <bits/stdc++.h>
+
 using namespace std;
 
 int main()
 {
 
-    int n, m, k[11], s[11][11], p[11], ans = 0;
+    int n, m, k[11], s[11][11], p[11], result = 0;
 
     cin >> n >> m;
 
     for (int i = 1; i <= m; i++)
     {
         cin >> k[i];
+
         for (int j = 1; j <= k[i]; j++)
         {
             cin >> s[i][j];
@@ -24,32 +32,94 @@ int main()
     }
 
     for (int i = 1; i <= m; i++)
+    {
         cin >> p[i];
+    }
 
-    // ランプの状態を整数値に一対一に紐づける
+    // 各電球のスイッチの状態は要素数nの部分集合となっている。
+
     for (int msk = 0; msk < (1 << n); msk++)
     {
-        int onLump = 0;
+
+        int lightCount = 0;
         for (int i = 1; i <= m; i++)
         {
-
-            int onSwich = 0;
+            int on = 0;
             for (int j = 1; j <= k[i]; j++)
             {
                 if (msk & (1 << s[i][j] - 1))
-                    onSwich++;
+                    on++;
             }
-            if (onSwich % 2 == p[i])
-                onLump++;
+            if (on % 2 == p[i])
+            {
+                lightCount++;
+            }
         }
-        if (onLump == m)
-            ans++;
+        cout << endl;
+        if (lightCount == m)
+            result++;
     }
 
-    cout << ans << endl;
+    cout << result << endl;
 
     return 0;
 }
+
+// *
+// 解答をもとに解きなおした4/18
+// *
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int main()
+// {
+
+//     int n, m, k[11], s[11][11], p[11], ans = 0;
+
+//     cin >> n >> m;
+
+//     for (int i = 1; i <= m; i++)
+//     {
+//         cin >> k[i];
+//         for (int j = 1; j <= k[i]; j++)
+//         {
+//             cin >> s[i][j];
+//         }
+//     }
+
+//     for (int i = 1; i <= m; i++)
+//         cin >> p[i];
+
+//     // ランプの状態を整数値に一対一に紐づける
+//     for (int msk = 0; msk < (1 << n); msk++)
+//     {
+//         int onLump = 0;
+//         for (int i = 1; i <= m; i++)
+//         {
+
+//             int onSwich = 0;
+//             for (int j = 1; j <= k[i]; j++)
+//             {
+//                 if (msk & (1 << s[i][j] - 1))
+//                     onSwich++;
+//             }
+//             if (onSwich % 2 == p[i])
+//                 onLump++;
+//         }
+//         if (onLump == m)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
+//*
+// 解答のコード
+//*
 
 // #include <iostream>
 // #include <vector>

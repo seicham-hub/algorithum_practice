@@ -1,4 +1,4 @@
-// https://blog.hamayanhamayan.com/entry/2019/12/03/225048
+// https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_d
 // 0417もう一度
 // 0418もう一度
 
@@ -9,32 +9,35 @@ using namespace std;
 
 int main()
 {
-
     int n, next_index[30005][10], result = 0;
     string s;
+
     cin >> n >> s;
 
-    // ありえない外れ値作成
-    for (int i = 0; i <= 9; i++)
+    for (int i = 0; i < 10; i++)
     {
         next_index[n][i] = n;
     }
 
     for (int i = n - 1; i >= 0; i--)
     {
-        for (int j = 0; j <= 9; j++)
+        // 後ろのものをいったん引き継ぐ
+        for (int j = 0; j < 10; j++)
         {
             next_index[i][j] = next_index[i + 1][j];
         }
+        // 現在インデックスにある数字について、インデックス番号を格納
         next_index[i][s[i] - '0'] = i;
     }
 
-    for (int i = 0; i <= 9; i++)
+    for (int i = 0; i < 10; i++)
     {
-        for (int j = 0; j <= 9; j++)
+
+        for (int j = 0; j < 10; j++)
         {
-            for (int k = 0; k <= 9; k++)
+            for (int k = 0; k < 10; k++)
             {
+
                 int curIndex = next_index[0][i];
                 curIndex++;
                 curIndex = next_index[min(curIndex, n)][j];
@@ -42,9 +45,7 @@ int main()
                 curIndex = next_index[min(curIndex, n)][k];
 
                 if (curIndex < n)
-                {
                     result++;
-                }
             }
         }
     }
@@ -53,6 +54,56 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     int n, next_index[30005][10], result = 0;
+//     string s;
+//     cin >> n >> s;
+
+//     // ありえない外れ値作成
+//     for (int i = 0; i <= 9; i++)
+//     {
+//         next_index[n][i] = n;
+//     }
+
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         for (int j = 0; j <= 9; j++)
+//         {
+//             next_index[i][j] = next_index[i + 1][j];
+//         }
+//         next_index[i][s[i] - '0'] = i;
+//     }
+
+//     for (int i = 0; i <= 9; i++)
+//     {
+//         for (int j = 0; j <= 9; j++)
+//         {
+//             for (int k = 0; k <= 9; k++)
+//             {
+//                 int curIndex = next_index[0][i];
+//                 curIndex++;
+//                 curIndex = next_index[min(curIndex, n)][j];
+//                 curIndex++;
+//                 curIndex = next_index[min(curIndex, n)][k];
+
+//                 if (curIndex < n)
+//                 {
+//                     result++;
+//                 }
+//             }
+//         }
+//     }
+
+//     cout << result << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
