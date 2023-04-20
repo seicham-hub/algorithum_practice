@@ -5,65 +5,126 @@
 // 解けなかった...→一つの電球が点灯しているとき次の電球は？のループしか思いつかない、どう書けば実装できるか思いつかない
 // 初めにあり得る電球のONOFFパターンすべてを持っておく！
 
-// *
-// 4/19解きなおし
-// *
-// ひとつの電球のスイッチのonoff状態は最大2^10通りなので、これをM個全探索すると(2^10)^10 =2^100無理
-// スイッチの状態からではなく、すべてのスイッチの状態を全探索する。
+/*
+4/20解きなおし
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
 
 int main()
 {
-
-    int n, m, k[11], s[11][11], p[11], result = 0;
-
+    int n, m, k[11], s[11][11], p[11], ans = 0;
     cin >> n >> m;
-
-    for (int i = 1; i <= m; i++)
+    for (int i = 0; i < m; i++)
     {
         cin >> k[i];
-
-        for (int j = 1; j <= k[i]; j++)
+        for (int j = 0; j < k[i]; j++)
         {
             cin >> s[i][j];
+            s[i][j]--;
         }
     }
 
-    for (int i = 1; i <= m; i++)
-    {
+    for (int i = 0; i < m; i++)
         cin >> p[i];
-    }
-
-    // 各電球のスイッチの状態は要素数nの部分集合となっている。
 
     for (int msk = 0; msk < (1 << n); msk++)
     {
 
-        int lightCount = 0;
-        for (int i = 1; i <= m; i++)
+        int lumpOnAmount = 0;
+        bool isAllOn = true;
+        for (int i = 0; i < m; i++)
         {
-            int on = 0;
-            for (int j = 1; j <= k[i]; j++)
+
+            if (isAllOn == false)
+                break;
+
+            int switchOn = 0;
+            for (int j = 0; j < k[i]; j++)
             {
-                if (msk & (1 << s[i][j] - 1))
-                    on++;
+                if (msk & (1 << s[i][j]))
+                    switchOn++;
             }
-            if (on % 2 == p[i])
+
+            if (switchOn % 2 == p[i])
+                lumpOnAmount++;
+            else
             {
-                lightCount++;
+                isAllOn = false;
+                break;
             }
         }
-        cout << endl;
-        if (lightCount == m)
-            result++;
+
+        if (isAllOn)
+            ans++;
     }
 
-    cout << result << endl;
+    cout << ans << endl;
 
     return 0;
 }
+
+// *
+// 4/19解きなおし
+// *
+// ひとつの電球のスイッチのonoff状態は最大2^10通りなので、これをM個全探索すると(2^10)^10 =2^100無理
+// スイッチの状態からではなく、すべてのスイッチの状態を全探索する。
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+
+//     int n, m, k[11], s[11][11], p[11], result = 0;
+
+//     cin >> n >> m;
+
+//     for (int i = 1; i <= m; i++)
+//     {
+//         cin >> k[i];
+
+//         for (int j = 1; j <= k[i]; j++)
+//         {
+//             cin >> s[i][j];
+//         }
+//     }
+
+//     for (int i = 1; i <= m; i++)
+//     {
+//         cin >> p[i];
+//     }
+
+//     // 各電球のスイッチの状態は要素数nの部分集合となっている。
+
+//     for (int msk = 0; msk < (1 << n); msk++)
+//     {
+
+//         int lightCount = 0;
+//         for (int i = 1; i <= m; i++)
+//         {
+//             int on = 0;
+//             for (int j = 1; j <= k[i]; j++)
+//             {
+//                 if (msk & (1 << s[i][j] - 1))
+//                     on++;
+//             }
+//             if (on % 2 == p[i])
+//             {
+//                 lightCount++;
+//             }
+//         }
+//         cout << endl;
+//         if (lightCount == m)
+//             result++;
+//     }
+
+//     cout << result << endl;
+
+//     return 0;
+// }
 
 // *
 // 解答をもとに解きなおした4/18
