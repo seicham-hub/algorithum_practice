@@ -4,6 +4,9 @@
 
 // 最初に要素を昇順に並べておき、do - while ループで、next_permutation() がfalse を返すまでループすると、 全順列が生成されることになる。
 
+/*
+0424解きなおし
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -19,30 +22,66 @@ int main()
 
     vector<int> indices(n);
     iota(indices.begin(), indices.end(), 0);
-
-    double total_distance = 0;
-    int cnt = 0;
+    double cnt = 0, total_distance = 0;
     do
     {
         double tmp_distance = 0;
         for (int i = 0; i < n - 1; i++)
         {
-            int now = indices[i];
-            int next = indices[i + 1];
+            int now = indices[i], next = indices[i + 1];
+
             tmp_distance += sqrt(pow(x[next] - x[now], 2) + pow(y[next] - y[now], 2));
         }
-
-        total_distance += tmp_distance;
         cnt++;
-
+        total_distance += tmp_distance;
     } while (next_permutation(indices.begin(), indices.end()));
 
     printf("%.10f\n", total_distance / cnt);
 
-    // cout << fixed << setprecision(10) << total_distance / cnt << endl;
-
     return 0;
+
+    // cout <<  fixed << setprecision(10) <<total_distance/cnt <<endl;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, x[10], y[10];
+
+//     cin >> n;
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> x[i] >> y[i];
+//     }
+
+//     vector<int> indices(n);
+//     iota(indices.begin(), indices.end(), 0);
+
+//     double total_distance = 0;
+//     int cnt = 0;
+//     do
+//     {
+//         double tmp_distance = 0;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             int now = indices[i];
+//             int next = indices[i + 1];
+//             tmp_distance += sqrt(pow(x[next] - x[now], 2) + pow(y[next] - y[now], 2));
+//         }
+
+//         total_distance += tmp_distance;
+//         cnt++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     printf("%.10f\n", total_distance / cnt);
+
+//     // cout << fixed << setprecision(10) << total_distance / cnt << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
