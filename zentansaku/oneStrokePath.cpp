@@ -4,25 +4,28 @@
 // 0424もう一度
 
 /*
-0424解きなおし
+0425解きなおし分
 */
 
 #include <bits/stdc++.h>
 using namespace std;
+
 bool g[8][8] = {};
 
 int main()
 {
+
     int n, m, ans = 0;
 
     cin >> n >> m;
 
     for (int i = 0; i < m; i++)
     {
-        int now, next;
-        cin >> now >> next;
-        g[now][next] = true;
-        g[next][now] = true;
+        int a, b;
+        cin >> a >> b;
+
+        g[a][b] = true;
+        g[b][a] = true;
     }
 
     vector<int> indices(n);
@@ -46,13 +49,62 @@ int main()
 
         if (ok)
             ans++;
-
     } while (next_permutation(indices.begin(), indices.end()));
 
     cout << ans << endl;
-
     return 0;
 }
+
+/*
+0424解きなおし分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// bool g[8][8] = {};
+
+// int main()
+// {
+//     int n, m, ans = 0;
+
+//     cin >> n >> m;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int now, next;
+//         cin >> now >> next;
+//         g[now][next] = true;
+//         g[next][now] = true;
+//     }
+
+//     vector<int> indices(n);
+//     iota(indices.begin(), indices.end(), 1);
+
+//     do
+//     {
+//         if (indices[0] != 1)
+//             break;
+
+//         bool ok = true;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             int now = indices[i], next = indices[i + 1];
+//             if (!g[now][next])
+//             {
+//                 ok = false;
+//                 break;
+//             }
+//         }
+
+//         if (ok)
+//             ans++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
