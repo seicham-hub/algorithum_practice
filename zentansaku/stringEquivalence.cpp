@@ -4,43 +4,81 @@
 
 // 方針が思いつかなかった。操作の法則が見つけられなかった
 
-#include <cstdio>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 int n;
-char s[11];
 
-void dfs(int x, int y)
+void dfs(string str, int uniqueNum)
 {
-
-    if (x == n)
+    if (str.size() == n)
     {
-        printf("%s\n", s);
+        cout << str << endl;
+        return;
     }
     else
     {
-        for (i = 0; i < y; i++)
+        for (int i = 0; i < uniqueNum; i++)
         {
-            s[x] = 'a' + i;
-            dfs(x + 1, y);
+            char add = 'a' + i;
+            dfs(str + add, uniqueNum);
         }
-
-        s[x] = 'a' + y;
-        dfs(x + 1, y + 1);
+        char add = 'a' + uniqueNum;
+        dfs(str + add, uniqueNum + 1);
     }
 }
 
 int main()
 {
-    int i;
 
-    scanf("%d", &n);
+    cin >> n;
 
-    dfs(0, 0);
+    dfs("", 0);
 
     return 0;
 }
+
+/*
+お手本解答
+*/
+// #include <cstdio>
+
+// using namespace std;
+
+// int n;
+// char s[11];
+
+// void dfs(int x, int y)
+// {
+
+//     if (x == n)
+//     {
+//         printf("%s\n", s);
+//     }
+//     else
+//     {
+//         for (i = 0; i < y; i++)
+//         {
+//             s[x] = 'a' + i;
+//             dfs(x + 1, y);
+//         }
+
+//         s[x] = 'a' + y;
+//         dfs(x + 1, y + 1);
+//     }
+// }
+
+// int main()
+// {
+//     int i;
+
+//     scanf("%d", &n);
+
+//     dfs(0, 0);
+
+//     return 0;
+// }
 
 // 解説をよんで書いたコード↓
 // #include <bits/stdc++.h>
