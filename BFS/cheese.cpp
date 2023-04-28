@@ -1,80 +1,158 @@
 // https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_e
 
-// 0427もう一尾
+// 0427もう一回
+// 0428もう一度
 // チーズに硬さあるんなら順番つけて回ればいいじゃない
+// someArr[(int)char型]などは正しくキャストされないからダメ
 
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef tuple<int, int, int> Node;
-
 int main()
 {
-    int H, W, N;
 
-    cin >> H >> W >> N;
-    vector<string> grid(H);
+    int h, w, n, ans = 0;
+    cin >> h >> w >> n;
 
-    for (int i = 0; i < H; i++)
+    char kukakuMap[h + 1][w + 1];
+    vector<pair<int, int>> position(n + 1);
+
+    for (int i = 1; i <= h; i++)
     {
-        cin >> grid[i];
-    }
 
-    vector<pair<int, int>> positions(N + 1);
-
-    for (int i = 0; i < H; i++)
-    {
-        for (int j = 0; j < W; j++)
+        for (int j = 1; j <= w; j++)
         {
-            if (grid[i][j] == 'S')
+            cin >> kukakuMap[i][j];
+            if (kukakuMap[i][j] == 'S')
             {
-                positions[0] = {i, j};
+                position[0] = {i, j};
             }
-            else if ('0' <= grid[i][j] && grid[i][j] <= '9')
+            else if ('0' <= kukakuMap[i][j] && kukakuMap[i][j] <= '9')
             {
-                int cheese = grid[i][j] - '0';
-                positions[cheese] = {i, j};
+                position[kukakuMap[i][j] - '0'] = {i, j};
             }
         }
     }
+    int dx[4] = {0, 1, 0, -1};
+    int dy[4] = {1, 0, -1, 0};
 
-    int ans = 0;
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {1, 0, -1, 0};
-
-    for (int i = 0; i < N; i++)
+    for (int num = 0; num < n; num++)
     {
-        vector<vector<bool>> visited(H, vector<bool>(W, false));
-        queue<Node> q;
-        q.push({positions[i].first, positions[i].second, 0});
+
+        queue<pair<int, int>> q;
+
+        vector<vector<int>> dist(h + 1, vector<int>(w + 1, -1));
+
+        dist[position[num].first][position[num].second] = 0;
+
+        q.push({position[num].first, position[num].second});
 
         while (!q.empty())
         {
-            int x, y, d;
-            tie(x, y, d) = q.front();
+            int x, y;
+            x = q.front().first;
+            y = q.front().second;
             q.pop();
-            if (x == positions[i + 1].first && y == positions[i + 1].second)
+
+            if (kukakuMap[x][y] == num + 1 + '0')
             {
-                ans += d;
+                ans += dist[x][y];
                 break;
             }
 
-            for (int j = 0; j < 4; j++)
+            for (int i = 0; i < 4; i++)
             {
-                int nx = x + dx[j];
-                int ny = y + dy[j];
-                if (nx >= 0 && nx < H && ny >= 0 && ny < W && !visited[nx][ny] && grid[nx][ny] != 'X')
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (nx >= 1 && nx <= h && ny >= 1 && ny <= w && dist[nx][ny] == -1 && kukakuMap[nx][ny] != 'X')
                 {
-                    visited[nx][ny] = true;
-                    q.push({nx, ny, d + 1});
+                    dist[nx][ny] = dist[x][y] + 1;
+                    q.push({nx, ny});
                 }
             }
         }
     }
+
     cout << ans << endl;
 
     return 0;
 }
+
+/*
+解答
+*/
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// typedef tuple<int, int, int> Node;
+
+// int main()
+// {
+//     int H, W, N;
+
+//     cin >> H >> W >> N;
+//     vector<string> grid(H);
+
+//     for (int i = 0; i < H; i++)
+//     {
+//         cin >> grid[i];
+//     }
+
+//     vector<pair<int, int>> positions(N + 1);
+
+//     for (int i = 0; i < H; i++)
+//     {
+//         for (int j = 0; j < W; j++)
+//         {
+//             if (grid[i][j] == 'S')
+//             {
+//                 positions[0] = {i, j};
+//             }
+//             else if ('0' <= grid[i][j] && grid[i][j] <= '9')
+//             {
+//                 int cheese = grid[i][j] - '0';
+//                 positions[cheese] = {i, j};
+//             }
+//         }
+//     }
+
+//     int ans = 0;
+//     int dx[] = {0, 1, 0, -1};
+//     int dy[] = {1, 0, -1, 0};
+
+//     for (int i = 0; i < N; i++)
+//     {
+//         vector<vector<bool>> visited(H, vector<bool>(W, false));
+//         queue<Node> q;
+//         q.push({positions[i].first, positions[i].second, 0});
+
+//         while (!q.empty())
+//         {
+//             int x, y, d;
+//             tie(x, y, d) = q.front();
+//             q.pop();
+//             if (x == positions[i + 1].first && y == positions[i + 1].second)
+//             {
+//                 ans += d;
+//                 break;
+//             }
+
+//             for (int j = 0; j < 4; j++)
+//             {
+//                 int nx = x + dx[j];
+//                 int ny = y + dy[j];
+//                 if (nx >= 0 && nx < H && ny >= 0 && ny < W && !visited[nx][ny] && grid[nx][ny] != 'X')
+//                 {
+//                     visited[nx][ny] = true;
+//                     q.push({nx, ny, d + 1});
+//                 }
+//             }
+//         }
+//     }
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分で書いたコード　単純に最初から全探索しているからダメ
 // #include <bits/stdc++.h>
