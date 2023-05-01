@@ -10,61 +10,57 @@ using namespace std;
 
 int main()
 {
-
     int h, w, n, ans = 0;
+
     cin >> h >> w >> n;
 
-    char kukakuMap[h + 1][w + 1];
+    string graph[h];
     vector<pair<int, int>> position(n + 1);
 
-    for (int i = 1; i <= h; i++)
+    for (int i = 0; i < h; i++)
     {
-
-        for (int j = 1; j <= w; j++)
+        cin >> graph[i];
+        for (int j = 0; j < w; j++)
         {
-            cin >> kukakuMap[i][j];
-            if (kukakuMap[i][j] == 'S')
+            if (graph[i][j] == 'S')
             {
                 position[0] = {i, j};
             }
-            else if ('0' <= kukakuMap[i][j] && kukakuMap[i][j] <= '9')
+            if (graph[i][j] >= '1' && graph[i][j] <= '9')
             {
-                position[kukakuMap[i][j] - '0'] = {i, j};
+                int cheese = graph[i][j] - '0';
+                position[cheese] = {i, j};
             }
         }
     }
-    int dx[4] = {0, 1, 0, -1};
-    int dy[4] = {1, 0, -1, 0};
 
-    for (int num = 0; num < n; num++)
+    int dx[4] = {1, 0, -1, 0};
+    int dy[4] = {0, -1, 0, 1};
+
+    for (int i = 0; i < n; i++)
     {
-
         queue<pair<int, int>> q;
-
+        q.push(position[i]);
         vector<vector<int>> dist(h + 1, vector<int>(w + 1, -1));
-
-        dist[position[num].first][position[num].second] = 0;
-
-        q.push({position[num].first, position[num].second});
+        dist[position[i].first][position[i].second] = 0;
 
         while (!q.empty())
         {
-            int x, y;
-            x = q.front().first;
-            y = q.front().second;
+            int x = q.front().first;
+            int y = q.front().second;
             q.pop();
 
-            if (kukakuMap[x][y] == num + 1 + '0')
+            if (x == position[i + 1].first && y == position[i + 1].second)
             {
                 ans += dist[x][y];
-                break;
             }
 
-            for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
             {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
-                if (nx >= 1 && nx <= h && ny >= 1 && ny <= w && dist[nx][ny] == -1 && kukakuMap[nx][ny] != 'X')
+                int nx = x + dx[j];
+                int ny = y + dy[j];
+
+                if (nx >= 0 && nx < h && ny >= 0 && ny < w && dist[nx][ny] == -1 && graph[nx][ny] != 'X')
                 {
                     dist[nx][ny] = dist[x][y] + 1;
                     q.push({nx, ny});
@@ -77,6 +73,82 @@ int main()
 
     return 0;
 }
+
+/*
+4/27解き直し分
+*/
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     int h, w, n, ans = 0;
+//     cin >> h >> w >> n;
+
+//     char kukakuMap[h + 1][w + 1];
+//     vector<pair<int, int>> position(n + 1);
+
+//     for (int i = 1; i <= h; i++)
+//     {
+
+//         for (int j = 1; j <= w; j++)
+//         {
+//             cin >> kukakuMap[i][j];
+//             if (kukakuMap[i][j] == 'S')
+//             {
+//                 position[0] = {i, j};
+//             }
+//             else if ('0' <= kukakuMap[i][j] && kukakuMap[i][j] <= '9')
+//             {
+//                 position[kukakuMap[i][j] - '0'] = {i, j};
+//             }
+//         }
+//     }
+//     int dx[4] = {0, 1, 0, -1};
+//     int dy[4] = {1, 0, -1, 0};
+
+//     for (int num = 0; num < n; num++)
+//     {
+
+//         queue<pair<int, int>> q;
+
+//         vector<vector<int>> dist(h + 1, vector<int>(w + 1, -1));
+
+//         dist[position[num].first][position[num].second] = 0;
+
+//         q.push({position[num].first, position[num].second});
+
+//         while (!q.empty())
+//         {
+//             int x, y;
+//             x = q.front().first;
+//             y = q.front().second;
+//             q.pop();
+
+//             if (kukakuMap[x][y] == num + 1 + '0')
+//             {
+//                 ans += dist[x][y];
+//                 break;
+//             }
+
+//             for (int i = 0; i < 4; i++)
+//             {
+//                 int nx = x + dx[i];
+//                 int ny = y + dy[i];
+//                 if (nx >= 1 && nx <= h && ny >= 1 && ny <= w && dist[nx][ny] == -1 && kukakuMap[nx][ny] != 'X')
+//                 {
+//                     dist[nx][ny] = dist[x][y] + 1;
+//                     q.push({nx, ny});
+//                 }
+//             }
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 /*
 解答

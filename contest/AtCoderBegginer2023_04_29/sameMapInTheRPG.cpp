@@ -1,4 +1,5 @@
 // 0428もう一度
+// 0501もう一度
 // https://atcoder.jp/contests/abc300/tasks/abc300_b
 
 // 各値を1ずつシフトするという操作を銅表現すれば良いのか分からず、時間がかかった。
@@ -6,28 +7,38 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+
 int main()
 {
-    int h, w;
+    int h, w, a[31][31], b[31][31];
     cin >> h >> w;
-    vector<string> A(h), B(h);
-    for (auto &x : A)
-        cin >> x;
-    for (auto &x : B)
-        cin >> x;
-
-    for (int s = 0; s < h; s++)
+    for (int i = 0; i < h; i++)
     {
-        for (int t = 0; t < w; t++)
+        for (int j = 0; j < w; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            cin >> b[i][j];
+        }
+    }
+
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
         {
 
-            int ok = 1;
-            for (int i = 0; i < h; i++)
+            bool ok = true;
+            for (int k = 0; k < h; k++)
             {
-                for (int j = 0; j < w; j++)
+                for (int l = 0; l < w; l++)
                 {
-                    if (A[(i - s + h) % h][(j - t + w) % w] != B[i][j])
-                        ok = 0;
+                    if (a[(k + i) % h][(l + j) % w] != b[k][l])
+                        ok = false;
                 }
             }
 
@@ -38,11 +49,50 @@ int main()
             }
         }
     }
-
     cout << "No" << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     int h, w;
+//     cin >> h >> w;
+//     vector<string> A(h), B(h);
+//     for (auto &x : A)
+//         cin >> x;
+//     for (auto &x : B)
+//         cin >> x;
+
+//     for (int s = 0; s < h; s++)
+//     {
+//         for (int t = 0; t < w; t++)
+//         {
+
+//             int ok = 1;
+//             for (int i = 0; i < h; i++)
+//             {
+//                 for (int j = 0; j < w; j++)
+//                 {
+//                     if (A[(i - s + h) % h][(j - t + w) % w] != B[i][j])
+//                         ok = 0;
+//                 }
+//             }
+
+//             if (ok)
+//             {
+//                 cout << "Yes" << endl;
+//                 exit(0);
+//             }
+//         }
+//     }
+
+//     cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
