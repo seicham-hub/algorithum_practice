@@ -10,8 +10,10 @@ using namespace std;
 
 int main()
 {
-    int h, w, a[31][31], b[31][31];
+    int h, w;
+    char a[31][31], b[31][31];
     cin >> h >> w;
+
     for (int i = 0; i < h; i++)
     {
         for (int j = 0; j < w; j++)
@@ -27,21 +29,19 @@ int main()
         }
     }
 
-    for (int i = 0; i < h; i++)
+    for (int s = 0; s < h; s++)
     {
-        for (int j = 0; j < w; j++)
+        for (int t = 0; t < w; t++)
         {
-
             bool ok = true;
-            for (int k = 0; k < h; k++)
+            for (int i = 0; i < h; i++)
             {
-                for (int l = 0; l < w; l++)
+                for (int j = 0; j < w; j++)
                 {
-                    if (a[(k + i) % h][(l + j) % w] != b[k][l])
+                    if (a[(i - s + h) % h][(j - t + w) % w] != b[i][j])
                         ok = false;
                 }
             }
-
             if (ok)
             {
                 cout << "Yes" << endl;
@@ -49,10 +49,63 @@ int main()
             }
         }
     }
+
     cout << "No" << endl;
 
     return 0;
 }
+
+/*
+5/1やり直し分
+*/
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int h, w, a[31][31], b[31][31];
+//     cin >> h >> w;
+//     for (int i = 0; i < h; i++)
+//     {
+//         for (int j = 0; j < w; j++)
+//         {
+//             cin >> a[i][j];
+//         }
+//     }
+//     for (int i = 0; i < h; i++)
+//     {
+//         for (int j = 0; j < w; j++)
+//         {
+//             cin >> b[i][j];
+//         }
+//     }
+
+//     for (int i = 0; i < h; i++)
+//     {
+//         for (int j = 0; j < w; j++)
+//         {
+
+//             bool ok = true;
+//             for (int k = 0; k < h; k++)
+//             {
+//                 for (int l = 0; l < w; l++)
+//                 {
+//                     if (a[(k + i) % h][(l + j) % w] != b[k][l])
+//                         ok = false;
+//                 }
+//             }
+
+//             if (ok)
+//             {
+//                 cout << "Yes" << endl;
+//                 exit(0);
+//             }
+//         }
+//     }
+//     cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

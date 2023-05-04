@@ -8,11 +8,11 @@ using namespace std;
 
 int main()
 {
-    int w, h, ans = 0;
+    int h, w, ans = 0;
 
     cin >> w >> h;
 
-    int graph[h + 2][w + 2] = {};
+    int graph[h + 2][w + 2];
 
     for (int i = 1; i <= h; i++)
     {
@@ -24,31 +24,32 @@ int main()
 
     queue<pair<int, int>> q;
     q.push({0, 0});
-    int dx[6] = {1, 0, -1, 0, 1, -1};
-    int dy[2][6] = {{0, -1, 0, 1, -1, -1}, {0, -1, 0, 1, 1, 1}};
-    vector<vector<bool>> visited(h + 2, vector<bool>(w + 2, false));
+
+    vector<vector<bool>> dist(h + 2, vector<bool>(w + 2, false));
+    dist[0][0] = true;
+
+    int dy[6] = {0, 1, 0, -1, -1, 1};
+    int dx[2][6] = {{1, 0, -1, 0, -1, -1}, {1, 0, -1, 0, 1, 1}};
 
     while (!q.empty())
     {
-        int x = q.front().first;
-        int y = q.front().second;
+        int y = q.front().first;
+        int x = q.front().second;
         q.pop();
 
         for (int i = 0; i < 6; i++)
         {
-            int nx = x + dx[i];
-            int ny = y + dy[x % 2][i];
+            int ny = y + dy[i];
+            int nx = x + dx[y % 2][i];
 
-            if (nx >= 0 && nx <= h + 1 && ny >= 0 && ny <= w + 1)
+            if (nx >= 0 && nx <= w + 1 && ny >= 0 && ny <= h + 1)
             {
-                if (graph[nx][ny] == 1)
-                {
+                if (graph[ny][nx] == 1)
                     ans++;
-                }
-                else if (graph[nx][ny] == 0 && visited[nx][ny] == false)
+                else if (!dist[ny][nx])
                 {
-                    q.push({nx, ny});
-                    visited[nx][ny] = true;
+                    dist[ny][nx] = true;
+                    q.push({ny, nx});
                 }
             }
         }
@@ -58,6 +59,63 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+//     int w, h, ans = 0;
+
+//     cin >> w >> h;
+
+//     int graph[h + 2][w + 2] = {};
+
+//     for (int i = 1; i <= h; i++)
+//     {
+//         for (int j = 1; j <= w; j++)
+//         {
+//             cin >> graph[i][j];
+//         }
+//     }
+
+//     queue<pair<int, int>> q;
+//     q.push({0, 0});
+//     int dx[6] = {1, 0, -1, 0, 1, -1};
+//     int dy[2][6] = {{0, -1, 0, 1, -1, -1}, {0, -1, 0, 1, 1, 1}};
+//     vector<vector<bool>> visited(h + 2, vector<bool>(w + 2, false));
+
+//     while (!q.empty())
+//     {
+//         int x = q.front().first;
+//         int y = q.front().second;
+//         q.pop();
+
+//         for (int i = 0; i < 6; i++)
+//         {
+//             int nx = x + dx[i];
+//             int ny = y + dy[x % 2][i];
+
+//             if (nx >= 0 && nx <= h + 1 && ny >= 0 && ny <= w + 1)
+//             {
+//                 if (graph[nx][ny] == 1)
+//                 {
+//                     ans++;
+//                 }
+//                 else if (graph[nx][ny] == 0 && visited[nx][ny] == false)
+//                 {
+//                     q.push({nx, ny});
+//                     visited[nx][ny] = true;
+//                 }
+//             }
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <iostream>
 // #include <cstdio>
