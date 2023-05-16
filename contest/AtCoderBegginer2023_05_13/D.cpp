@@ -25,15 +25,13 @@ int main()
         return 0;
     }
 
-    int ans = -1;
-
     for (int c : canChange)
     {
         int in = init;
         init += pow(2, s.size() - 1 - c) * 1;
         if (init <= n)
         {
-            ans = init;
+            continue;
         }
         else
         {
@@ -41,7 +39,7 @@ int main()
         }
     }
 
-    cout << ans << endl;
+    cout << init << endl;
 
     return 0;
 }

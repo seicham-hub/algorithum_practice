@@ -4,39 +4,83 @@ using namespace std;
 
 int main()
 {
+    int cntS[256] = {}, cntT[256] = {};
+
     string s, t, at = "atcoder";
-    int sCnt[256] = {0};
-    int tCnt[256] = {0};
 
     cin >> s >> t;
 
     for (int i = 0; i < s.size(); i++)
     {
-        sCnt[s[i]]++;
-        tCnt[t[i]]++;
+        cntS[s[i]]++;
+        cntT[t[i]]++;
     }
 
     for (int i = 0; i < 7; i++)
     {
-        int M = max(sCnt[at[i]], tCnt[at[i]]);
+        char c = at[i];
+        int M = max(cntS[c], cntT[c]);
 
-        sCnt['@'] -= M - sCnt[at[i]];
-        tCnt['@'] -= M - tCnt[at[i]];
+        cntS['@'] -= M - cntS[c];
+        cntT['@'] -= M - cntT[c];
 
-        sCnt[at[i]] = tCnt[at[i]] = M;
+        cntS[c] = cntT[c] = M;
     }
 
-    bool ans = sCnt['@'] >= 0 && tCnt['@'] >= 0;
+    bool ans = cntS['@'] >= 0 && cntT['@'] >= 0;
 
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 255; i++)
     {
-        ans = ans && sCnt[i] == tCnt[i];
+        ans = ans && cntS[i] == cntT[i];
     }
 
-    puts(ans ? "Yes" : "No");
+    cout << (ans ? "Yes" : "No") << endl;
 
     return 0;
 }
+
+/*
+やり直し分
+*/
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+//     string s, t, at = "atcoder";
+//     int sCnt[256] = {0};
+//     int tCnt[256] = {0};
+
+//     cin >> s >> t;
+
+//     for (int i = 0; i < s.size(); i++)
+//     {
+//         sCnt[s[i]]++;
+//         tCnt[t[i]]++;
+//     }
+
+//     for (int i = 0; i < 7; i++)
+//     {
+//         int M = max(sCnt[at[i]], tCnt[at[i]]);
+
+//         sCnt['@'] -= M - sCnt[at[i]];
+//         tCnt['@'] -= M - tCnt[at[i]];
+
+//         sCnt[at[i]] = tCnt[at[i]] = M;
+//     }
+
+//     bool ans = sCnt['@'] >= 0 && tCnt['@'] >= 0;
+
+//     for (int i = 0; i < 256; i++)
+//     {
+//         ans = ans && sCnt[i] == tCnt[i];
+//     }
+
+//     puts(ans ? "Yes" : "No");
+
+//     return 0;
+// }
 
 // #include <stdio.h>
 // #include <math.h>

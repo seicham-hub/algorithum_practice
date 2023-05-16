@@ -89,10 +89,5 @@
     "variant": "cpp"
   },
 
-  "command-runner.commands": {
-    "oj test": "oj test -c ${fileDirname}/${fileBasenameNoExtension} -d ${fileDirname}/tests",
-    "acc submit": "cd ${fileDirname} && acc submit ${file} || cd ../../"
-  },
-
   "editor.formatOnSave": true
 }
