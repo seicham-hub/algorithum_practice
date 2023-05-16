@@ -31,7 +31,12 @@
       "id": "arc099_a",
       "label": "C",
       "title": "Minimization",
-      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_a"
+      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_a",
+      "directory": {
+        "path": "c",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "arc099_b",
