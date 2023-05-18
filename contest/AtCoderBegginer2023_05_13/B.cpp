@@ -4,9 +4,8 @@
 // 0516もう一度
 
 /*
-0516やり直し分
+5/17やり直し分
 */
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,6 +23,7 @@ int main()
 
     for (int i = 0; i < a.size() - 1; i++)
     {
+
         if (a[i] + 1 < a[i + 1])
             a.insert(a.begin() + i + 1, a[i] + 1);
         if (a[i] - 1 > a[i + 1])
@@ -31,13 +31,46 @@ int main()
     }
 
     for (int i = 0; i < a.size(); i++)
-    {
-
         cout << a[i] << " ";
-    }
 
     return 0;
 }
+
+/*
+0516やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> a[i];
+//     }
+
+//     for (int i = 0; i < a.size() - 1; i++)
+//     {
+//         if (a[i] + 1 < a[i + 1])
+//             a.insert(a.begin() + i + 1, a[i] + 1);
+//         if (a[i] - 1 > a[i + 1])
+//             a.insert(a.begin() + i + 1, a[i] - 1);
+//     }
+
+//     for (int i = 0; i < a.size(); i++)
+//     {
+
+//         cout << a[i] << " ";
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

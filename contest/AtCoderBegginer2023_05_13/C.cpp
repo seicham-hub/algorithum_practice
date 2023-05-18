@@ -1,3 +1,9 @@
+// https://atcoder.jp/contests/abc301/tasks/abc301_c
+// 数字比較の際のture,falseは明確にする必要あり。if(a>0)等
+
+/*
+5/16やり直し分
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
