@@ -1,4 +1,5 @@
 // https://atcoder.jp/contests/abc301/tasks/abc301_d
+// bit演算の場合は& | 一つでよい
 // 0517もう一度
 
 #include <bits/stdc++.h>
@@ -7,11 +8,33 @@ using namespace std;
 int main()
 {
     string s;
-    long long n;
+    long long n, ss = 0;
+
+    cin >> s >> n;
+
+    reverse(s.begin(), s.end());
 
     for (int i = 0; i < s.size(); i++)
     {
+        if (s[i] == '1')
+            ss = ss | (1LL << i);
     }
+
+    if (ss > n)
+    {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    for (int i = s.size() - 1; i >= 0; i--)
+    {
+        if (s[i] == '?' && (ss || 1LL << i) <= n)
+        {
+            ss = ss | 1LL << i;
+        }
+    }
+
+    cout << ss << endl;
 
     return 0;
 }
