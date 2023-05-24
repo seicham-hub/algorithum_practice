@@ -1,3 +1,7 @@
+// https://atcoder.jp/contests/abc298/tasks/abc298_c
+
+// 0521もう一度
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -39,7 +43,7 @@ int main()
 
             for (int k = 0; k < numToBox[i].size(); k++)
             {
-
+                // 末尾にごみが残るのでerase
                 numToBox[i].erase(unique(numToBox[i].begin(), numToBox[i].end()), numToBox[i].end());
                 // if (k >= 1 && numToBox[i][k] == numToBox[i][k - 1])
                 //     continue;
