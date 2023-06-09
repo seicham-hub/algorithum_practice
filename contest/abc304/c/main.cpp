@@ -1,6 +1,6 @@
 // https://atcoder.jp/contests/abc304/tasks/abc304_c
 
-// 0606もう一度　BFSの実装を固める
+// 0606もう一度　BFSの実装を固める OK
 // 配列よりvectorで宣言するのがおすすめ、初期値が０で初期化される為
 // グローバル変数で定義したほうがメモリ領域多めにとれるっぽい
 // REは配列外参照の可能性大
@@ -13,8 +13,8 @@ int main()
 {
     int n, d;
     cin >> n >> d;
-    vector<int> x(n), y(n);
 
+    vector<int> x(n), y(n);
     rep(i, n) cin >> x[i] >> y[i];
 
     auto near = [&](int a, int b)
@@ -26,30 +26,29 @@ int main()
     };
 
     queue<int> q;
-    vector<bool> ans(n);
-
-    ans[0] = true;
     q.push(0);
+    vector<bool> dist(n);
+    dist[0] = true;
+
     while (!q.empty())
     {
-
-        int v = q.front();
+        int u = q.front();
         q.pop();
-        rep(u, n)
+        rep(i, n)
         {
-            if (near(v, u))
+            if (near(u, i))
             {
-                if (ans[u])
+                if (dist[i])
                     continue;
-                ans[u] = true;
-                q.push(u);
+                q.push(i);
+                dist[i] = true;
             }
         }
     }
 
     rep(i, n)
     {
-        if (ans[i])
+        if (dist[i])
             cout << "Yes" << endl;
         else
             cout << "No" << endl;
@@ -57,6 +56,111 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+
+// int main()
+// {
+//     int n, d;
+//     cin >> n >> d;
+//     vector<int> x(n), y(n);
+//     rep(i, n) cin >> x[i] >> y[i];
+
+//     auto near = [&](int a, int b)
+//     {
+//         int dx = x[a] - x[b];
+//         int dy = y[a] - y[b];
+
+//         return dx * dx + dy * dy <= d * d;
+//     };
+
+//     queue<int> q;
+//     q.push(0);
+//     vector<bool> dist(n);
+//     dist[0] = true;
+
+//     while (!q.empty())
+//     {
+//         int u = q.front();
+//         q.pop();
+
+//         rep(i, n)
+//         {
+//             if (near(u, i))
+//             {
+//                 if (dist[i])
+//                     continue;
+//                 q.push(i);
+//                 dist[i] = true;
+//             }
+//         }
+//     }
+
+//     rep(i, n)
+//     {
+//         if (dist[i])
+//             cout << "Yes" << endl;
+//         else
+//             cout << "No" << endl;
+//     }
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+
+// int main()
+// {
+//     int n, d;
+//     cin >> n >> d;
+//     vector<int> x(n), y(n);
+
+//     rep(i, n) cin >> x[i] >> y[i];
+
+//     auto near = [&](int a, int b)
+//     {
+//         int dx = x[a] - x[b];
+//         int dy = y[a] - y[b];
+
+//         return dx * dx + dy * dy <= d * d;
+//     };
+
+//     queue<int> q;
+//     vector<bool> ans(n);
+
+//     ans[0] = true;
+//     q.push(0);
+//     while (!q.empty())
+//     {
+
+//         int v = q.front();
+//         q.pop();
+//         rep(u, n)
+//         {
+//             if (near(v, u))
+//             {
+//                 if (ans[u])
+//                     continue;
+//                 ans[u] = true;
+//                 q.push(u);
+//             }
+//         }
+//     }
+
+//     rep(i, n)
+//     {
+//         if (ans[i])
+//             cout << "Yes" << endl;
+//         else
+//             cout << "No" << endl;
+//     }
+
+//     return 0;
+// }
 
 // 本番のコード
 // #include <bits/stdc++.h>

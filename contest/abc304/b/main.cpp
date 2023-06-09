@@ -1,6 +1,9 @@
 // https://atcoder.jp/contests/abc304/tasks/abc304_b
-// 0606もう一度
+// 0606もう一度 OK
 
+/*
+6/8やり直し分
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -8,37 +11,75 @@ int main()
 {
     int n;
     cin >> n;
-    string s = to_string(n);
+    string ns = to_string(n);
 
-    for (int i = 3; i < s.size(); i++)
+    for (int i = 3; i < ns.size(); i++)
     {
-        s[i] = '0';
+        ns[i] = '0';
     }
-    cout << s << endl;
+
+    cout << ns << endl;
 
     return 0;
 }
 
-// 別解
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-int main()
-{
-    int n;
-    cin >> n;
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     string ns = to_string(n);
 
-    for (int r = 1000;; r * 10)
-    {
-        if (n < r)
-        {
-            int w = r/1000;
-            cout << (n / w) * w << endl;
+//     for (int i = 3; i < ns.size(); i++)
+//     {
+//         ns[i] = '0';
+//     }
 
-            return 0;
-        }
-    }
-}
+//     cout << ns << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     string s = to_string(n);
+
+//     for (int i = 3; i < s.size(); i++)
+//     {
+//         s[i] = '0';
+//     }
+//     cout << s << endl;
+
+//     return 0;
+// }
+
+// // 別解
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     for (int r = 1000;; r * 10)
+//     {
+//         if (n < r)
+//         {
+//             int w = r/1000;
+//             cout << (n / w) * w << endl;
+
+//             return 0;
+//         }
+//     }
+// }
 
 // 本番時のコード
 // #include <bits/stdc++.h>
