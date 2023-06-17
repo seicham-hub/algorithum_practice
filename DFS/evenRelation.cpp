@@ -1,102 +1,148 @@
 // https://atcoder.jp/contests/abc126/tasks/abc126_d
 
+// 0616もう一度
+// グラフは初期位置を決めて、それに隣接するものをたどっていく。無向の場合は逆の物も入れる。
+
 #include <bits/stdc++.h>
 using namespace std;
 
-using Graph = map<int, pair<int, int>>;
+#define rep(i, n) for (int i = 0; i < n; ++i)
 
-int n;
-vector<int> u, v, w, ans;
+int N;
+vector<pair<int, int>> E[101010];
+int ans[101010];
 
-void dfs(Graph G, int i, vector<int> color)
+void dfs(int cu, int pa = -1, int col = 0)
 {
+    ans[cu] = col;
+    for (auto p : E[cu])
+    {
+        if (p.first == pa)
+            continue;
 
-    if (i == n)
-    {
-        ans = color;
-        return;
-    }
-    int next = G[i].first;
-    int dist = G[i].second;
-
-    if (dist % 2 == 0)
-    {
-        if (color[i] != color[next] && (color[i] != -1 || color[next] != -1))
-        {
-            return;
-        }
-        else if (color[i] != -1)
-        {
-            color[next] = color[i] + 1;
-        }
-        else if (color[next] != -1)
-        {
-            color[i] = color[next] + 1;
-        }
+        if (p.second % 2 == 0)
+            dfs(p.first, cu, col);
         else
-        {
-            color[i] = color[next] = 0;
-            dfs(G, i + 1, color);
-            color[i] = color[next] = 1;
-            dfs(G, i + 1, color);
-        }
+            dfs(p.first, cu, 1 - col);
     }
-    else
-    {
-        if (color[i] == color[next] && (color[i] != -1 || color[next] != -1))
-        {
-            return;
-        }
-        if (color[i] != -1)
-        {
-            color[next] = (color[i] + 1) % 2;
-        }
-        else if (color[next] != -1)
-        {
-            color[i] = (color[next] + 1) % 2;
-        }
-        else
-        {
-            color[i] = 0;
-            color[next] = 1;
-            dfs(G, i + 1, color);
-            color[i] = 1;
-            color[next] = 0;
-            dfs(G, i + 1, color);
-        }
-    }
-    dfs(G, i + 1, color);
 }
 
 int main()
 {
-
-    cin >> n;
-    u.resize(n - 1);
-    v.resize(n - 1);
-    w.resize(n - 1);
-
-    for (int i = 0; i < n - 1; i++)
+    cin >> N;
+    rep(i, N - 1)
     {
-        cin >> u[i] >> v[i] >> w[i];
+        int a, b, c;
+        cin >> a >> b >> c;
+        a--;
+        b--;
+
+        E[a].push_back({b, c});
+        E[b].push_back({a, c});
     }
 
-    Graph G;
+    dfs(0);
 
-    for (int i = 0; i < n - 1; i++)
-    {
-        G[u[i]] = {v[i], w[i]};
-        G[v[i]] = {u[i], w[i]};
-    }
-
-    vector<int> color(n + 1, -1);
-
-    dfs(G, 1, color);
-
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i < N; i++)
     {
         cout << ans[i] << endl;
     }
 
     return 0;
 }
+
+// TLE,RE 自分で書いたコード
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int n;
+
+// vector<int> u, v, w, ans;
+// using Graph = map<pair<int, int>, bool>;
+// Graph mp;
+
+// void dfs(vector<int> c, int ni)
+// {
+
+//     if (ni >= n - 1)
+//     {
+//         ans = c;
+//         return;
+//     }
+
+//     int nexti = ni + 1;
+
+//     if (w[ni] % 2 == 0)
+//     {
+//         if (c[u[ni]] != -1)
+//         {
+//             c[v[ni]] = c[u[ni]];
+//             dfs(c, nexti);
+//         }
+//         else if (c[v[ni]] != -1)
+//         {
+//             c[u[ni]] = c[v[ni]];
+//             dfs(c, nexti);
+//         }
+//         else
+//         {
+//             c[u[ni]] = c[v[ni]] = 0;
+//             dfs(c, ni++);
+//             c[u[ni]] = c[v[ni]] = 0;
+//             dfs(c, nexti);
+//         }
+//     }
+//     else
+//     {
+//         if (c[u[ni]] != -1)
+//         {
+//             c[v[ni]] = (c[u[ni]] + 1) % 2;
+//             dfs(c, nexti);
+//         }
+//         else if (c[v[ni]] != -1)
+//         {
+//             c[u[ni]] = (c[v[ni]] + 1) % 2;
+//             dfs(c, nexti);
+//         }
+//         else
+//         {
+
+//             c[u[ni]] = 1;
+//             c[v[ni]] = 0;
+//             dfs(c, nexti);
+//             c[u[ni]] = 0;
+//             c[v[ni]] = 1;
+//             dfs(c, nexti);
+//         }
+//     }
+
+//     return;
+// }
+
+// int main()
+// {
+
+//     cin >> n;
+//     vector<int> color(n + 1, -1);
+//     u.resize(n - 1);
+//     v.resize(n - 1);
+//     w.resize(n - 1);
+
+//     for (int i = 0; i < n - 1; i++)
+//     {
+//         cin >> u[i] >> v[i] >> w[i];
+//         mp[{u[i], v[i]}] = true;
+//         mp[{v[i], u[i]}] = true;
+//     }
+
+//     dfs(color, 0);
+
+//     for (int i = 1; i <= n; i++)
+//     {
+
+//         cout << ans[i] << endl;
+//     }
+
+//     return 0;
+// }

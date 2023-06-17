@@ -1,4 +1,4 @@
-// 0614もう一度
+// 0614もう一度 ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -6,15 +6,36 @@ using namespace std;
 
 int main()
 {
+    int dist[] = {0, 3, 4, 8, 9, 14, 23};
+
     char p, q;
+
     cin >> p >> q;
 
-    int e[] = {0, 3, 4, 8, 9, 14, 23};
-
-    cout << abs(e[p - 'A'] - e[q - 'A']) << endl;
+    cout << abs(dist[p - 'A'] - dist[q - 'A']) << endl;
 
     return 0;
 }
+
+/*
+模範解答
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     char p, q;
+//     cin >> p >> q;
+
+//     int e[] = {0, 3, 4, 8, 9, 14, 23};
+
+//     cout << abs(e[p - 'A'] - e[q - 'A']) << endl;
+
+//     return 0;
+// }
 
 // 本番のコード
 

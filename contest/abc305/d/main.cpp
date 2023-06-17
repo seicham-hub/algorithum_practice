@@ -1,7 +1,7 @@
 // https://atcoder.jp/contests/abc305/tasks/abc305_d
 
 // 0612もう一度
-// 0613もう一度　ちょっと遅いかな
+// 0613もう一度　ちょっと遅いかな ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,23 +24,23 @@ int main()
     for (int i = 1; i < n; i++)
     {
 
-        if (i % 2 == 0)
-        {
-            fa[i] = fa[i - 1] + a[i] - a[i - 1];
-        }
-        else
+        if (i % 2 == 1)
         {
             fa[i] = fa[i - 1];
         }
+        else
+        {
+            fa[i] = fa[i - 1] + a[i] - a[i - 1];
+        }
     }
 
-    auto f = [&](long long k)
+    auto f = [&](long long num)
     {
-        int j = upper_bound(a.begin(), a.end(), k) - a.begin() - 1;
+        int j = upper_bound(a.begin(), a.end(), num) - a.begin() - 1;
 
         if (j % 2 == 1)
         {
-            return fa[j] + k - a[j];
+            return fa[j] + num - a[j];
         }
         else
         {
@@ -55,6 +55,63 @@ int main()
 
     return 0;
 }
+
+/*
+6/13やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<long long> a(n), fa(n);
+//     rep(i, n) cin >> a[i];
+//     int q;
+//     cin >> q;
+//     vector<long long> l(q), r(q);
+//     rep(i, q)
+//     {
+//         cin >> l[i] >> r[i];
+//     }
+
+//     for (int i = 1; i < n; i++)
+//     {
+
+//         if (i % 2 == 0)
+//         {
+//             fa[i] = fa[i - 1] + a[i] - a[i - 1];
+//         }
+//         else
+//         {
+//             fa[i] = fa[i - 1];
+//         }
+//     }
+
+//     auto f = [&](long long k)
+//     {
+//         int j = upper_bound(a.begin(), a.end(), k) - a.begin() - 1;
+
+//         if (j % 2 == 1)
+//         {
+//             return fa[j] + k - a[j];
+//         }
+//         else
+//         {
+//             return fa[j];
+//         }
+//     };
+
+//     rep(i, q)
+//     {
+//         cout << f(r[i]) - f(l[i]) << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
