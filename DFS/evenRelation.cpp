@@ -1,6 +1,7 @@
 // https://atcoder.jp/contests/abc126/tasks/abc126_d
 
 // 0616もう一度
+// 0617もう一度　vectorの構造　時間かかりすぎ
 // グラフは初期位置を決めて、それに隣接するものをたどっていく。無向の場合は逆の物も入れる。
 
 #include <bits/stdc++.h>
@@ -8,48 +9,101 @@ using namespace std;
 
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-int N;
-vector<pair<int, int>> E[101010];
-int ans[101010];
+vector<int> c;
+map<int, vector<pair<int, int>>> graph;
 
-void dfs(int cu, int pa = -1, int col = 0)
+void dfs(int now, int color = 0)
 {
-    ans[cu] = col;
-    for (auto p : E[cu])
+    c[now] = color;
+    for (auto g : graph[now])
     {
-        if (p.first == pa)
+        int next = g.first;
+        int dist = g.second;
+
+        if (c[next] != -1)
             continue;
 
-        if (p.second % 2 == 0)
-            dfs(p.first, cu, col);
+        if (dist % 2 == 0)
+            dfs(next, color);
         else
-            dfs(p.first, cu, 1 - col);
+            dfs(next, (color + 1) % 2);
     }
+
+    return;
 }
 
 int main()
 {
-    cin >> N;
-    rep(i, N - 1)
-    {
-        int a, b, c;
-        cin >> a >> b >> c;
-        a--;
-        b--;
+    int n;
+    cin >> n;
+    c.resize(n + 1, -1);
+    vector<int> u(n - 1), v(n - 1), w(n - 1);
 
-        E[a].push_back({b, c});
-        E[b].push_back({a, c});
+    rep(i, n - 1)
+    {
+        cin >> u[i] >> v[i] >> w[i];
+        graph[u[i]].push_back({v[i], w[i]});
+        graph[v[i]].push_back({u[i], w[i]});
     }
 
-    dfs(0);
+    dfs(1);
 
-    for (int i = 0; i < N; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cout << ans[i] << endl;
+
+        cout << c[i] << endl;
     }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int N;
+// vector<pair<int, int>> E[101010];
+// int ans[101010];
+
+// void dfs(int cu, int pa = -1, int col = 0)
+// {
+//     ans[cu] = col;
+//     for (auto p : E[cu])
+//     {
+//         if (p.first == pa)
+//             continue;
+
+//         if (p.second % 2 == 0)
+//             dfs(p.first, cu, col);
+//         else
+//             dfs(p.first, cu, 1 - col);
+//     }
+// }
+
+// int main()
+// {
+//     cin >> N;
+//     rep(i, N - 1)
+//     {
+//         int a, b, c;
+//         cin >> a >> b >> c;
+//         a--;
+//         b--;
+
+//         E[a].push_back({b, c});
+//         E[b].push_back({a, c});
+//     }
+
+//     dfs(0);
+
+//     for (int i = 0; i < N; i++)
+//     {
+//         cout << ans[i] << endl;
+//     }
+
+//     return 0;
+// }
 
 // TLE,RE 自分で書いたコード
 
