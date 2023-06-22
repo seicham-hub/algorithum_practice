@@ -12,19 +12,42 @@ using ull = unsigned long long;
 
 int main()
 {
-    ull ans = 0;
-    int a;
 
+    ull ans = 0;
     rep(i, 64)
     {
+        int a;
         cin >> a;
-        ans += (1ull << i) * a;
+
+        if (a == 1)
+            ans += 1ull << i;
     }
 
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ull = unsigned long long;
+
+// int main()
+// {
+//     ull ans = 0;
+//     int a;
+
+//     rep(i, 64)
+//     {
+//         cin >> a;
+//         ans += (1ull << i) * a;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
