@@ -2,7 +2,7 @@
 // 0619もう一度
 // 計算量はdp[i][p] O(N×2)
 // 0620もう一度
-// 0622もう一度
+// 0622もう一度 ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,12 +28,15 @@ int main()
     ll INF = 1e18;
 
     vector<vector<ll>> dp(n + 1, vector<ll>(2, -INF));
+
     dp[0][0] = 0;
 
     rep(i, n)
     {
-        dp[i + 1][0] = dp[i][0];
-        dp[i + 1][1] = dp[i][1];
+
+        chmax(dp[i + 1][0], dp[i][0]);
+        chmax(dp[i + 1][1], dp[i][1]);
+
         if (x[i] == 0)
         {
             chmax(dp[i + 1][0], dp[i][0] + y[i]);
@@ -49,6 +52,52 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// void chmax(ll &x, ll y)
+// {
+//     x = max(x, y);
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> x(n), y(n);
+//     rep(i, n)
+//     {
+//         cin >> x[i] >> y[i];
+//     }
+
+//     ll INF = 1e18;
+
+//     vector<vector<ll>> dp(n + 1, vector<ll>(2, -INF));
+//     dp[0][0] = 0;
+
+//     rep(i, n)
+//     {
+//         dp[i + 1][0] = dp[i][0];
+//         dp[i + 1][1] = dp[i][1];
+//         if (x[i] == 0)
+//         {
+//             chmax(dp[i + 1][0], dp[i][0] + y[i]);
+//             chmax(dp[i + 1][0], dp[i][1] + y[i]);
+//         }
+//         else
+//         {
+//             chmax(dp[i + 1][1], dp[i][0] + y[i]);
+//         }
+//     }
+
+//     cout << max(dp[n][0], dp[n][1]) << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
