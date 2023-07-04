@@ -1,7 +1,7 @@
 // https://atcoder.jp/contests/abc306/tasks/abc306_b
 
 // 0620もう一度
-// 0621もう一度
+// 0621もう一度 ok
 
 // long long型は64bit→2^63-1までしか表現できない　先頭bitが符号を表す為
 
