@@ -1,6 +1,6 @@
 // https://atcoder.jp/contests/abc308/tasks/abc308_d
 // 0704もう一度
-// 0706もう一度
+// 0706もう一度 ok
 
 /*
 0706やり直し分
@@ -12,23 +12,20 @@ using namespace std;
 
 int main()
 {
-
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {1, 0, -1, 0};
-
     int h, w;
     cin >> h >> w;
     vector<string> s(h);
-    rep(i, h)
-    {
-        cin >> s[i];
-    }
-    map<char, char> su;
-    su['s'] = 'n';
-    su['n'] = 'u';
-    su['u'] = 'k';
-    su['k'] = 'e';
-    su['e'] = 's';
+
+    rep(i, h) cin >> s[i];
+
+    map<char, char> smp;
+    smp['s'] = 'n';
+    smp['n'] = 'u';
+    smp['u'] = 'k';
+    smp['k'] = 'e';
+    smp['e'] = 's';
 
     queue<pair<int, int>> q;
     q.push({0, 0});
@@ -42,7 +39,6 @@ int main()
 
         if (x == h - 1 && y == w - 1)
         {
-
             cout << "Yes" << endl;
             return 0;
         }
@@ -52,18 +48,76 @@ int main()
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            if (nx >= 0 && nx < h && ny >= 0 && ny < w && !seen[nx][ny] && s[nx][ny] == su[s[x][y]])
+            if (nx >= 0 && nx < h && ny >= 0 && ny < w && !seen[nx][ny] && smp[s[x][y]] == s[nx][ny])
             {
                 seen[nx][ny] = true;
                 q.push({nx, ny});
             }
         }
     }
-
     cout << "No" << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+
+//     int dx[4] = {0, 1, 0, -1};
+//     int dy[4] = {1, 0, -1, 0};
+
+//     int h, w;
+//     cin >> h >> w;
+//     vector<string> s(h);
+//     rep(i, h)
+//     {
+//         cin >> s[i];
+//     }
+//     map<char, char> su;
+//     su['s'] = 'n';
+//     su['n'] = 'u';
+//     su['u'] = 'k';
+//     su['k'] = 'e';
+//     su['e'] = 's';
+
+//     queue<pair<int, int>> q;
+//     q.push({0, 0});
+//     vector<vector<bool>> seen(h, vector<bool>(w, false));
+//     seen[0][0] = true;
+
+//     while (!q.empty())
+//     {
+//         auto [x, y] = q.front();
+//         q.pop();
+
+//         if (x == h - 1 && y == w - 1)
+//         {
+
+//             cout << "Yes" << endl;
+//             return 0;
+//         }
+
+//         rep(i, 4)
+//         {
+//             int nx = x + dx[i];
+//             int ny = y + dy[i];
+
+//             if (nx >= 0 && nx < h && ny >= 0 && ny < w && !seen[nx][ny] && s[nx][ny] == su[s[x][y]])
+//             {
+//                 seen[nx][ny] = true;
+//                 q.push({nx, ny});
+//             }
+//         }
+//     }
+
+//     cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

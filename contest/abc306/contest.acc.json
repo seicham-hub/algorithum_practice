@@ -64,7 +64,12 @@
       "id": "abc306_f",
       "label": "F",
       "title": "Merge Sets",
-      "url": "https://atcoder.jp/contests/abc306/tasks/abc306_f"
+      "url": "https://atcoder.jp/contests/abc306/tasks/abc306_f",
+      "directory": {
+        "path": "f",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "abc306_g",

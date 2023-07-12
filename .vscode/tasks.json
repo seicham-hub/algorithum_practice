@@ -45,6 +45,8 @@
       "command": "g++",
       "args": [
         // "-std=gnu++1y",
+        "-I",
+        "${env:HOME}/atCoder/ac-library",
         "-g",
         "-O0",
         "${file}",
