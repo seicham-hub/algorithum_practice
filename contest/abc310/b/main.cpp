@@ -5,6 +5,10 @@
 
 // 0716もう一度
 
+/*
+7/18やり直し分
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
@@ -16,6 +20,7 @@ int main()
     cin >> n >> m;
 
     vector<int> p(n), c(n);
+
     vector<multiset<int>> f(n);
 
     rep(i, n)
@@ -23,36 +28,90 @@ int main()
         cin >> p[i] >> c[i];
         rep(j, c[i])
         {
-            int temp;
-            cin >> temp;
-            f[i].insert(temp);
+            int tmp;
+            cin >> tmp;
+            f[i].insert(tmp);
         }
     }
 
-    bool ans = false;
     rep(i, n)
     {
 
         rep(j, n)
         {
-            bool haveAllFunc = true;
-
-            for (auto x : f[i])
+            bool isAllFunc = true;
+            for (auto &fi : f[i])
             {
-                if (f[j].find(x) == f[j].end())
+                if (f[j].find(fi) == f[j].end())
                 {
-                    haveAllFunc = false;
+                    isAllFunc = false;
                 }
             }
 
-            ans = ans || p[i] >= p[j] && haveAllFunc && (p[i] > p[j] || f[j].size() > f[i].size());
+            if (p[i] >= p[j] && isAllFunc && (p[i] > p[j] || f[j].size() > f[i].size()))
+            {
+                cout << "Yes" << endl;
+                return 0;
+            }
         }
     }
 
-    cout << (ans ? "Yes" : "No") << endl;
+    cout << "No" << endl;
 
     return 0;
 }
+
+/*
+解答のコード
+*/
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<int> p(n), c(n);
+//     vector<multiset<int>> f(n);
+
+//     rep(i, n)
+//     {
+//         cin >> p[i] >> c[i];
+//         rep(j, c[i])
+//         {
+//             int temp;
+//             cin >> temp;
+//             f[i].insert(temp);
+//         }
+//     }
+
+//     bool ans = false;
+//     rep(i, n)
+//     {
+
+//         rep(j, n)
+//         {
+//             bool haveAllFunc = true;
+
+//             for (auto x : f[i])
+//             {
+//                 if (f[j].find(x) == f[j].end())
+//                 {
+//                     haveAllFunc = false;
+//                 }
+//             }
+
+//             ans = ans || p[i] >= p[j] && haveAllFunc && (p[i] > p[j] || f[j].size() > f[i].size());
+//         }
+//     }
+
+//     cout << (ans ? "Yes" : "No") << endl;
+
+//     return 0;
+// }
 
 /*
 解答コード

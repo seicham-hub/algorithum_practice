@@ -1,64 +1,128 @@
 // https://atcoder.jp/contests/abc310/tasks/abc310_d
 // チームに分ける方法が分からなかった... →全部分けてみて、チーム数が園可錫なるときを考えればよい
 // reserveが必要な理由が分からない..
+// 0718もう一度
+// 0725もう一度
 
 /*
-解答のコード
+7/19やり直し分
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-int n, t, m;
-vector<int> hate, teams;
+int n, t, m, ans = 0;
+vector<int> team;
+map<int, int> hate;
 
-int dfs(int now)
+void dfs(int now)
 {
-    if (now == n)
-        return teams.size() == t;
 
-    int ans = 0;
-
-    for (auto &&team : teams)
+    if (team.size() == t && now == n)
     {
-        // チームにnow番目の選手と相性の悪い選手がいなければ
-        if (!(team & hate[now]))
+        ans++;
+        return;
+    }
+
+    if (now > n - 1)
+        return;
+
+    rep(i, team.size())
+    {
+        if (!(team[i] & hate[now]))
         {
-            team |= 1 << now;
-            ans += dfs(now + 1);
-            team ^= 1 << now;
+            team[i] |= 1 << now;
+            dfs(now + 1);
+            team[i] ^= 1 << now;
         }
     }
 
-    // チーム数に余裕があるとき、新しいチームを作る
-    if (teams.size() < t)
+    if (team.size() < t)
     {
-        teams.emplace_back(1 << now);
-        ans += dfs(now + 1);
-        teams.pop_back();
+        team.emplace_back(1 << now);
+        dfs(now + 1);
+        team.pop_back();
     }
-
-    return ans;
 }
 
 int main()
 {
+
     cin >> n >> t >> m;
 
-    hate.resize(n);
     rep(i, m)
     {
         int a, b;
         cin >> a >> b;
-        hate[--b] |= 1 << --a;
+        hate[--a] |= 1 << --b;
+        hate[b] |= 1 << a;
     }
 
-    teams.reserve(t);
-    cout << dfs(0) << endl;
+    dfs(0);
+
+    cout << ans << endl;
 
     return 0;
 }
+
+/*
+解答のコード
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int n, t, m;
+// vector<int> hate, teams;
+
+// int dfs(int now)
+// {
+//     if (now == n)
+//         return teams.size() == t;
+
+//     int ans = 0;
+
+//     for (auto &&team : teams)
+//     {
+//         // チームにnow番目の選手と相性の悪い選手がいなければ
+//         if (!(team & hate[now]))
+//         {
+//             team |= 1 << now;
+//             ans += dfs(now + 1);
+//             team ^= 1 << now;
+//         }
+//     }
+
+//     // チーム数に余裕があるとき、新しいチームを作る
+//     if (teams.size() < t)
+//     {
+//         teams.emplace_back(1 << now);
+//         ans += dfs(now + 1);
+//         teams.pop_back();
+//     }
+
+//     return ans;
+// }
+
+// int main()
+// {
+//     cin >> n >> t >> m;
+
+//     hate.resize(n);
+//     rep(i, m)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+//         hate[--b] |= 1 << --a;
+//     }
+
+//     teams.reserve(t);
+//     cout << dfs(0) << endl;
+
+//     return 0;
+// }
 
 // #include <iostream>
 // #include <vector>
