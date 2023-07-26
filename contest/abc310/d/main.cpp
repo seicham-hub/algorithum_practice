@@ -2,10 +2,10 @@
 // チームに分ける方法が分からなかった... →全部分けてみて、チーム数が園可錫なるときを考えればよい
 // reserveが必要な理由が分からない..
 // 0718もう一度
-// 0725もう一度
+// 0725もう一度 ok
 
 /*
-7/19やり直し分
+0726やり直し分
 */
 
 #include <bits/stdc++.h>
@@ -13,20 +13,20 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
 int n, t, m, ans = 0;
-vector<int> team;
 map<int, int> hate;
+vector<int> team;
 
 void dfs(int now)
 {
-
-    if (team.size() == t && now == n)
+    if (now == n && team.size() == t)
     {
         ans++;
         return;
     }
-
     if (now > n - 1)
+    {
         return;
+    }
 
     rep(i, team.size())
     {
@@ -55,7 +55,10 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        hate[--a] |= 1 << --b;
+        a--;
+        b--;
+
+        hate[a] |= 1 << b;
         hate[b] |= 1 << a;
     }
 
@@ -65,6 +68,68 @@ int main()
 
     return 0;
 }
+
+/*
+7/19やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int n, t, m, ans = 0;
+// vector<int> team;
+// map<int, int> hate;
+
+// void dfs(int now)
+// {
+
+//     if (team.size() == t && now == n)
+//     {
+//         ans++;
+//         return;
+//     }
+
+//     if (now > n - 1)
+//         return;
+
+//     rep(i, team.size())
+//     {
+//         if (!(team[i] & hate[now]))
+//         {
+//             team[i] |= 1 << now;
+//             dfs(now + 1);
+//             team[i] ^= 1 << now;
+//         }
+//     }
+
+//     if (team.size() < t)
+//     {
+//         team.emplace_back(1 << now);
+//         dfs(now + 1);
+//         team.pop_back();
+//     }
+// }
+
+// int main()
+// {
+
+//     cin >> n >> t >> m;
+
+//     rep(i, m)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+//         hate[--a] |= 1 << --b;
+//         hate[b] |= 1 << a;
+//     }
+
+//     dfs(0);
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 /*
 解答のコード
