@@ -3,10 +3,10 @@
 // 解けなかった... なぜ下記で間違ってるのか分からない →間隔に頼りすぎた
 
 // 0730もう一度
-// 0801もう一度
+// 0801もう一度 ok
 
 /*
-7/30やり直し分
+8/2やり直し分
 */
 
 #include <bits/stdc++.h>
@@ -18,13 +18,13 @@ vector<int> a, b;
 
 bool check(int mid)
 {
-    auto sIt = upper_bound(a.begin(), a.end(), mid);
-    int sellP = sIt - a.begin();
+    auto buyI = upper_bound(a.begin(), a.end(), mid);
+    int buyP = buyI - a.begin();
 
-    auto bIt = lower_bound(b.begin(), b.end(), mid);
-    int buyP = m - (bIt - b.begin());
+    auto selI = lower_bound(b.begin(), b.end(), mid);
+    int selP = m - (selI - b.begin());
 
-    return sellP >= buyP;
+    return (buyP - selP) >= 0;
 }
 
 int main()
@@ -46,7 +46,8 @@ int main()
 
     while (abs(right - left) > 1)
     {
-        int mid = (left + right) / 2;
+        int mid = (right + left) / 2;
+
         if (check(mid))
             right = mid;
         else
@@ -57,6 +58,59 @@ int main()
 
     return 0;
 }
+
+/*
+7/30やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int n, m;
+// vector<int> a, b;
+
+// bool check(int mid)
+// {
+//     auto sIt = upper_bound(a.begin(), a.end(), mid);
+//     int sellP = sIt - a.begin();
+
+//     auto bIt = lower_bound(b.begin(), b.end(), mid);
+//     int buyP = m - (bIt - b.begin());
+
+//     return sellP >= buyP;
+// }
+
+// int main()
+// {
+
+//     cin >> n >> m;
+
+//     a.resize(n);
+//     b.resize(m);
+
+//     rep(i, n) cin >> a[i];
+//     rep(i, m) cin >> b[i];
+
+//     sort(a.begin(), a.end());
+//     sort(b.begin(), b.end());
+
+//     int left = 0;
+//     int right = 1e9 + 1;
+
+//     while (abs(right - left) > 1)
+//     {
+//         int mid = (left + right) / 2;
+//         if (check(mid))
+//             right = mid;
+//         else
+//             left = mid;
+//     }
+
+//     cout << right << endl;
+
+//     return 0;
+// }
 
 /*
 解答のコード
