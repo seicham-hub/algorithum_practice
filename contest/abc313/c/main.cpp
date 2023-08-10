@@ -1,6 +1,11 @@
 // https://atcoder.jp/contests/abc313/tasks/abc313_c
 // 最大1e9差なので普通にやってたらどんなに頑張っても終わらないよね
 // 0806もう一度
+// 0809もう一度
+
+/*
+8/10やり直し分
+*/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,32 +16,25 @@ int main()
 {
     int n;
     cin >> n;
+
     vector<int> a(n);
-    vector<int> b(n);
-
-    long long sum = 0;
-
+    ll sum = 0;
     rep(i, n)
     {
         cin >> a[i];
         sum += a[i];
     }
 
-    int ave = sum / n;
-    int remain = sum % n;
-
     sort(a.begin(), a.end());
 
-    rep(i, n)
+    vector<int> b(n, sum / n);
+
+    for (int i = 0; i < sum % n; i++)
     {
-        if (i <= n - 1 - remain)
-            b[i] = ave;
-        else
-            b[i] = ave + 1;
+        b[n - 1 - i]++;
     }
 
     sum = 0;
-
     rep(i, n)
     {
         sum += abs(a[i] - b[i]);
@@ -46,6 +44,51 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> a(n);
+//     vector<int> b(n);
+
+//     long long sum = 0;
+
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         sum += a[i];
+//     }
+
+//     int ave = sum / n;
+//     int remain = sum % n;
+
+//     sort(a.begin(), a.end());
+
+//     rep(i, n)
+//     {
+//         if (i <= n - 1 - remain)
+//             b[i] = ave;
+//         else
+//             b[i] = ave + 1;
+//     }
+
+//     sum = 0;
+
+//     rep(i, n)
+//     {
+//         sum += abs(a[i] - b[i]);
+//     }
+
+//     cout << sum / 2 << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
