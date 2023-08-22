@@ -1,5 +1,5 @@
 // // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2891
-// // サイクルに含まれる頂点は一度もシンクになることはあり得ない
+// // サイクルに含まれる頂点は一度もシンクになることはあり得ない→シンクになってない頂点はサイクルに含まれる
 
 // #include <bits/stdc++.h>
 // using namespace std;
