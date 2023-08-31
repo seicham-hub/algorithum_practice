@@ -1,7 +1,7 @@
 // https://atcoder.jp/contests/abc314/tasks/abc314_d
 // 毎回forで回してたら終わらない..→最後にまとめてできないか？
 // 0822もう一度
-// 0825もう一度
+// 0825もう一度 ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,49 +11,93 @@ int main()
 {
     int n, q;
     string s;
-
     cin >> n >> s >> q;
 
-    vector<pair<int, char>> personal(n); // personal[sの何文字目か] = {時刻,変更後の文字}
+    // i番目の文字 時刻、その時の文字
+    vector<pair<int, char>> ans(n);
 
-    rep(i, n) personal[i] = {0, s[i]};
+    rep(i, n) ans[i] = {0, s[i]};
 
-    pair<int, int> full = {-100, 5}; // {時刻、大文字か小文字か(2,3)}
+    // 時刻、low,upperか
+    pair<int, int> all = {-1, 4};
 
     rep(i, q)
     {
-
         int t, x;
         char c;
         cin >> t >> x >> c;
 
         if (t == 1)
-            personal[x - 1] = {i, c};
-        else if (t == 2)
-            full = {i, t};
+            ans[x - 1] = {i, c};
         else
-            full = {i, t};
+            all = {i, t};
     }
 
-    for (auto p : personal)
+    for (auto [time, st] : ans)
     {
-        int time = p.first;
-        char mozi = p.second;
-
-        int ftime = full.first;
-        int to = full.second;
-
-        if (ftime < time)
-            cout << mozi;
-        else if (to == 2)
-            cout << (char)tolower(mozi);
-        else
-            cout << (char)toupper(mozi);
+        if (time > all.first)
+            cout << (char)st;
+        else if (all.second == 2)
+            cout << (char)tolower(st);
+        else if (all.second == 3)
+            cout << (char)toupper(st);
     }
     cout << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, q;
+//     string s;
+
+//     cin >> n >> s >> q;
+
+//     vector<pair<int, char>> personal(n); // personal[sの何文字目か] = {時刻,変更後の文字}
+
+//     rep(i, n) personal[i] = {0, s[i]};
+
+//     pair<int, int> full = {-100, 5}; // {時刻、大文字か小文字か(2,3)}
+
+//     rep(i, q)
+//     {
+
+//         int t, x;
+//         char c;
+//         cin >> t >> x >> c;
+
+//         if (t == 1)
+//             personal[x - 1] = {i, c};
+//         else if (t == 2)
+//             full = {i, t};
+//         else
+//             full = {i, t};
+//     }
+
+//     for (auto p : personal)
+//     {
+//         int time = p.first;
+//         char mozi = p.second;
+
+//         int ftime = full.first;
+//         int to = full.second;
+
+//         if (ftime < time)
+//             cout << mozi;
+//         else if (to == 2)
+//             cout << (char)tolower(mozi);
+//         else
+//             cout << (char)toupper(mozi);
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
