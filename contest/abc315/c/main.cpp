@@ -4,7 +4,7 @@
 
 // 0823もう一度
 // 0829もう一度
-// 0831もう一度
+// 0831もう一度 ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,13 +15,12 @@ int main()
     int n;
     cin >> n;
 
-    vector<vector<int>> fs(n + 1, vector<int>(1, 0));
+    vector<vector<int>> fs(n + 1);
 
     rep(i, n)
     {
         int f, s;
         cin >> f >> s;
-
         fs[f].push_back(s);
     }
 
@@ -35,16 +34,58 @@ int main()
     reverse(fs.begin(), fs.end());
 
     int ans = 0;
-
     if (fs[0].size() >= 2)
+    {
         ans = fs[0][0] + fs[0][1] / 2;
+    }
 
-    ans = max(ans, fs[0][0] + fs[1][0]);
-
+    if (fs[0].size() >= 1 && fs[1].size() >= 1)
+    {
+        ans = max(ans, fs[0][0] + fs[1][0]);
+    }
     cout << ans << endl;
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<vector<int>> fs(n + 1, vector<int>(1, 0));
+
+//     rep(i, n)
+//     {
+//         int f, s;
+//         cin >> f >> s;
+
+//         fs[f].push_back(s);
+//     }
+
+//     rep(i, n + 1)
+//     {
+//         sort(fs[i].begin(), fs[i].end());
+//         reverse(fs[i].begin(), fs[i].end());
+//     }
+
+//     sort(fs.begin(), fs.end());
+//     reverse(fs.begin(), fs.end());
+
+//     int ans = 0;
+
+//     if (fs[0].size() >= 2)
+//         ans = fs[0][0] + fs[0][1] / 2;
+
+//     ans = max(ans, fs[0][0] + fs[1][0]);
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
