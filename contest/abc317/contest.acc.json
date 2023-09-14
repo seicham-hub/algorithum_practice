@@ -42,7 +42,12 @@
       "id": "abc317_d",
       "label": "D",
       "title": "President",
-      "url": "https://atcoder.jp/contests/abc317/tasks/abc317_d"
+      "url": "https://atcoder.jp/contests/abc317/tasks/abc317_d",
+      "directory": {
+        "path": "d",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "abc317_e",
