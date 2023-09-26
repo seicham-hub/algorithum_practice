@@ -12,11 +12,14 @@ int main()
     int n;
     cin >> n;
 
-    vector<vector<int>> d(n - 1, vector<int>(n - 1));
+    vector<vector<int>> d(n, vector<int>(n));
 
     rep(i, n - 1)
     {
-        rep(j, n - i - 1) cin >> d[i][j];
+        rep(j, n - i - 1)
+        {
+            cin >> d[i][j + i + 1];
+        }
     }
 
     // dp[b] bの立っているビット＝選んでいる端点としたときの重みの最大値
@@ -31,9 +34,9 @@ int main()
         {
             for (int j = i + 1; j < n; j++)
             {
-                if (!(b & i << 1) && !(b & j << 1))
+                if (!(b & (1 << i)) && !(b & (1 << j)))
                 {
-                    int next = (b | i << 1) | j << 1;
+                    int next = b | (1 << i) | (1 << j);
                     dp[next] = max(dp[next], dp[b] + d[i][j]);
                 }
             }

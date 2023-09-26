@@ -1,10 +1,10 @@
 // https://atcoder.jp/contests/abc313/tasks/abc313_c
 // 最大1e9差なので普通にやってたらどんなに頑張っても終わらないよね
 // 0806もう一度
-// 0809もう一度
+// 0809もう一度 ok
 
 /*
-8/10やり直し分
+9/26 やり直し分
 */
 
 #include <bits/stdc++.h>
@@ -18,7 +18,9 @@ int main()
     cin >> n;
 
     vector<int> a(n);
+
     ll sum = 0;
+
     rep(i, n)
     {
         cin >> a[i];
@@ -27,23 +29,68 @@ int main()
 
     sort(a.begin(), a.end());
 
-    vector<int> b(n, sum / n);
+    int base = sum / n;
+    int plus = sum % n;
 
-    for (int i = 0; i < sum % n; i++)
+    vector<int> com(n, base);
+    rep(i, plus)
     {
-        b[n - 1 - i]++;
+        com[n - 1 - i] += 1;
     }
 
-    sum = 0;
+    ll ans = 0;
+
     rep(i, n)
     {
-        sum += abs(a[i] - b[i]);
+        ans += abs(a[i] - com[i]);
     }
 
-    cout << sum / 2 << endl;
+    cout << ans / 2 << endl;
 
     return 0;
 }
+
+// /*
+// 8/10やり直し分
+// */
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+//     ll sum = 0;
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         sum += a[i];
+//     }
+
+//     sort(a.begin(), a.end());
+
+//     vector<int> b(n, sum / n);
+
+//     for (int i = 0; i < sum % n; i++)
+//     {
+//         b[n - 1 - i]++;
+//     }
+
+//     sum = 0;
+//     rep(i, n)
+//     {
+//         sum += abs(a[i] - b[i]);
+//     }
+
+//     cout << sum / 2 << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
