@@ -3,6 +3,7 @@
 // 分からなかった
 // 0814もう一度
 // 0928もう一度
+// 1002もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,16 +14,21 @@ int main()
 {
     int n;
     cin >> n;
-    vector<vector<int>> d(n - 1, vector<int>(n - 1));
+    vector<vector<int>> d(n - 1, vector<int>(n));
 
     rep(i, n - 1)
     {
-        for (int j = i + 1; j < n; j++)
+        rep(j, n - i - 1)
         {
-            cin >> d[i][j];
+            cin >> d[i][j + i + 1];
         }
     }
-    // dp[i] i(bit)選んでいる時の重みの総和の最大値
+
+    // rep(i, n - 1)
+    // {
+    //     for (int j = i + 1; j <= n - 1; j++)
+    //         cin >> d[i][j];
+    // }
 
     vector<long long> dp(1 << n);
     dp[0] = 0ll;
@@ -31,10 +37,14 @@ int main()
     {
         rep(j, n)
         {
-            for (int k = j + 1; j < n; j++)
+            for (int k = j + 1; k < n; k++)
             {
+
                 if (!(i & (1 << j)) && !(i & (1 << k)))
-                    dp[i | (1 << j) | (1 << k)] = max(dp[i | (1 << j) | (1 << k)], dp[i] + d[i][k]);
+                {
+                    int next = i | (1 << j) | (1 << k);
+                    dp[next] = max(dp[next], dp[i] + d[j][k]);
+                }
             }
         }
     }
