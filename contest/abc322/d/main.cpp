@@ -2,7 +2,180 @@
 
 // 方針は思いついたが、保存するデータ構造が分からなかった
 // 1006もう一度
-// 1027もう一度 あり円時間かかりすぎ
+// 1027もう一度 ありえん時間かかりすぎ ok
+
+#include <bits/stdc++.h>
+using namespace std;
+#define rep(i, n) for (int i = 0; i < n; ++i)
+
+void Rotate(vector<string> &p)
+{
+    vector<string> w(4, "....");
+
+    rep(i, 4) rep(j, 4)
+    {
+        w[j][3 - i] = p[i][j];
+    }
+
+    p = w;
+    return;
+}
+
+bool can_put(int di, int dj, vector<vector<int>> &exist, vector<string> p)
+{
+    rep(i, 4) rep(j, 4)
+    {
+        if (p[i][j] == '#')
+        {
+            int ni = i + di;
+            int nj = j + dj;
+
+            if (!(ni >= 0 && ni < 4 && nj >= 0 && nj < 4))
+                return false;
+            if (exist[ni][nj])
+                return false;
+            exist[ni][nj] = 1;
+        }
+    }
+    return true;
+}
+
+void dfs(int cnt, vector<vector<int>> exist, const vector<vector<string>> &ps)
+{
+    if (cnt == 3)
+    {
+        rep(i, 4) rep(j, 4)
+        {
+            if (!exist[i][j])
+                return;
+        }
+        cout << "Yes" << endl;
+        exit(0);
+    }
+
+    for (int di = -3; di <= 3; di++)
+    {
+        for (int dj = -3; dj <= 3; dj++)
+        {
+            auto ex2 = exist;
+            if (can_put(di, dj, ex2, ps[cnt]))
+            {
+                dfs(cnt + 1, ex2, ps);
+            }
+        }
+    }
+}
+
+int main()
+{
+
+    vector<vector<string>> ps(3);
+
+    rep(i, 3)
+    {
+        ps[i].resize(4);
+        rep(j, 4)
+        {
+            cin >> ps[i][j];
+        }
+    }
+
+    rep(i, 4)
+    {
+        rep(j, 4)
+        {
+            vector<vector<int>> exist(4, vector<int>(4, 0));
+            dfs(0, exist, ps);
+            Rotate(ps[1]);
+        }
+        Rotate(ps[2]);
+    }
+    cout << "No" << endl;
+    return 0;
+}
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// void Rotate(vector<string> &v)
+// {
+//     vector<string> w = v;
+//     // 左に90土回転
+//     rep(i, 4) rep(j, 4)
+//     {
+//         w[3 - j][i] = v[i][j];
+//     }
+// }
+
+// bool can_put(vector<vector<int>> &exist, const vector<string> &p, int di, int dj)
+// {
+//     rep(i, 4) rep(j, 4)
+//     {
+//         if (p[i][j] == '#')
+//         {
+//             int ni = i + di;
+//             int nj = j + dj;
+//             if (!(0 <= ni && ni < 4 && 0 <= nj && nj < 4))
+//                 return false;
+//             if (exist[ni][nj] = '#')
+//                 return false;
+//             exist[ni][nj] = 1;
+//         }
+//     }
+//     return true;
+// }
+
+// void dfs(int i, const vector<vector<int>> &exist, const vector<vector<string>> &ps)
+// {
+//     if (i == 3)
+//     {
+//         int ok = 1;
+//         rep(i, 4) rep(j, 4) ok &= exist[i][j];
+//         if (ok)
+//         {
+//             cout << "Yes" << endl;
+//             exit(0);
+//         }
+//     }
+
+//     for (int di = -3; di <= 3; di++)
+//     {
+//         for (int dj = -3; dj <= 3; dj++)
+//         {
+//             auto ex2 = exist;
+//             bool flag = can_put(ex2, ps[i], di, dj);
+//             if (flag)
+//                 dfs(i + 1, ex2, ps);
+//         }
+//     }
+// }
+
+// int main()
+// {
+//     vector<vector<string>> ps(3);
+//     rep(i, 3)
+//     {
+//         ps[i].resize(4);
+//         for (auto &s : ps[i])
+//             cin >> s;
+//     }
+
+//     rep(i, 4)
+//     {
+//         rep(j, 4)
+//         {
+//             vector<vector<int>> exist(4, vector<int>(4, 0));
+//             dfs(0, exist, ps);
+//             Rotate(ps[2]);
+//         }
+//         Rotate(ps[3]);
+//     }
+
+//     cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
