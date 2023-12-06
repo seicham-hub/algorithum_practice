@@ -1,6 +1,6 @@
 // https://atcoder.jp/contests/abc323/tasks/abc323_d
 // 分からなかった
-// 11/30もう一度
+// 11/30もう一度 ok
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,8 +26,8 @@ int main()
 
     while (itr != mp.end())
     {
-        int x = (*itr).first;
-        int y = (*itr).second;
+        long long x = (*itr).first;
+        long long y = (*itr).second;
 
         if (y > 1)
             mp[2 * x] += y / 2;
