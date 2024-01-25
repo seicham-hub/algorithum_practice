@@ -53,7 +53,12 @@
       "id": "abc324_e",
       "label": "E",
       "title": "Joint Two Strings",
-      "url": "https://atcoder.jp/contests/abc324/tasks/abc324_e"
+      "url": "https://atcoder.jp/contests/abc324/tasks/abc324_e",
+      "directory": {
+        "path": "e",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "abc324_f",
