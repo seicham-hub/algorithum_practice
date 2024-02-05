@@ -1,24 +1,24 @@
 // https://atcoder.jp/contests/abc324/tasks/abc324_c
 // 0124もう一度 ok
 
-// 2024 1/24やり直し分
+// 0131やり直し分
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
 bool f(string &s, string &t)
 {
-    if (s.size() != t.size() - 1)
+    if (s.size() - t.size() != 1)
         return false;
 
-    int ti = 0;
-    rep(i, s.size())
+    int si = 0;
+    rep(i, t.size())
     {
-        while (ti < t.size() && t[ti] != s[i])
-            ti++;
-        if (ti == t.size())
+        while (si < s.size() && s[si] != t[i])
+            si++;
+        if (si == s.size())
             return false;
-        ti++;
+        si++;
     }
     return true;
 }
@@ -27,7 +27,9 @@ int ham(string &s, string &t)
 {
     if (s.size() != t.size())
         return 999;
+
     int res = 0;
+
     rep(i, s.size())
     {
         if (s[i] != t[i])
@@ -40,8 +42,10 @@ int main()
 {
     int n;
     string t;
-    cin >> n >> t;
+
     vector<int> ans;
+
+    cin >> n >> t;
 
     rep(i, n)
     {
@@ -52,7 +56,6 @@ int main()
 
         if (s.size() + 1 >= t.size())
         {
-
             if (s == t)
                 ok = true;
             if (f(s, t))
@@ -70,9 +73,81 @@ int main()
     cout << ans.size() << endl;
     for (int a : ans)
         cout << a << " ";
-
     return 0;
 }
+
+// 2024 1/24やり直し分
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// bool f(string &s, string &t)
+// {
+//     if (s.size() != t.size() - 1)
+//         return false;
+
+//     int ti = 0;
+//     rep(i, s.size())
+//     {
+//         while (ti < t.size() && t[ti] != s[i])
+//             ti++;
+//         if (ti == t.size())
+//             return false;
+//         ti++;
+//     }
+//     return true;
+// }
+
+// int ham(string &s, string &t)
+// {
+//     if (s.size() != t.size())
+//         return 999;
+//     int res = 0;
+//     rep(i, s.size())
+//     {
+//         if (s[i] != t[i])
+//             res++;
+//     }
+//     return res;
+// }
+
+// int main()
+// {
+//     int n;
+//     string t;
+//     cin >> n >> t;
+//     vector<int> ans;
+
+//     rep(i, n)
+//     {
+//         string s;
+//         cin >> s;
+
+//         bool ok = false;
+
+//         if (s.size() + 1 >= t.size())
+//         {
+
+//             if (s == t)
+//                 ok = true;
+//             if (f(s, t))
+//                 ok = true;
+//             if (f(t, s))
+//                 ok = true;
+//             if (ham(s, t) <= 1)
+//                 ok = true;
+//         }
+
+//         if (ok)
+//             ans.push_back(i + 1);
+//     }
+
+//     cout << ans.size() << endl;
+//     for (int a : ans)
+//         cout << a << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

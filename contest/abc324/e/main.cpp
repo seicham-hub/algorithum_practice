@@ -2,25 +2,26 @@
 // 0104もう一度
 // 0112もう一度
 
-// 0112やり直し分
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 using ll = long long;
 
-ll calc(const string &s, const string &t)
+int calc(string &s, string &t)
 {
-
-    ll g = 0;
-
-    for (auto c : s)
+    int result = 0;
+    int si = 0;
+    for (char c : t)
     {
-        if (g >= (int)t.size())
+        while (si < s.size() && s[si] != c)
+            si++;
+        if (si == s.size())
             break;
-        if (c == t[g])
-            g++;
+        si++;
+        result++;
     }
-    return g;
+
+    return result;
 }
 
 int main()
@@ -29,35 +30,93 @@ int main()
     string t;
     cin >> n >> t;
 
-    ll a[500001], b[500001], c[500001];
-
     vector<string> s(n);
     rep(i, n) cin >> s[i];
 
-    rep(i, n) a[i] = calc(s[i], t);
-
-    reverse(t.begin(), t.end());
-    rep(i, n)
-    {
-        reverse(s[i].begin(), s[i].end());
-        b[i] = calc(s[i], t);
-        c[b[i]]++;
-    }
-
     ll ans = 0;
 
+    vector<int> l(n), r(n);
+    rep(_, 2)
+    {
+        rep(i, n)
+        {
+            l[i] = calc(s[i], t);
+        }
+        swap(l, r);
+        rep(i, n) reverse(s[i].begin(), s[i].end());
+        reverse(t.begin(), t.end());
+    }
+
+    // 部分文字列以上のrの個数を格納するvector
+    vector<int> more(t.size() + 1);
+
+    rep(i, n) for (int j = r[i]; j >= 0; j--) more[j]++;
+
     rep(i, n)
     {
-        ll l = (int)t.size() - a[i];
-        for (int j = l; j <= t.size(); j++)
-        {
-            ans += c[j];
-        }
+        ans += more[t.size() - l[i]];
     }
-    cout << ans << endl;
 
+    cout << ans << endl;
     return 0;
 }
+
+// 0112やり直し分
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// ll calc(const string &s, const string &t)
+// {
+
+//     ll g = 0;
+
+//     for (auto c : s)
+//     {
+//         if (g >= (int)t.size())
+//             break;
+//         if (c == t[g])
+//             g++;
+//     }
+//     return g;
+// }
+
+// int main()
+// {
+//     int n;
+//     string t;
+//     cin >> n >> t;
+
+//     ll a[500001], b[500001], c[500001];
+
+//     vector<string> s(n);
+//     rep(i, n) cin >> s[i];
+
+//     rep(i, n) a[i] = calc(s[i], t);
+
+//     reverse(t.begin(), t.end());
+//     rep(i, n)
+//     {
+//         reverse(s[i].begin(), s[i].end());
+//         b[i] = calc(s[i], t);
+//         c[b[i]]++;
+//     }
+
+//     ll ans = 0;
+
+//     rep(i, n)
+//     {
+//         ll l = (int)t.size() - a[i];
+//         for (int j = l; j <= t.size(); j++)
+//         {
+//             ans += c[j];
+//         }
+//     }
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分で書いたコード
 // #include <bits/stdc++.h>

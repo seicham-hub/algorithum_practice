@@ -1,7 +1,7 @@
 // https://atcoder.jp/contests/abc324/tasks/abc324_d
 // 0105もう一度
+// 0131もう一度
 
-// 解答のコード
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
@@ -10,28 +10,65 @@ using ll = long long;
 
 int main()
 {
-    int N;
-    string S;
-    cin >> N >> S;
+    int n;
+    string s;
 
-    sort(S.begin(), S.end());
+    cin >> n >> s;
 
-    long max_value = pow(10, N);
+    vector<int> sc(10);
+    for (char c : s)
+        sc[c - '0']++;
 
-    int ans = 0;
-    for (long i = 0; i * i < max_value; i++)
+    ll ans = 0;
+
+    for (ll x = 0;; x++)
     {
-        string T = to_string(i * i);
-        T.resize(N, '0');
-        sort(T.begin(), T.end());
-        if (S == T)
+        string t = to_string(x * x);
+        if (t.size() > s.size())
+            break;
+        vector<int> tc(10);
+        for (char c : t)
+            tc[c - '0']++;
+        tc[0] += s.size() - t.size();
+
+        if (tc == sc)
             ans++;
     }
-
     cout << ans << endl;
-
     return 0;
 }
+
+// 解答のコード
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// using ll = long long;
+
+// int main()
+// {
+//     int N;
+//     string S;
+//     cin >> N >> S;
+
+//     sort(S.begin(), S.end());
+
+//     long max_value = pow(10, N);
+
+//     int ans = 0;
+//     for (long i = 0; i * i < max_value; i++)
+//     {
+//         string T = to_string(i * i);
+//         T.resize(N, '0');
+//         sort(T.begin(), T.end());
+//         if (S == T)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分のコード　桁数をそろえる必要があることに気づきにくい
 // #include <bits/stdc++.h>

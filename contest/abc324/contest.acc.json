@@ -64,7 +64,12 @@
       "id": "abc324_f",
       "label": "F",
       "title": "Beautiful Path",
-      "url": "https://atcoder.jp/contests/abc324/tasks/abc324_f"
+      "url": "https://atcoder.jp/contests/abc324/tasks/abc324_f",
+      "directory": {
+        "path": "f",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "abc324_g",
