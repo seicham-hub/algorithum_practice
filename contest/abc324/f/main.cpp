@@ -8,6 +8,11 @@ using namespace std;
 
 using ll = long long;
 
+void chmax(double &x, double y)
+{
+    x = max(x, y);
+}
+
 struct Edge
 {
     int to, b, c;
@@ -27,10 +32,38 @@ int main()
         g[u].push_back((Edge){v, b, c});
     }
 
-    // 二分探索の上限下限
-    double ac = 0, wa = 1e4;
+    auto f = [&](double x)
+    {
+        const double INF = 1e18;
+        vector<double> dp(n, -INF);
+        dp[0] = 0;
+        rep(i, n)
+        {
+            for (auto e : g[i])
+            {
+                chmax(dp[e.to], dp[i] + e.b - e.c * x);
+            }
+        }
+        return dp[n - 1] >= 0;
+    };
 
+    // 二分探索の上限下限
+    double ac = 0,
+           wa = 1e4;
     // 実数で二分探索するときは回数でやるのがおすすめ
+    // 誤差10^-9なので全体の長さを考えると、10^-13以下にしないといけない
+    // (1/2)^k =< (1/10)^13
+    rep(ti, 50)
+    {
+        double wj = (ac + wa) / 2;
+
+        if (f(wj))
+            ac = wj;
+        else
+            wa = wj;
+    }
+
+    printf("%.10f\n", ac);
 
     return 0;
 }
