@@ -1,7 +1,8 @@
 // https://atcoder.jp/contests/abc324/tasks/abc324_d
 // 0105もう一度
-// 0131もう一度
+// 0131もう一度 ok
 
+// 2024/2/7やり直し分
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
@@ -12,31 +13,70 @@ int main()
 {
     int n;
     string s;
-
     cin >> n >> s;
+    ll ans = 0;
 
     vector<int> sc(10);
-    for (char c : s)
-        sc[c - '0']++;
 
-    ll ans = 0;
+    rep(i, s.size())
+        sc[s[i] - '0']++;
 
     for (ll x = 0;; x++)
     {
         string t = to_string(x * x);
+
         if (t.size() > s.size())
             break;
+
         vector<int> tc(10);
-        for (char c : t)
-            tc[c - '0']++;
+        rep(i, t.size())
+            tc[t[i] - '0']++;
+
         tc[0] += s.size() - t.size();
 
-        if (tc == sc)
+        if (sc == tc)
             ans++;
     }
+
     cout << ans << endl;
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     string s;
+
+//     cin >> n >> s;
+
+//     vector<int> sc(10);
+//     for (char c : s)
+//         sc[c - '0']++;
+
+//     ll ans = 0;
+
+//     for (ll x = 0;; x++)
+//     {
+//         string t = to_string(x * x);
+//         if (t.size() > s.size())
+//             break;
+//         vector<int> tc(10);
+//         for (char c : t)
+//             tc[c - '0']++;
+//         tc[0] += s.size() - t.size();
+
+//         if (tc == sc)
+//             ans++;
+//     }
+//     cout << ans << endl;
+//     return 0;
+// }
 
 // 解答のコード
 // #include <bits/stdc++.h>

@@ -1,6 +1,77 @@
 // https://atcoder.jp/contests/abc324/tasks/abc324_e
 // 0104もう一度
 // 0112もう一度
+// 0207もう一度 提出で間違った
+
+#include <bits/stdc++.h>
+using namespace std;
+#define rep(i, n) for (int i = 0; i < n; ++i)
+using ll = long long;
+
+int calc(string &s, string &t)
+{
+    int res = 0;
+
+    int si = 0;
+    for (char tc : t)
+    {
+        while (si < s.size() && s[si] != tc)
+            si++;
+
+        if (si == s.size())
+            break;
+        // siを+しなかった
+        si++;
+        res++;
+    }
+
+    return res;
+}
+
+int main()
+{
+    int n;
+    string t;
+    cin >> n >> t;
+
+    vector<string> s(n);
+
+    vector<int> l(n), r(n);
+
+    rep(i, n) cin >> s[i];
+    ll ans = 0;
+
+    rep(_, 2)
+    {
+        rep(i, n)
+        {
+            l[i] = calc(s[i], t);
+        }
+        swap(l, r);
+        reverse(t.begin(), t.end());
+        rep(i, n) reverse(s[i].begin(), s[i].end());
+    }
+
+    // 〇個以上のrの個数を格納する配列
+    // 初期化個数をn+1にしてしまった
+    vector<ll> c(t.size() + 1);
+
+    rep(i, n)
+    {
+        for (int j = r[i]; j >= 0; j--)
+            c[j]++;
+    }
+
+    rep(i, n)
+    {
+        ll remain = t.size() - l[i];
+        ans += c[remain];
+    }
+
+    cout << ans << endl;
+
+    return 0;
+}
 
 #include <bits/stdc++.h>
 using namespace std;
