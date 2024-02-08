@@ -1,8 +1,9 @@
 // https://atcoder.jp/contests/abc324/tasks/abc324_e
 // 0104もう一度
 // 0112もう一度
-// 0207もう一度 提出で間違った
+// 0207もう一度 提出で間違った ok
 
+// 02208やり直し分
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
@@ -10,21 +11,21 @@ using ll = long long;
 
 int calc(string &s, string &t)
 {
+
     int res = 0;
 
     int si = 0;
-    for (char tc : t)
+    for (char c : t)
     {
-        while (si < s.size() && s[si] != tc)
+        while (si < s.size() && s[si] != c)
             si++;
 
         if (si == s.size())
             break;
-        // siを+しなかった
+
         si++;
         res++;
     }
-
     return res;
 }
 
@@ -33,13 +34,12 @@ int main()
     int n;
     string t;
     cin >> n >> t;
-
     vector<string> s(n);
+    rep(i, n) cin >> s[i];
+
+    ll ans = 0;
 
     vector<int> l(n), r(n);
-
-    rep(i, n) cin >> s[i];
-    ll ans = 0;
 
     rep(_, 2)
     {
@@ -52,8 +52,7 @@ int main()
         rep(i, n) reverse(s[i].begin(), s[i].end());
     }
 
-    // 〇個以上のrの個数を格納する配列
-    // 初期化個数をn+1にしてしまった
+    // c[i] 部分列個数i以下のrの個数
     vector<ll> c(t.size() + 1);
 
     rep(i, n)
@@ -62,9 +61,11 @@ int main()
             c[j]++;
     }
 
-    rep(i, n)
+    // li + ri =< t.size()
+
+    for (auto li : l)
     {
-        ll remain = t.size() - l[i];
+        ll remain = t.size() - li;
         ans += c[remain];
     }
 
@@ -73,64 +74,135 @@ int main()
     return 0;
 }
 
-#include <bits/stdc++.h>
-using namespace std;
-#define rep(i, n) for (int i = 0; i < n; ++i)
-using ll = long long;
+// 0207やり直し分
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
 
-int calc(string &s, string &t)
-{
-    int result = 0;
-    int si = 0;
-    for (char c : t)
-    {
-        while (si < s.size() && s[si] != c)
-            si++;
-        if (si == s.size())
-            break;
-        si++;
-        result++;
-    }
+// int calc(string &s, string &t)
+// {
+//     int res = 0;
 
-    return result;
-}
+//     int si = 0;
+//     for (char tc : t)
+//     {
+//         while (si < s.size() && s[si] != tc)
+//             si++;
 
-int main()
-{
-    int n;
-    string t;
-    cin >> n >> t;
+//         if (si == s.size())
+//             break;
+//         // siを+しなかった
+//         si++;
+//         res++;
+//     }
 
-    vector<string> s(n);
-    rep(i, n) cin >> s[i];
+//     return res;
+// }
 
-    ll ans = 0;
+// int main()
+// {
+//     int n;
+//     string t;
+//     cin >> n >> t;
 
-    vector<int> l(n), r(n);
-    rep(_, 2)
-    {
-        rep(i, n)
-        {
-            l[i] = calc(s[i], t);
-        }
-        swap(l, r);
-        rep(i, n) reverse(s[i].begin(), s[i].end());
-        reverse(t.begin(), t.end());
-    }
+//     vector<string> s(n);
 
-    // 部分文字列以上のrの個数を格納するvector
-    vector<int> more(t.size() + 1);
+//     vector<int> l(n), r(n);
 
-    rep(i, n) for (int j = r[i]; j >= 0; j--) more[j]++;
+//     rep(i, n) cin >> s[i];
+//     ll ans = 0;
 
-    rep(i, n)
-    {
-        ans += more[t.size() - l[i]];
-    }
+//     rep(_, 2)
+//     {
+//         rep(i, n)
+//         {
+//             l[i] = calc(s[i], t);
+//         }
+//         swap(l, r);
+//         reverse(t.begin(), t.end());
+//         rep(i, n) reverse(s[i].begin(), s[i].end());
+//     }
 
-    cout << ans << endl;
-    return 0;
-}
+//     // 〇個以上のrの個数を格納する配列
+//     // 初期化個数をn+1にしてしまった
+//     vector<ll> c(t.size() + 1);
+
+//     rep(i, n)
+//     {
+//         for (int j = r[i]; j >= 0; j--)
+//             c[j]++;
+//     }
+
+//     rep(i, n)
+//     {
+//         ll remain = t.size() - l[i];
+//         ans += c[remain];
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int calc(string &s, string &t)
+// {
+//     int result = 0;
+//     int si = 0;
+//     for (char c : t)
+//     {
+//         while (si < s.size() && s[si] != c)
+//             si++;
+//         if (si == s.size())
+//             break;
+//         si++;
+//         result++;
+//     }
+
+//     return result;
+// }
+
+// int main()
+// {
+//     int n;
+//     string t;
+//     cin >> n >> t;
+
+//     vector<string> s(n);
+//     rep(i, n) cin >> s[i];
+
+//     ll ans = 0;
+
+//     vector<int> l(n), r(n);
+//     rep(_, 2)
+//     {
+//         rep(i, n)
+//         {
+//             l[i] = calc(s[i], t);
+//         }
+//         swap(l, r);
+//         rep(i, n) reverse(s[i].begin(), s[i].end());
+//         reverse(t.begin(), t.end());
+//     }
+
+//     // 部分文字列以上のrの個数を格納するvector
+//     vector<int> more(t.size() + 1);
+
+//     rep(i, n) for (int j = r[i]; j >= 0; j--) more[j]++;
+
+//     rep(i, n)
+//     {
+//         ans += more[t.size() - l[i]];
+//     }
+
+//     cout << ans << endl;
+//     return 0;
+// }
 
 // 0112やり直し分
 // #include <bits/stdc++.h>
