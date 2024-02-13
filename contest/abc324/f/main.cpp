@@ -20,19 +20,18 @@ int main()
     cin >> n >> m;
 
     vector<vector<Edge>> g(m);
+
     rep(i, m)
     {
         int u, v, b, c;
         cin >> u >> v >> b >> c;
         u--;
         v--;
-
         g[u].push_back((Edge){v, b, c});
     }
-
     auto f = [&](double x)
     {
-        const double INF = 1e4;
+        const double INF = 1e18;
         vector<double> dp(n, -INF);
         dp[0] = 0;
 
@@ -40,8 +39,7 @@ int main()
         {
             for (auto e : g[i])
             {
-
-                dp[e.to] = max(dp[e.to], dp[i] + e.b - x * e.c);
+                dp[e.to] = max(dp[e.to], dp[i] + e.b - e.c * x);
             }
         }
 
@@ -52,16 +50,78 @@ int main()
     rep(i, 50)
     {
         double wj = (ac + wa) / 2;
+
         if (f(wj))
             ac = wj;
         else
             wa = wj;
     }
 
-    printf("%.10f", ac);
+    printf("%.14f", ac);
 
     return 0;
 }
+
+// 2/8やり直し分　DPらへんが分からなかった
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// using ll = long long;
+
+// struct Edge
+// {
+//     int to, b, c;
+// };
+
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<vector<Edge>> g(m);
+//     rep(i, m)
+//     {
+//         int u, v, b, c;
+//         cin >> u >> v >> b >> c;
+//         u--;
+//         v--;
+
+//         g[u].push_back((Edge){v, b, c});
+//     }
+
+//     auto f = [&](double x)
+//     {
+//         const double INF = 1e4;
+//         vector<double> dp(n, -INF);
+//         dp[0] = 0;
+
+//         rep(i, n)
+//         {
+//             for (auto e : g[i])
+//             {
+
+//                 dp[e.to] = max(dp[e.to], dp[i] + e.b - x * e.c);
+//             }
+//         }
+
+//         return dp[n - 1] >= 0;
+//     };
+
+//     double ac = 0, wa = 1e4;
+//     rep(i, 50)
+//     {
+//         double wj = (ac + wa) / 2;
+//         if (f(wj))
+//             ac = wj;
+//         else
+//             wa = wj;
+//     }
+
+//     printf("%.10f", ac);
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
