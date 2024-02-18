@@ -3,13 +3,15 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i, n) for (int i = 0; i < n; i++)
+#define rep(i, n) for (int i = 0; i < n; ++i)
 
 void quick(vector<int> &nums, int start, int end)
 {
-    if (end - start < 1)
+
+    if (start >= end)
         return;
     int i = start - 1;
+
     int pivot = nums[end];
 
     for (int j = start; j < end; j++)
@@ -20,20 +22,17 @@ void quick(vector<int> &nums, int start, int end)
             swap(nums[i], nums[j]);
         }
     }
-    ++i;
-    swap(nums[i], nums[end]);
+    swap(nums[i + 1], nums[end]);
 
-    quick(nums, start, i - 1);
-    quick(nums, i, end);
+    quick(nums, start, i);
+    quick(nums, i + 1, end);
 }
 
 int main()
 {
+
     vector<int> nums;
-    rep(i, 10)
-    {
-        nums.push_back(rand() % 1000);
-    }
+    rep(i, 10) nums.push_back(rand() % 1000);
 
     quick(nums, 0, nums.size() - 1);
 
@@ -41,6 +40,47 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+
+// void quick(vector<int> &nums, int start, int end)
+// {
+//     if (end - start < 1)
+//         return;
+//     int i = start - 1;
+//     int pivot = nums[end];
+
+//     for (int j = start; j < end; j++)
+//     {
+//         if (nums[j] < pivot)
+//         {
+//             ++i;
+//             swap(nums[i], nums[j]);
+//         }
+//     }
+//     ++i;
+//     swap(nums[i], nums[end]);
+
+//     quick(nums, start, i - 1);
+//     quick(nums, i, end);
+// }
+
+// int main()
+// {
+//     vector<int> nums;
+//     rep(i, 10)
+//     {
+//         nums.push_back(rand() % 1000);
+//     }
+
+//     quick(nums, 0, nums.size() - 1);
+
+//     rep(i, nums.size()) cout << nums[i] << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

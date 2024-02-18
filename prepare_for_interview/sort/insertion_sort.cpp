@@ -12,26 +12,26 @@ void insertion(vector<int> &nums)
     for (int i = 1; i < n; i++)
     {
         int j = i - 1;
-        while (j >= 0 && nums[j] > nums[j + 1])
+        int key = nums[i];
+        while (j >= 0 && nums[j] > key)
         {
             nums[j + 1] = nums[j];
             j--;
         }
-        swap(nums[j + 1], nums[i]);
+
+        nums[j + 1] = key;
     }
 }
 
 int main()
 {
+
     vector<int> nums;
-    rep(i, 10)
-    {
-        nums.push_back(rand() % 1000);
-    }
+    rep(i, 10) nums.push_back(rand() % 1000);
+
     insertion(nums);
 
     rep(i, nums.size()) cout << nums[i] << " ";
-
     return 0;
 }
 
