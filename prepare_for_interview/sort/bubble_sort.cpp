@@ -3,15 +3,15 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i, n) for (int i = 0; i < n; i++)
+#define rep(i, n) for (int i = 0; i < n; ++i)
 
 void bubble(vector<int> &nums)
 {
-    int n = nums.size();
 
+    int n = nums.size();
     rep(i, n)
     {
-        for (int j = 0; j < n - 1 - i; j++)
+        for (int j = 0; j < n - 1 - i; ++j)
         {
             if (nums[j] > nums[j + 1])
                 swap(nums[j], nums[j + 1]);
@@ -27,6 +27,33 @@ int main()
     bubble(nums);
     rep(i, nums.size()) cout << nums[i] << " ";
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+
+// void bubble(vector<int> &nums)
+// {
+//     int n = nums.size();
+
+//     rep(i, n)
+//     {
+//         for (int j = 0; j < n - 1 - i; j++)
+//         {
+//             if (nums[j] > nums[j + 1])
+//                 swap(nums[j], nums[j + 1]);
+//         }
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<int> nums;
+//     rep(i, 10) nums.push_back(rand() % 1000);
+//     bubble(nums);
+//     rep(i, nums.size()) cout << nums[i] << " ";
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

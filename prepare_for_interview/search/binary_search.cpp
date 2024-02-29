@@ -4,9 +4,8 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n++ i)
 
-int binary(vector<int> &nums, int &target, int left, int right)
+int binary(vector<int> &nums, int target, int left, int right)
 {
-
     if (abs(right - left) <= 1)
     {
         if (nums[left] == target)
@@ -16,6 +15,7 @@ int binary(vector<int> &nums, int &target, int left, int right)
     }
 
     int mid = (left + right) / 2;
+
     if (nums[mid] <= target)
         binary(nums, target, mid, right);
     else
@@ -31,6 +31,73 @@ int main()
     cout << ans << endl;
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n++ i)
+
+// int binary(vector<int> &nums, int &target)
+// {
+
+//     int left = 0;
+//     int right = nums.size();
+
+//     while (abs(right - left) > 1)
+//     {
+//         int mid = (left + right) / 2;
+//         if (nums[mid] <= target)
+//             left = mid;
+//         else
+//             right = mid;
+//     }
+
+//     if (target == nums[left])
+//         return left;
+//     else
+//         return -1;
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {1, 2, 4, 6, 7, 8, 11, 15, 19, 21, 22, 26, 28, 32, 44};
+//     int target = 28;
+//     int ans = binary(nums, target);
+//     cout << ans << endl;
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n++ i)
+
+// int binary(vector<int> &nums, int &target, int left, int right)
+// {
+
+//     if (abs(right - left) <= 1)
+//     {
+//         if (nums[left] == target)
+//             return left;
+//         else
+//             return -1;
+//     }
+
+//     int mid = (left + right) / 2;
+//     if (nums[mid] <= target)
+//         binary(nums, target, mid, right);
+//     else
+//         binary(nums, target, left, mid);
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {1, 2, 4, 6, 7, 8, 11, 15, 19, 21, 22, 26, 28, 32, 44};
+//     int target = 28;
+//     int ans = binary(nums, target, 0, nums.size() - 1);
+//     cout << ans << endl;
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 // #define rep(i, n) for (int i = 0; i < n++ i)
