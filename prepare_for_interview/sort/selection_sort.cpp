@@ -7,15 +7,16 @@ using namespace std;
 
 void selection(vector<int> &nums)
 {
-
     int n = nums.size();
-
     rep(i, n)
     {
+
         int min_ind = i;
-        for (int j = i + 1; j < n; ++j)
+        for (int j = i; j < n; j++)
+        {
             if (nums[j] < nums[min_ind])
                 min_ind = j;
+        }
         swap(nums[i], nums[min_ind]);
     }
 }
@@ -32,6 +33,38 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// void selection(vector<int> &nums)
+// {
+
+//     int n = nums.size();
+
+//     rep(i, n)
+//     {
+//         int min_ind = i;
+//         for (int j = i + 1; j < n; ++j)
+//             if (nums[j] < nums[min_ind])
+//                 min_ind = j;
+//         swap(nums[i], nums[min_ind]);
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<int> nums;
+//     rep(i, 10) nums.push_back(rand() % 1000);
+
+//     selection(nums);
+
+//     rep(i, nums.size()) cout << nums[i] << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
