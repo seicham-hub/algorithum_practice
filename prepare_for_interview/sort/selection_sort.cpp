@@ -30,8 +30,7 @@ int main()
     selection(nums);
 
     rep(i, nums.size()) cout << nums[i] << endl;
-
-    return 0;
+    -return 0;
 }
 
 // #include <bits/stdc++.h>
