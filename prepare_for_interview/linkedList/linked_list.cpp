@@ -122,11 +122,9 @@ private:
 
     Node *_reverse_even(Node *currentNode, Node *previousNode)
     {
-
-        if (currentNode == nullptr)
-            return nullptr;
-
         Node *startNode = currentNode;
+        if (startNode == nullptr)
+            return nullptr;
 
         while (currentNode != nullptr && currentNode->data % 2 == 0)
         {
@@ -138,17 +136,14 @@ private:
 
         if (startNode != currentNode)
         {
-            // 偶数の最後（startNode）と奇数の最初をつなげる
             startNode->next = currentNode;
-            // トップレベルのporeviousNodeを返す
             _reverse_even(currentNode, nullptr);
             return previousNode;
         }
         else
         {
-            // 先頭が奇数の時はかえってきたpreviousNodeを次のNodeにする
-            currentNode->next = _reverse_even(currentNode->next, currentNode);
-            return currentNode;
+            startNode->next = _reverse_even(currentNode->next, currentNode);
+            return startNode;
         }
     }
 };
@@ -160,6 +155,14 @@ int main()
     list.append(2);
     list.append(4);
     list.append(6);
+    list.append(1);
+    list.append(2);
+    list.append(4);
+    list.append(6);
+    list.append(8);
+    list.append(3);
+    list.append(1);
+    list.append(2);
     list.append(3);
 
     list.reverse_even();

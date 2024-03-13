@@ -12,6 +12,7 @@ public:
 };
 
 class DublyLinkedList
+
 {
 public:
     Node *head;
@@ -45,9 +46,10 @@ public:
         if (head == nullptr)
         {
             head = newNode;
+            return;
         }
-        newNode->next = head;
         head->prev = newNode;
+        newNode->next = head;
         head = newNode;
     }
 
@@ -71,6 +73,7 @@ public:
                 nextNode->prev = nullptr;
                 delete currentNode;
                 head = nextNode;
+                return;
             }
         }
 
@@ -119,7 +122,7 @@ int main()
     list.insert(1);
     list.insert(0);
 
-    list.remove(1);
+    list.remove(3);
 
     list.display();
 
