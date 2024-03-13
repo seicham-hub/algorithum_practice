@@ -111,18 +111,49 @@ public:
             currentNode = currentNode->next;
         }
     }
+
+    void reverse_iterative()
+    {
+
+        Node *currentNode = head;
+        Node *previousNode = nullptr;
+        while (currentNode != nullptr)
+        {
+            if (previousNode != nullptr)
+            {
+                Node *nextNode = currentNode->next;
+                currentNode->next = previousNode;
+                previousNode->prev = currentNode;
+                previousNode = currentNode;
+                currentNode = nextNode;
+            }
+            else
+            {
+                Node *nextNode = currentNode->next;
+                currentNode->next = previousNode;
+                previousNode = currentNode;
+                currentNode = nextNode;
+            }
+        }
+
+        if (previousNode != nullptr)
+        {
+            previousNode->prev = nullptr;
+            head = previousNode;
+        }
+    }
 };
 
 int main()
 {
 
     DublyLinkedList list;
+    list.append(0);
+    list.append(1);
     list.append(2);
     list.append(3);
-    list.insert(1);
-    list.insert(0);
 
-    list.remove(3);
+    list.reverse_iterative();
 
     list.display();
 

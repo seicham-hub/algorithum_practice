@@ -5,51 +5,58 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-vector<int> merge(vector<int> &nums, int start, int end)
+// メモリ節約ver
+void merge(vector<int> &nums, int start, int end)
 {
+
     if (start >= end)
-    {
-        return {nums[start]};
-    }
+        return;
 
     int mid = (start + end) / 2;
 
-    vector<int> l = merge(nums, start, mid);
-    vector<int> r = merge(nums, mid + 1, end);
+    merge(nums, start, mid);
+    merge(nums, mid + 1, end);
 
-    int i = 0, j = 0, k = 0;
-    vector<int> res(l.size() + r.size());
+    int i = start, j = mid + 1, k = 0;
+    vector<int> tmp(end - start + 1);
 
-    while (i < l.size() && j < r.size())
+    while (i <= mid && j <= end)
     {
-        if (l[i] <= r[j])
+        if (nums[i] <= nums[j])
         {
-            res[k] = l[i];
-            ++k;
+            tmp[k] = nums[i];
             ++i;
+            ++k;
         }
         else
         {
-            res[k] = r[j];
-            ++k;
+            tmp[k] = nums[j];
             ++j;
+            ++k;
         }
     }
-    while (i < l.size())
+
+    while (i <= mid)
     {
-        res[k] = l[i];
+        tmp[k] = nums[i];
         ++i;
         ++k;
     }
-
-    while (j < r.size())
+    while (j <= end)
     {
-        res[k] = r[j];
+        tmp[k] = nums[j];
         ++j;
         ++k;
     }
 
-    return res;
+    int s = 0;
+    for (int i = start; i <= end; i++)
+    {
+        nums[i] = tmp[s];
+        ++s;
+    }
+
+    return;
 }
 
 int main()
@@ -58,12 +65,76 @@ int main()
 
     rep(i, 10) nums.push_back(rand() % 1000);
 
-    vector<int> ans = merge(nums, 0, nums.size() - 1);
+    merge(nums, 0, nums.size() - 1);
 
-    rep(i, ans.size()) cout << ans[i] << " ";
+    rep(i, nums.size()) cout << nums[i] << " ";
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// vector<int> merge(vector<int> &nums, int start, int end)
+// {
+//     if (start >= end)
+//     {
+//         return {nums[start]};
+//     }
+
+//     int mid = (start + end) / 2;
+
+//     vector<int> l = merge(nums, start, mid);
+//     vector<int> r = merge(nums, mid + 1, end);
+
+//     int i = 0, j = 0, k = 0;
+//     vector<int> res(l.size() + r.size());
+
+//     while (i < l.size() && j < r.size())
+//     {
+//         if (l[i] <= r[j])
+//         {
+//             res[k] = l[i];
+//             ++k;
+//             ++i;
+//         }
+//         else
+//         {
+//             res[k] = r[j];
+//             ++k;
+//             ++j;
+//         }
+//     }
+//     while (i < l.size())
+//     {
+//         res[k] = l[i];
+//         ++i;
+//         ++k;
+//     }
+
+//     while (j < r.size())
+//     {
+//         res[k] = r[j];
+//         ++j;
+//         ++k;
+//     }
+
+//     return res;
+// }
+
+// int main()
+// {
+//     vector<int> nums;
+
+//     rep(i, 10) nums.push_back(rand() % 1000);
+
+//     vector<int> ans = merge(nums, 0, nums.size() - 1);
+
+//     rep(i, ans.size()) cout << ans[i] << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
