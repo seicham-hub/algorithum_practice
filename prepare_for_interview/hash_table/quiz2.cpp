@@ -5,7 +5,7 @@ using namespace std;
 pair<int, int> get_pair_half_sum(vector<int> &nums, int &sum)
 {
 
-    map<int, int> cache;
+    unordered_map<int, int> cache;
     int n = nums.size();
 
     if (sum % 2 != 0)
@@ -15,12 +15,12 @@ pair<int, int> get_pair_half_sum(vector<int> &nums, int &sum)
 
     rep(i, n)
     {
-        cache[nums[i]]++;
 
         int target = half_sum - nums[i];
 
         if (cache[target])
             return {target, nums[i]};
+        cache[nums[i]]++;
     }
 
     return {0, 0};
@@ -34,6 +34,7 @@ int main()
     int sum = 0;
     rep(i, nums.size()) sum += nums[i];
 
+    sort(nums.begin(), nums.end());
     pair<int, int> ans = get_pair_half_sum(nums, sum);
 
     cout << ans.first << "," << ans.second << endl;
