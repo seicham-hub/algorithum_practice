@@ -142,17 +142,17 @@ public:
 
         while (currentNode != nullptr)
         {
-            Node *startNode = currentNode;
-            while (startNode->next != nullptr)
+            Node *nextNode = currentNode;
+            while (nextNode != nullptr)
             {
-                Node *nextNode = startNode->next;
-                if (startNode->data > nextNode->data)
+                // Node *nextNode = startNode->next;
+                if (currentNode->data > nextNode->data)
                 {
-                    int tmpData = startNode->data;
-                    startNode->data = nextNode->data;
+                    int tmpData = currentNode->data;
+                    currentNode->data = nextNode->data;
                     nextNode->data = tmpData;
                 }
-                startNode = startNode->next;
+                nextNode = nextNode->next;
             }
             currentNode = currentNode->next;
         }
@@ -205,13 +205,13 @@ int main()
 {
 
     DublyLinkedList list;
-    list.append(2);
-    list.append(1);
-    list.append(0);
-    list.append(3);
+    list.append(13);
+    list.append(21);
+    list.append(19);
+    list.append(4);
 
     list.sort();
-    list.reverse_recursive();
+    // list.reverse_recursive();
 
     list.display();
 
