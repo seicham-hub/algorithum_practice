@@ -6,10 +6,10 @@ using namespace std;
 class Node
 {
 public:
-    int data;
+    int value;
     Node *next;
 
-    Node(int data) : data(data), next(nullptr) {}
+    Node(int value) : value(value){};
 };
 
 class LinkedList
@@ -17,12 +17,14 @@ class LinkedList
 public:
     Node *head;
 
-    LinkedList() : head(nullptr) {}
+    LinkedList() : head(nullptr){};
 
-    void add(int data)
+    void add(int value)
     {
+
         Node *currentNode = head;
-        Node *newNode = new Node(data);
+        Node *newNode = new Node(value);
+
         if (currentNode == nullptr)
         {
             head = newNode;
@@ -36,45 +38,45 @@ public:
         currentNode->next = newNode;
     }
 
-    void insert(int data)
+    void insert(int value)
     {
-        Node *newNode = new Node(data);
+        Node *newNode = new Node(value);
         newNode->next = head;
         head = newNode;
     }
 
-    void remove(int data)
+    void remove(int value)
     {
+
         Node *currentNode = head;
         Node *previousNode = nullptr;
 
-        if (head != nullptr && head->data == data)
+        if (currentNode != nullptr && currentNode->value == value)
         {
-            head = head->next;
+            head = currentNode->next;
+            delete currentNode;
             return;
         }
 
-        while (currentNode != nullptr && currentNode->data != data)
+        while (currentNode != nullptr && currentNode->value != value)
         {
             previousNode = currentNode;
             currentNode = currentNode->next;
         }
+
         if (currentNode == nullptr)
-        {
             return;
-        }
+
         previousNode->next = currentNode->next;
         delete currentNode;
     }
-
     void display()
     {
-
         Node *currentNode = head;
-
         while (currentNode != nullptr)
         {
-            cout << currentNode->data << endl;
+
+            cout << currentNode->value << endl;
             currentNode = currentNode->next;
         }
     }
@@ -83,9 +85,6 @@ public:
     {
         Node *currentNode = head;
         Node *previousNode = nullptr;
-
-        if (currentNode == nullptr)
-            return;
 
         while (currentNode != nullptr)
         {
@@ -111,34 +110,30 @@ public:
 private:
     Node *_reverse_recursive(Node *currentNode, Node *previousNode)
     {
-
         if (currentNode == nullptr)
-
         {
             return previousNode;
         }
         Node *nextNode = currentNode->next;
         currentNode->next = previousNode;
+
         return _reverse_recursive(nextNode, currentNode);
     }
-
     Node *_reverse_even(Node *currentNode, Node *previousNode)
     {
-        if (currentNode == nullptr)
-        {
-            return nullptr;
-        }
 
         Node *startNode = currentNode;
 
-        while (currentNode != nullptr && currentNode->data % 2 == 0)
+        if (currentNode == nullptr)
+            return nullptr;
+
+        while (currentNode != nullptr && currentNode->value % 2 == 0)
         {
             Node *nextNode = currentNode->next;
             currentNode->next = previousNode;
             previousNode = currentNode;
             currentNode = nextNode;
         }
-
         if (startNode != currentNode)
         {
             startNode->next = currentNode;
@@ -147,23 +142,30 @@ private:
         }
         else
         {
-            startNode->next = _reverse_even(startNode->next, currentNode);
-            return startNode;
+            currentNode->next = _reverse_even(currentNode->next, currentNode);
+            return currentNode;
         }
     }
 };
 
 int main()
 {
-
     LinkedList list;
-    list.add(3);
+    list.add(1);
+    list.add(2);
+    list.add(4);
     list.add(6);
+    list.add(7);
+    list.add(8);
+    list.add(4);
     list.add(2);
-    list.add(0);
     list.add(3);
-    list.add(2);
-    list.add(5);
+    list.insert(0);
+
+    list.remove(0);
+
+    // list.reverse_iterative();
+    // list.reverse_recursive();
 
     list.reverse_even();
 
@@ -171,6 +173,178 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *next;
+
+//     Node(int data) : data(data), next(nullptr) {}
+// };
+
+// class LinkedList
+// {
+// public:
+//     Node *head;
+
+//     LinkedList() : head(nullptr) {}
+
+//     void add(int data)
+//     {
+//         Node *currentNode = head;
+//         Node *newNode = new Node(data);
+//         if (currentNode == nullptr)
+//         {
+//             head = newNode;
+//             return;
+//         }
+
+//         while (currentNode->next != nullptr)
+//         {
+//             currentNode = currentNode->next;
+//         }
+//         currentNode->next = newNode;
+//     }
+
+//     void insert(int data)
+//     {
+//         Node *newNode = new Node(data);
+//         newNode->next = head;
+//         head = newNode;
+//     }
+
+//     void remove(int data)
+//     {
+//         Node *currentNode = head;
+//         Node *previousNode = nullptr;
+
+//         if (head != nullptr && head->data == data)
+//         {
+//             head = head->next;
+//             return;
+//         }
+
+//         while (currentNode != nullptr && currentNode->data != data)
+//         {
+//             previousNode = currentNode;
+//             currentNode = currentNode->next;
+//         }
+//         if (currentNode == nullptr)
+//         {
+//             return;
+//         }
+//         previousNode->next = currentNode->next;
+//         delete currentNode;
+//     }
+
+//     void display()
+//     {
+
+//         Node *currentNode = head;
+
+//         while (currentNode != nullptr)
+//         {
+//             cout << currentNode->data << endl;
+//             currentNode = currentNode->next;
+//         }
+//     }
+
+//     void reverse_iterative()
+//     {
+//         Node *currentNode = head;
+//         Node *previousNode = nullptr;
+
+//         if (currentNode == nullptr)
+//             return;
+
+//         while (currentNode != nullptr)
+//         {
+//             Node *nextNode = currentNode->next;
+//             currentNode->next = previousNode;
+//             previousNode = currentNode;
+//             currentNode = nextNode;
+//         }
+
+//         head = previousNode;
+//     }
+
+//     void reverse_recursive()
+//     {
+//         head = _reverse_recursive(head, nullptr);
+//     }
+
+//     void reverse_even()
+//     {
+//         head = _reverse_even(head, nullptr);
+//     }
+
+// private:
+//     Node *_reverse_recursive(Node *currentNode, Node *previousNode)
+//     {
+
+//         if (currentNode == nullptr)
+
+//         {
+//             return previousNode;
+//         }
+//         Node *nextNode = currentNode->next;
+//         currentNode->next = previousNode;
+//         return _reverse_recursive(nextNode, currentNode);
+//     }
+
+//     Node *_reverse_even(Node *currentNode, Node *previousNode)
+//     {
+//         if (currentNode == nullptr)
+//         {
+//             return nullptr;
+//         }
+
+//         Node *startNode = currentNode;
+
+//         while (currentNode != nullptr && currentNode->data % 2 == 0)
+//         {
+//             Node *nextNode = currentNode->next;
+//             currentNode->next = previousNode;
+//             previousNode = currentNode;
+//             currentNode = nextNode;
+//         }
+
+//         if (startNode != currentNode)
+//         {
+//             startNode->next = currentNode;
+//             _reverse_even(currentNode, nullptr);
+//             return previousNode;
+//         }
+//         else
+//         {
+//             startNode->next = _reverse_even(startNode->next, currentNode);
+//             return startNode;
+//         }
+//     }
+// };
+
+// int main()
+// {
+
+//     LinkedList list;
+//     list.add(3);
+//     list.add(6);
+//     list.add(2);
+//     list.add(0);
+//     list.add(3);
+//     list.add(2);
+//     list.add(5);
+
+//     list.reverse_even();
+
+//     list.display();
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
