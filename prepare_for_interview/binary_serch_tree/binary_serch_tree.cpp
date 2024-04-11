@@ -1,3 +1,5 @@
+// 2024_04_06もう一度
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,31 +12,141 @@ struct Node
     Node(int value) : value(value){};
 };
 
+class BinalySearchTree
+{
+public:
+    Node *root;
+
+    BinalySearchTree() : root(nullptr){};
+
+    void *insert(int value)
+    {
+
+        function<Node *(Node *, int)> _insert = [&_insert](Node *node, int value) -> Node *
+        {
+            if (node == nullptr)
+            {
+                return new Node(value);
+            }
+            if (value < node->value)
+            {
+                node->left = _insert(node->left, value);
+            }
+            else
+            {
+                node->right = _insert(node->right, value);
+            }
+
+            return node;
+        };
+        if (root == nullptr)
+            root = new Node(value);
+        else
+            _insert(root, value);
+    }
+    void inorder()
+    {
+        function<void(Node *)> _inorder = [&_inorder](Node *node)
+        {
+            if (node == nullptr)
+                return;
+            _inorder(node->left);
+            cout << node->value << endl;
+            _inorder(node->right);
+        };
+
+        _inorder(root);
+    }
+
+    bool search(int target)
+    {
+        function<bool(Node *, int)> _search = [&_search](Node *node, int target)
+        {
+            if (node == nullptr)
+                return false;
+
+            if (target < node->value)
+                return _search(node->left, target);
+            else if (target > node->value)
+                return _search(node->right, target);
+            else
+                return true;
+        };
+        return _search(root, target);
+    }
+
+    Node *min_value(Node *node)
+    {
+
+        while (node->left != nullptr)
+        {
+            node = node->left;
+        }
+        return node;
+    }
+
+    void *remove(int value)
+    {
+        function<Node *(Node *, int)> _remove = [&](Node *node, int value)
+        {
+            if (node == nullptr)
+                return node;
+            else if (value < node->value)
+                node->left = _remove(node->left, value);
+            else if (value > node->value)
+                node->right = _remove(node->right, value);
+            else
+            {
+                if (node->left == nullptr)
+                {
+                    Node *tmp = node->right;
+                    delete node;
+                    return tmp;
+                }
+                else if (node->right == nullptr)
+                {
+                    Node *tmp = node->left;
+                    delete node;
+                    return tmp;
+                }
+                else
+                {
+                    Node *tmp = min_value(node->right);
+                    node->value = tmp->value;
+                    node->right = _remove(node->right, tmp->value);
+                }
+            }
+            return node;
+        };
+        _remove(root, value);
+    }
+};
+
 Node *insert(Node *node, int value)
 {
-
     if (node == nullptr)
     {
         return new Node(value);
     }
-
     if (value < node->value)
+    {
         node->left = insert(node->left, value);
+    }
     else
+    {
         node->right = insert(node->right, value);
+    }
 
     return node;
 }
 
 void inorder(Node *node)
 {
-
-    if (node != nullptr)
-    {
-        inorder(node->left);
-        cout << node->value << endl;
-        inorder(node->right);
-    }
+    if (node == nullptr)
+        return;
+    inorder(node->left);
+    cout << node->value << endl;
+    inorder(node->right);
 }
 
 bool search(Node *node, int target)
@@ -42,77 +154,191 @@ bool search(Node *node, int target)
     if (node == nullptr)
         return false;
 
-    if (node->value == target)
-        return true;
-    else if (target < node->value)
-        search(node->left, target);
+    if (target < node->value)
+        return search(node->left, target);
+    else if (target > node->value)
+        return search(node->right, target);
     else
-        search(node->right, target);
+        return true;
 }
 
 Node *min_value(Node *node)
 {
-    Node *current = node;
-    while (current->left != nullptr)
+
+    while (node->left != nullptr)
     {
-        current = current->left;
+        node = node->left;
     }
-    return current;
+    return node;
 }
 
 Node *remove(Node *node, int value)
 {
+
     if (node == nullptr)
-    {
         return node;
-    }
-    if (value < node->value)
-    {
+    else if (value < node->value)
         node->left = remove(node->left, value);
-    }
     else if (value > node->value)
-    {
         node->right = remove(node->right, value);
-    }
     else
     {
         if (node->left == nullptr)
         {
-            Node *temp = node->right;
+            Node *tmp = node->right;
             delete node;
-            return temp;
+            return tmp;
         }
         else if (node->right == nullptr)
         {
-            Node *temp = node->left;
+            Node *tmp = node->left;
             delete node;
-            return temp;
+            return tmp;
         }
-
-        Node *temp = min_value(node->right);
-        node->value = temp->value;
-        node->right = remove(node->right, temp->value);
+        else
+        {
+            Node *tmp = min_value(node->right);
+            node->value = tmp->value;
+            node->right = remove(node->right, tmp->value);
+        }
     }
     return node;
 }
 
 int main()
 {
+    BinalySearchTree *tree = new BinalySearchTree();
+    tree->insert(3);
+    tree->insert(6);
+    tree->insert(5);
+    tree->insert(7);
+    tree->insert(1);
+    tree->insert(10);
+    tree->insert(2);
 
-    Node *root = nullptr;
+    tree->remove(6);
+    tree->inorder();
 
-    root = insert(root, 3);
-    root = insert(root, 4);
-    root = insert(root, 5);
-    root = insert(root, 2);
-
-    cout << search(root, 10) << endl;
-    root = remove(root, 4);
-
-    // inorder(root);
+    cout << tree->search(10) << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// struct Node
+// {
+//     int value;
+//     Node *left;
+//     Node *right;
+
+//     Node(int value) : value(value){};
+// };
+
+// Node *insert(Node *node, int value)
+// {
+
+//     if (node == nullptr)
+//     {
+//         return new Node(value);
+//     }
+
+//     if (value < node->value)
+//         node->left = insert(node->left, value);
+//     else
+//         node->right = insert(node->right, value);
+
+//     return node;
+// }
+
+// void inorder(Node *node)
+// {
+
+//     if (node != nullptr)
+//     {
+//         inorder(node->left);
+//         cout << node->value << endl;
+//         inorder(node->right);
+//     }
+// }
+
+// bool search(Node *node, int target)
+// {
+//     if (node == nullptr)
+//         return false;
+
+//     if (node->value == target)
+//         return true;
+//     else if (target < node->value)
+//         search(node->left, target);
+//     else
+//         search(node->right, target);
+// }
+
+// Node *min_value(Node *node)
+// {
+//     Node *current = node;
+//     while (current->left != nullptr)
+//     {
+//         current = current->left;
+//     }
+//     return current;
+// }
+
+// Node *remove(Node *node, int value)
+// {
+//     if (node == nullptr)
+//     {
+//         return node;
+//     }
+//     if (value < node->value)
+//     {
+//         node->left = remove(node->left, value);
+//     }
+//     else if (value > node->value)
+//     {
+//         node->right = remove(node->right, value);
+//     }
+//     else
+//     {
+//         if (node->left == nullptr)
+//         {
+//             Node *temp = node->right;
+//             delete node;
+//             return temp;
+//         }
+//         else if (node->right == nullptr)
+//         {
+//             Node *temp = node->left;
+//             delete node;
+//             return temp;
+//         }
+
+//         Node *temp = min_value(node->right);
+//         node->value = temp->value;
+//         node->right = remove(node->right, temp->value);
+//     }
+//     return node;
+// }
+
+// int main()
+// {
+
+//     Node *root = nullptr;
+
+//     root = insert(root, 3);
+//     root = insert(root, 4);
+//     root = insert(root, 5);
+//     root = insert(root, 2);
+
+//     cout << search(root, 10) << endl;
+//     root = remove(root, 4);
+
+//     // inorder(root);
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
