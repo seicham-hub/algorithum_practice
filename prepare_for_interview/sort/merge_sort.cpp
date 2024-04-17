@@ -5,72 +5,137 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-// メモリ節約ver
-void merge(vector<int> &nums, int start, int end)
+vector<int> merge(vector<int> &nums, int start, int end)
 {
 
     if (start >= end)
-        return;
+        return {nums[start]};
 
     int mid = (start + end) / 2;
 
-    merge(nums, start, mid);
-    merge(nums, mid + 1, end);
+    vector<int> left = merge(nums, start, mid);
+    vector<int> right = merge(nums, mid + 1, end);
 
-    int i = start, j = mid + 1, k = 0;
-    vector<int> tmp(end - start + 1);
+    vector<int> res(left.size() + right.size());
 
-    while (i <= mid && j <= end)
+    int k = 0, l = 0, r = 0;
+
+    while (l < left.size() && r < right.size())
     {
-        if (nums[i] <= nums[j])
+        if (left[l] <= right[r])
         {
-            tmp[k] = nums[i];
-            ++i;
-            ++k;
+            res[k] = left[l];
+            l++;
         }
         else
         {
-            tmp[k] = nums[j];
-            ++j;
-            ++k;
+            res[k] = right[r];
+            r++;
         }
+        k++;
     }
 
-    while (i <= mid)
+    while (l < left.size())
     {
-        tmp[k] = nums[i];
-        ++i;
-        ++k;
-    }
-    while (j <= end)
-    {
-        tmp[k] = nums[j];
-        ++j;
-        ++k;
+        res[k] = left[l];
+        l++;
+        k++;
     }
 
-    int s = 0;
-    for (int i = start; i <= end; i++)
+    while (r < right.size())
     {
-        nums[i] = tmp[s];
-        ++s;
+        res[k] = right[r];
+        r++;
+        k++;
     }
 
-    return;
+    return res;
 }
 
 int main()
 {
     vector<int> nums;
 
-    rep(i, 10) nums.push_back(rand() % 1000);
+    rep(i, 10) nums.push_back(rand() % 100);
 
-    merge(nums, 0, nums.size() - 1);
+    vector<int> ans = merge(nums, 0, nums.size());
 
-    rep(i, nums.size()) cout << nums[i] << " ";
+    for (int a : ans)
+        cout << a << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// // メモリ節約ver
+// void merge(vector<int> &nums, int start, int end)
+// {
+
+//     if (start >= end)
+//         return;
+
+//     int mid = (start + end) / 2;
+
+//     merge(nums, start, mid);
+//     merge(nums, mid + 1, end);
+
+//     int i = start, j = mid + 1, k = 0;
+//     vector<int> tmp(end - start + 1);
+
+//     while (i <= mid && j <= end)
+//     {
+//         if (nums[i] <= nums[j])
+//         {
+//             tmp[k] = nums[i];
+//             ++i;
+//             ++k;
+//         }
+//         else
+//         {
+//             tmp[k] = nums[j];
+//             ++j;
+//             ++k;
+//         }
+//     }
+
+//     while (i <= mid)
+//     {
+//         tmp[k] = nums[i];
+//         ++i;
+//         ++k;
+//     }
+//     while (j <= end)
+//     {
+//         tmp[k] = nums[j];
+//         ++j;
+//         ++k;
+//     }
+
+//     int s = 0;
+//     for (int i = start; i <= end; i++)
+//     {
+//         nums[i] = tmp[s];
+//         ++s;
+//     }
+
+//     return;
+// }
+
+// int main()
+// {
+//     vector<int> nums;
+
+//     rep(i, 10) nums.push_back(rand() % 1000);
+
+//     merge(nums, 0, nums.size() - 1);
+
+//     rep(i, nums.size()) cout << nums[i] << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

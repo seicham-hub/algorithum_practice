@@ -1,36 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<string> w = {"python", "c", "java", "python", "c", "go", "python"};
+// {"python", "go", "c", "java", "python", "c", "go", "python"};
 // 1:python
 // 2:go
 // 2:c
 // 4:java
 
-vector<string> top_n_with_heap(vector<string> words, int n)
+// 上位n位をpython,go,c,javaの順に出力したい
+
+vector<string> top_n_words(vector<string> words, int n)
 {
     unordered_map<string, int> freqMap;
-    for (int i = 0; i < words.size(); ++i)
+
+    for (string &w : words)
     {
-        freqMap[words[i]]++;
+        freqMap[w]++;
     }
-    auto compare = [](const pair<string, int> a, pair<string, int> b) -> bool
+
+    auto compare = [](const pair<string, int> &a, const pair<string, int> &b)
     {
         return a.second < b.second;
     };
 
-    priority_queue<pair<string, int>, vector<pair<string, int>>, decltype(compare)>
-        heap(compare);
+    priority_queue<pair<string, int>, vector<pair<string, int>>, decltype(compare)> heap(compare);
 
     for (auto m : freqMap)
-        heap.push(m);
+    {
+        heap.push({m.first, m.second});
+    }
 
     vector<string> result;
-    int count = 0;
     while (!heap.empty() && n > 0)
     {
-        result.push_back(heap.top().first);
+        auto top = heap.top();
         heap.pop();
+        result.push_back(top.first);
         n--;
     }
 
@@ -39,15 +44,66 @@ vector<string> top_n_with_heap(vector<string> words, int n)
 
 int main()
 {
-    vector<string> topWords = top_n_with_heap(w, 3);
+    vector<string> w = {"python", "go", "c", "java", "python", "c", "go", "python"};
 
-    for (const auto &word : topWords)
+    vector<string> ans = top_n_words(w, 2);
+
+    for (string &a : ans)
     {
-        cout << word << endl;
+        cout << a << endl;
     }
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<string> w = {"python", "c", "java", "python", "c", "go", "python"};
+// // 1:python
+// // 2:go
+// // 2:c
+// // 4:java
+
+// vector<string> top_n_with_heap(vector<string> words, int n)
+// {
+//     unordered_map<string, int> freqMap;
+//     for (int i = 0; i < words.size(); ++i)
+//     {
+//         freqMap[words[i]]++;
+//     }
+//     auto compare = [](const pair<string, int> a, pair<string, int> b) -> bool
+//     {
+//         return a.second < b.second;
+//     };
+
+//     priority_queue<pair<string, int>, vector<pair<string, int>>, decltype(compare)>
+//         heap(compare);
+
+//     for (auto m : freqMap)
+//         heap.push(m);
+
+//     vector<string> result;
+//     while (!heap.empty() && n > 0)
+//     {
+//         result.push_back(heap.top().first);
+//         heap.pop();
+//         n--;
+//     }
+
+//     return result;
+// }
+
+// int main()
+// {
+//     vector<string> topWords = top_n_with_heap(w, 3);
+
+//     for (const auto &word : topWords)
+//     {
+//         cout << word << endl;
+//     }
+
+//     return 0;
+// }
 
 // int main()
 // {
