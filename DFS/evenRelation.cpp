@@ -9,53 +9,104 @@ using namespace std;
 
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-vector<int> c;
-map<int, vector<pair<int, int>>> graph;
+vector<bool> visted(100030, false);
 
-void dfs(int now, int color = 0)
+void dfs(int node, int color, vector<int> &ans, vector<vector<pair<int, int>>> &graph)
 {
-    c[now] = color;
-    for (auto g : graph[now])
+    visted[node] = true;
+    for (auto g : graph[node])
     {
-        int next = g.first;
+        int next_node = g.first;
         int dist = g.second;
 
-        if (c[next] != -1)
-            continue;
+        int next_color = dist % 2 == 0 ? color : (color + 1) % 2;
+        ans[next_node] = next_color;
 
-        if (dist % 2 == 0)
-            dfs(next, color);
-        else
-            dfs(next, (color + 1) % 2);
+        if (!visted[next_node])
+            dfs(next_node, next_color, ans, graph);
     }
-
-    return;
 }
 
 int main()
 {
     int n;
     cin >> n;
-    c.resize(n + 1, -1);
-    vector<int> u(n - 1), v(n - 1), w(n - 1);
+
+    vector<vector<pair<int, int>>> graph(n);
 
     rep(i, n - 1)
     {
-        cin >> u[i] >> v[i] >> w[i];
-        graph[u[i]].push_back({v[i], w[i]});
-        graph[v[i]].push_back({u[i], w[i]});
+        int u, v, w;
+        cin >> u >> v >> w;
+        u--;
+        v--;
+
+        graph[u].push_back({v, w});
+        graph[v].push_back({u, w});
     }
 
-    dfs(1);
+    vector<int> ans(n);
 
-    for (int i = 1; i <= n; i++)
-    {
+    dfs(0, 0, ans, graph);
 
-        cout << c[i] << endl;
-    }
+    for (auto a : ans)
+        cout << a << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// vector<int> c;
+// map<int, vector<pair<int, int>>> graph;
+
+// void dfs(int now, int color = 0)
+// {
+//     c[now] = color;
+//     for (auto g : graph[now])
+//     {
+//         int next = g.first;
+//         int dist = g.second;
+
+//         if (c[next] != -1)
+//             continue;
+
+//         if (dist % 2 == 0)
+//             dfs(next, color);
+//         else
+//             dfs(next, (color + 1) % 2);
+//     }
+
+//     return;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     c.resize(n + 1, -1);
+//     vector<int> u(n - 1), v(n - 1), w(n - 1);
+
+//     rep(i, n - 1)
+//     {
+//         cin >> u[i] >> v[i] >> w[i];
+//         graph[u[i]].push_back({v[i], w[i]});
+//         graph[v[i]].push_back({u[i], w[i]});
+//     }
+
+//     dfs(1);
+
+//     for (int i = 1; i <= n; i++)
+//     {
+
+//         cout << c[i] << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

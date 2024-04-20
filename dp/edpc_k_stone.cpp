@@ -5,23 +5,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 山の石がi個で自分の手番の時勝利するかどうか
-bool dp[100010];
-
 int main()
 {
-    int n, k, a[100010];
+    int n, k;
     cin >> n >> k;
+    vector<int> a(n);
 
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
-    for (int i = 1; i <= k; i++)
+    // 石の個数がnで残った石がこの状態で先手or後手が勝つか負けるか
+    vector<bool> dp(k + 1);
+
+    dp[0] = false;
+
+    for (int i = 0; i < k; i++)
     {
         for (int j = 0; j < n; j++)
         {
+
             if (i - a[j] >= 0)
-                dp[i] = dp[i] | !dp[i - a[j]];
+                dp[i + 1] = dp[i] || !dp[i - a[j]];
         }
     }
 
@@ -32,6 +36,37 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// // 山の石がi個で自分の手番の時勝利するかどうか
+// bool dp[100010];
+
+// int main()
+// {
+//     int n, k, a[100010];
+//     cin >> n >> k;
+
+//     for (int i = 0; i < n; i++)
+//         cin >> a[i];
+
+//     for (int i = 1; i <= k; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {
+//             if (i - a[j] >= 0)
+//                 dp[i] = dp[i] | !dp[i - a[j]];
+//         }
+//     }
+
+//     if (dp[k])
+//         cout << "First" << endl;
+//     else
+//         cout << "Second" << endl;
+
+//     return 0;
+// }
 
 /*
 5/8やり直し分

@@ -3,53 +3,73 @@
 // 0501もう一度
 
 #include <bits/stdc++.h>
-
 using namespace std;
+#define rep(i, n) for (int i = 0; i < n; ++i)
 
 int main()
 {
-    int h, w, ans = 0;
 
+    int h, w;
     cin >> w >> h;
 
-    int graph[h + 2][w + 2];
+    vector<vector<int>> building_map(h + 2, vector<int>(w + 2, 0));
 
-    for (int i = 1; i <= h; i++)
+    rep(i, h)
     {
-        for (int j = 1; j <= w; j++)
+        rep(j, w)
         {
-            cin >> graph[i][j];
+            int d;
+            cin >> d;
+            building_map[i + 1][j + 1] = d;
         }
     }
 
+    int ans = 0;
+
     queue<pair<int, int>> q;
-    q.push({0, 0});
+    vector<vector<int>> distance(h + 2, vector<int>(w + 2, -1));
 
-    vector<vector<bool>> dist(h + 2, vector<bool>(w + 2, false));
-    dist[0][0] = true;
+    pair<int, int> start = {0, 0};
+    q.push(start);
+    distance[start.first][start.second] = 0;
 
-    int dy[6] = {0, 1, 0, -1, -1, 1};
-    int dx[2][6] = {{1, 0, -1, 0, -1, -1}, {1, 0, -1, 0, 1, 1}};
+    int dx_odd[6] = {0, 1, 0, -1, -1, 1};
+    int dy_odd[6] = {1, 0, -1, 0, 1, 1};
+    int dx_even[6] = {0, 1, 0, -1, -1, 1};
+    int dy_even[6] = {1, 0, -1, 0, -1, -1};
 
     while (!q.empty())
     {
-        int y = q.front().first;
-        int x = q.front().second;
+        auto now_position = q.front();
         q.pop();
 
-        for (int i = 0; i < 6; i++)
-        {
-            int ny = y + dy[i];
-            int nx = x + dx[y % 2][i];
+        int x = now_position.first;
+        int y = now_position.second;
 
-            if (nx >= 0 && nx <= w + 1 && ny >= 0 && ny <= h + 1)
+        int now_distance = distance[x][y];
+
+        rep(i, 6)
+        {
+            int nx, ny;
+            if (x % 2 == 1)
             {
-                if (graph[ny][nx] == 1)
+                nx = x + dx_odd[i];
+                ny = y + dy_odd[i];
+            }
+            else
+            {
+                nx = x + dx_even[i];
+                ny = y + dy_even[i];
+            }
+
+            if (0 <= nx && nx < h + 2 && 0 <= ny && ny < w + 2)
+            {
+                if (building_map[nx][ny] == 1)
                     ans++;
-                else if (!dist[ny][nx])
+                else if (distance[nx][ny] == -1)
                 {
-                    dist[ny][nx] = true;
-                    q.push({ny, nx});
+                    q.push({nx, ny});
+                    distance[nx][ny] = now_distance + 1;
                 }
             }
         }
@@ -59,6 +79,64 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+//     int h, w, ans = 0;
+
+//     cin >> w >> h;
+
+//     int graph[h + 2][w + 2];
+
+//     for (int i = 1; i <= h; i++)
+//     {
+//         for (int j = 1; j <= w; j++)
+//         {
+//             cin >> graph[i][j];
+//         }
+//     }
+
+//     queue<pair<int, int>> q;
+//     q.push({0, 0});
+
+//     vector<vector<bool>> dist(h + 2, vector<bool>(w + 2, false));
+//     dist[0][0] = true;
+
+//     int dy[6] = {0, 1, 0, -1, -1, 1};
+//     int dx[2][6] = {{1, 0, -1, 0, -1, -1}, {1, 0, -1, 0, 1, 1}};
+
+//     while (!q.empty())
+//     {
+//         int y = q.front().first;
+//         int x = q.front().second;
+//         q.pop();
+
+//         for (int i = 0; i < 6; i++)
+//         {
+//             int ny = y + dy[i];
+//             int nx = x + dx[y % 2][i];
+
+//             if (nx >= 0 && nx <= w + 1 && ny >= 0 && ny <= h + 1)
+//             {
+//                 if (graph[ny][nx] == 1)
+//                     ans++;
+//                 else if (!dist[ny][nx])
+//                 {
+//                     dist[ny][nx] = true;
+//                     q.push({ny, nx});
+//                 }
+//             }
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 

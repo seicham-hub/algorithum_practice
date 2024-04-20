@@ -8,29 +8,64 @@ using namespace std;
 void selection(vector<int> &nums)
 {
     int n = nums.size();
+
     rep(i, n)
     {
+
         int min_ind = i;
         for (int j = i; j < n; j++)
         {
             if (nums[j] < nums[min_ind])
                 min_ind = j;
         }
-        swap(nums[min_ind], nums[i]);
+
+        swap(nums[i], nums[min_ind]);
     }
 }
 
 int main()
 {
-
     vector<int> nums;
-    rep(i, 10) nums.push_back(rand() % 1000);
+    rep(i, 10) nums.push_back(rand() % 100);
 
     selection(nums);
 
-    rep(i, nums.size()) cout << nums[i] << endl;
+    for (int n : nums)
+        cout << n << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// void selection(vector<int> &nums)
+// {
+//     int n = nums.size();
+//     rep(i, n)
+//     {
+//         int min_ind = i;
+//         for (int j = i; j < n; j++)
+//         {
+//             if (nums[j] < nums[min_ind])
+//                 min_ind = j;
+//         }
+//         swap(nums[min_ind], nums[i]);
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<int> nums;
+//     rep(i, 10) nums.push_back(rand() % 1000);
+
+//     selection(nums);
+
+//     rep(i, nums.size()) cout << nums[i] << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

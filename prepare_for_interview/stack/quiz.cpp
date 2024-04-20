@@ -4,41 +4,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool validate_format(string str)
+bool validate_format(string s)
 {
 
-    unordered_map<char, char> lookup = {{'{', '}'}, {'(', ')'}, {'[', ']'}};
+    unordered_map<char, char> blacket_pair = {{'{', '}'}, {'(', ')'}, {'[', ']'}};
 
-    vector<char> stack;
-
-    for (char c : str)
+    stack<char> st;
+    for (char c : s)
     {
+        if (blacket_pair.count(c))
+            st.push(blacket_pair[c]);
 
-        if (lookup.count(c))
+        for (auto m : blacket_pair)
         {
-            stack.push_back(lookup[c]);
-        }
-        else
-        {
-
-            if (c == '}' || c == ')' || c == ']')
+            if (m.second == c)
             {
-                if (stack.empty() || stack.back() != c)
+                if (st.empty() || st.top() != c)
                     return false;
-
-                stack.pop_back();
+                st.pop();
             }
         }
     }
 
-    return stack.empty();
+    return st.empty()
 }
-
 int main()
 {
 
-    // string check_str = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
-    string check_str = "{\"users\": [{\"name\": \"David\", \"age\": 28}, {\"name\": \"Eve\", \"age\": 22}]}[";
+    string check_str = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
+    // string check_str = "{\"users\": [{\"name\": \"David\", \"age\": 28}, {\"name\": \"Eve\", \"age\": 22}]}[";
 
     bool ans = validate_format(check_str);
 
@@ -46,6 +40,52 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool validate_format(string str)
+// {
+
+//     unordered_map<char, char> lookup = {{'{', '}'}, {'(', ')'}, {'[', ']'}};
+
+//     vector<char> stack;
+
+//     for (char c : str)
+//     {
+
+//         if (lookup.count(c))
+//         {
+//             stack.push_back(lookup[c]);
+//         }
+//         else
+//         {
+
+//             if (c == '}' || c == ')' || c == ']')
+//             {
+//                 if (stack.empty() || stack.back() != c)
+//                     return false;
+
+//                 stack.pop_back();
+//             }
+//         }
+//     }
+
+//     return stack.empty();
+// }
+
+// int main()
+// {
+
+//     // string check_str = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
+//     string check_str = "{\"users\": [{\"name\": \"David\", \"age\": 28}, {\"name\": \"Eve\", \"age\": 22}]}[";
+
+//     bool ans = validate_format(check_str);
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
