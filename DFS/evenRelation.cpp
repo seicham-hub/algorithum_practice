@@ -6,30 +6,32 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-vector<bool> visted(100030, false);
+int n;
 
-void dfs(int node, int color, vector<int> &ans, vector<vector<pair<int, int>>> &graph)
+void dfs(int node, int color, vector<int> &ans, vector<vector<pair<int, int>>> &graph, vector<bool> &visited)
 {
-    visted[node] = true;
-    for (auto g : graph[node])
+
+    ans[node] = color;
+    visited[node] = true;
+
+    for (pair<int, int> g : graph[node])
     {
         int next_node = g.first;
         int dist = g.second;
 
         int next_color = dist % 2 == 0 ? color : (color + 1) % 2;
-        ans[next_node] = next_color;
 
-        if (!visted[next_node])
-            dfs(next_node, next_color, ans, graph);
+        if (!visited[next_node])
+            dfs(next_node, next_color, ans, graph, visited);
     }
+    return;
 }
 
 int main()
 {
-    int n;
+
     cin >> n;
 
     vector<vector<pair<int, int>>> graph(n);
@@ -45,15 +47,67 @@ int main()
         graph[v].push_back({u, w});
     }
 
+    vector<bool> visited(n);
     vector<int> ans(n);
-
-    dfs(0, 0, ans, graph);
+    ans[0] = 0;
+    dfs(0, 0, ans, graph, visited);
 
     for (auto a : ans)
         cout << a << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// vector<bool> visted(100030, false);
+
+// void dfs(int node, int color, vector<int> &ans, vector<vector<pair<int, int>>> &graph)
+// {
+//     visted[node] = true;
+//     for (auto g : graph[node])
+//     {
+//         int next_node = g.first;
+//         int dist = g.second;
+
+//         int next_color = dist % 2 == 0 ? color : (color + 1) % 2;
+//         ans[next_node] = next_color;
+
+//         if (!visted[next_node])
+//             dfs(next_node, next_color, ans, graph);
+//     }
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<vector<pair<int, int>>> graph(n);
+
+//     rep(i, n - 1)
+//     {
+//         int u, v, w;
+//         cin >> u >> v >> w;
+//         u--;
+//         v--;
+
+//         graph[u].push_back({v, w});
+//         graph[v].push_back({u, w});
+//     }
+
+//     vector<int> ans(n);
+
+//     dfs(0, 0, ans, graph);
+
+//     for (auto a : ans)
+//         cout << a << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

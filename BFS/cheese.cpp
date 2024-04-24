@@ -9,14 +9,59 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+int h, w, n;
+
+int calc_section_time(pair<int, int> start, pair<int, int> goal, vector<vector<char>> city_map)
+{
+    queue<pair<int, int>> q;
+    vector<vector<int>> travel_time(h, vector<int>(w, -1));
+    q.push(start);
+    travel_time[start.first][start.second] = 0;
+
+    int section_time = -1;
+    while (!q.empty())
+    {
+        auto now_position = q.front();
+        q.pop();
+
+        int x = now_position.first;
+        int y = now_position.second;
+
+        int now_travel_time = travel_time[x][y];
+
+        if (now_position == goal)
+        {
+            section_time = now_travel_time;
+            break;
+        }
+
+        rep(d, 4)
+        {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+
+            if (0 <= nx && nx < h && 0 <= ny && ny < w && city_map[nx][ny] != 'X')
+            {
+                if (travel_time[nx][ny] == -1)
+                {
+                    q.push({nx, ny});
+                    travel_time[nx][ny] = now_travel_time + 1;
+                }
+            }
+        }
+    }
+
+    return section_time;
+}
+
 int main()
 {
 
-    int h, w, n;
     cin >> h >> w >> n;
 
     vector<vector<char>> city_map(h, vector<char>(w));
-
     vector<pair<int, int>> start_end_position(n + 1);
 
     rep(i, h)
@@ -26,74 +71,119 @@ int main()
             char c;
             cin >> c;
             city_map[i][j] = c;
-
             if (c == 'S')
                 start_end_position[0] = {i, j};
-
             if ('1' <= c && c <= '9')
             {
+
                 start_end_position[c - '0'] = {i, j};
             }
         }
     }
-
-    int dx[4] = {0, 1, 0, -1};
-    int dy[4] = {1, 0, -1, 0};
 
     int ans = 0;
 
     rep(i, n)
     {
 
-        queue<pair<int, int>> q;
-        vector<vector<int>> travel_time(h, vector<int>(w, -1));
+        pair<int, int> start = start_end_position[i];
+        pair<int, int> goal = start_end_position[i + 1];
 
-        auto start = start_end_position[i];
-        auto goal = start_end_position[i + 1];
-        q.push(start);
-        travel_time[start.first][start.second] = 0;
-
-        int time = -1;
-
-        while (!q.empty())
-        {
-            auto now_position = q.front();
-            q.pop();
-
-            int x = now_position.first;
-            int y = now_position.second;
-
-            int now_time = travel_time[x][y];
-
-            if (now_position == goal)
-            {
-                time = now_time;
-                break;
-            }
-            rep(d, 4)
-            {
-                int nx = x + dx[d];
-                int ny = y + dy[d];
-
-                if (0 <= nx && nx < h && 0 <= ny && ny < w && city_map[nx][ny] != 'X')
-                {
-
-                    if (travel_time[nx][ny] == -1)
-                    {
-                        q.push({nx, ny});
-                        travel_time[nx][ny] = now_time + 1;
-                    }
-                }
-            }
-        }
-
-        ans += time;
+        ans += calc_section_time(start, goal, city_map);
     }
-
     cout << ans << endl;
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+
+//     int h, w, n;
+//     cin >> h >> w >> n;
+
+//     vector<vector<char>> city_map(h, vector<char>(w));
+
+//     vector<pair<int, int>> start_end_position(n + 1);
+
+//     rep(i, h)
+//     {
+//         rep(j, w)
+//         {
+//             char c;
+//             cin >> c;
+//             city_map[i][j] = c;
+
+//             if (c == 'S')
+//                 start_end_position[0] = {i, j};
+
+//             if ('1' <= c && c <= '9')
+//             {
+//                 start_end_position[c - '0'] = {i, j};
+//             }
+//         }
+//     }
+
+//     int dx[4] = {0, 1, 0, -1};
+//     int dy[4] = {1, 0, -1, 0};
+
+//     int ans = 0;
+
+//     rep(i, n)
+//     {
+
+//         queue<pair<int, int>> q;
+//         vector<vector<int>> travel_time(h, vector<int>(w, -1));
+
+//         auto start = start_end_position[i];
+//         auto goal = start_end_position[i + 1];
+//         q.push(start);
+//         travel_time[start.first][start.second] = 0;
+
+//         int time = -1;
+
+//         while (!q.empty())
+//         {
+//             auto now_position = q.front();
+//             q.pop();
+
+//             int x = now_position.first;
+//             int y = now_position.second;
+
+//             int now_time = travel_time[x][y];
+
+//             if (now_position == goal)
+//             {
+//                 time = now_time;
+//                 break;
+//             }
+//             rep(d, 4)
+//             {
+//                 int nx = x + dx[d];
+//                 int ny = y + dy[d];
+
+//                 if (0 <= nx && nx < h && 0 <= ny && ny < w && city_map[nx][ny] != 'X')
+//                 {
+
+//                     if (travel_time[nx][ny] == -1)
+//                     {
+//                         q.push({nx, ny});
+//                         travel_time[nx][ny] = now_time + 1;
+//                     }
+//                 }
+//             }
+//         }
+
+//         ans += time;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

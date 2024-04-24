@@ -16,35 +16,29 @@ dp[i][j] = 元の数列から連続する区間ai,....,aj-1を抜き出した状
 
 */
 
-/*
-5/13やり直し分
-*/
-
 #include <bits/stdc++.h>
 using namespace std;
-
-long long dp[3100][3100];
+using ll = long long;
 
 int main()
 {
     int n;
     cin >> n;
-
-    vector<long long> a(n);
-
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
-    {
         cin >> a[i];
-        dp[i][i] = 0;
-    }
 
+    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1, 0));
+
+    // 普通に0<=i<n,1<=j<=nで回すと、i,jの間に依存関係がないのでダメ
+    // 遷移は残っている配列の長さをもとに行う
     for (int len = 1; len <= n; len++)
     {
         for (int i = 0; i <= n - len; i++)
         {
             int j = len + i;
 
-            if (n % 2 == len % 2)
+            if (len % 2 == n % 2)
                 dp[i][j] = max(dp[i + 1][j] + a[i], dp[i][j - 1] + a[j - 1]);
             else
                 dp[i][j] = min(dp[i + 1][j] - a[i], dp[i][j - 1] - a[j - 1]);
@@ -55,6 +49,46 @@ int main()
 
     return 0;
 }
+
+/*
+5/13やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// long long dp[3100][3100];
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<long long> a(n);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> a[i];
+//         dp[i][i] = 0;
+//     }
+
+//     for (int len = 1; len <= n; len++)
+//     {
+//         for (int i = 0; i <= n - len; i++)
+//         {
+//             int j = len + i;
+
+//             if (n % 2 == len % 2)
+//                 dp[i][j] = max(dp[i + 1][j] + a[i], dp[i][j - 1] + a[j - 1]);
+//             else
+//                 dp[i][j] = min(dp[i + 1][j] - a[i], dp[i][j - 1] - a[j - 1]);
+//         }
+//     }
+
+//     cout << dp[0][n] << endl;
+
+//     return 0;
+// }
 
 /*
 5/12やり直し分
