@@ -28,16 +28,15 @@ int main()
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
+    // dp[i][j] 配列がaiからaj-1の状態から始めたときのx-yの値
     vector<vector<ll>> dp(n + 1, vector<ll>(n + 1, 0));
 
-    // 普通に0<=i<n,1<=j<=nで回すと、i,jの間に依存関係がないのでダメ
-    // 遷移は残っている配列の長さをもとに行う
     for (int len = 1; len <= n; len++)
     {
         for (int i = 0; i <= n - len; i++)
         {
-            int j = len + i;
 
+            int j = len + i;
             if (len % 2 == n % 2)
                 dp[i][j] = max(dp[i + 1][j] + a[i], dp[i][j - 1] + a[j - 1]);
             else
@@ -49,6 +48,40 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> a(n);
+//     for (int i = 0; i < n; i++)
+//         cin >> a[i];
+
+//     vector<vector<ll>> dp(n + 1, vector<ll>(n + 1, 0));
+
+//     // 普通に0<=i<n,1<=j<=nで回すと、i,jの間に依存関係がないのでダメ
+//     // 遷移は残っている配列の長さをもとに行う
+//     for (int len = 1; len <= n; len++)
+//     {
+//         for (int i = 0; i <= n - len; i++)
+//         {
+//             int j = len + i;
+
+//             if (len % 2 == n % 2)
+//                 dp[i][j] = max(dp[i + 1][j] + a[i], dp[i][j - 1] + a[j - 1]);
+//             else
+//                 dp[i][j] = min(dp[i + 1][j] - a[i], dp[i][j - 1] - a[j - 1]);
+//         }
+//     }
+
+//     cout << dp[0][n] << endl;
+
+//     return 0;
+// }
 
 /*
 5/13やり直し分

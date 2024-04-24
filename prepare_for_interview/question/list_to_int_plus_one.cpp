@@ -8,12 +8,10 @@ using namespace std;
 
 void remove_zero(vector<int> &nums)
 {
-    if (nums[0] == 0)
+    while (nums.size() && nums[0] == 0)
     {
         nums.erase(nums.begin());
-        remove_zero(nums);
     }
-    return;
 }
 
 int main()
@@ -22,40 +20,95 @@ int main()
     vector<int> nums = {9, 9, 9};
 
     int n = nums.size();
-    int i = n - 1;
-    nums[i]++;
-    while (i > 0)
+
+    int i = 1;
+
+    nums[n - i]++;
+
+    while (n - i - 1 >= 0)
     {
-        if (nums[i] < 10)
+
+        if (nums[n - i] < 10)
         {
-            remove_zero(nums);
             break;
         }
         else
         {
-            nums[i] = 0;
-            nums[i - 1]++;
+            nums[n - i] = 0;
+            nums[n - i - 1]++;
         }
-
-        i--;
+        i++;
     }
 
-    if (nums[0] == 10)
+    remove_zero(nums);
+
+    if (nums[0] > 9)
     {
         nums[0] = 0;
         nums.insert(nums.begin(), 1);
     }
 
     string ans = "";
-    for (int j = 0; j < nums.size(); j++)
-    {
-        ans += nums[j] + '0';
-    }
+    for (int i = 0; i < nums.size(); i++)
+        ans += nums[i] + '0';
 
     cout << stoi(ans) << endl;
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// void remove_zero(vector<int> &nums)
+// {
+//     if (nums[0] == 0)
+//     {
+//         nums.erase(nums.begin());
+//         remove_zero(nums);
+//     }
+//     return;
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {9, 9, 9};
+
+//     int n = nums.size();
+//     int i = n - 1;
+//     nums[i]++;
+//     while (i > 0)
+//     {
+//         if (nums[i] < 10)
+//         {
+//             remove_zero(nums);
+//             break;
+//         }
+//         else
+//         {
+//             nums[i] = 0;
+//             nums[i - 1]++;
+//         }
+
+//         i--;
+//     }
+
+//     if (nums[0] == 10)
+//     {
+//         nums[0] = 0;
+//         nums.insert(nums.begin(), 1);
+//     }
+
+//     string ans = "";
+//     for (int j = 0; j < nums.size(); j++)
+//     {
+//         ans += nums[j] + '0';
+//     }
+
+//     cout << stoi(ans) << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
