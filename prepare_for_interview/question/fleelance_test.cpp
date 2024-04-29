@@ -12,27 +12,28 @@ using ll = long long;
 
 int main()
 {
-
     ll h, a, b;
+
     cin >> h >> a >> b;
 
-    // 　勇者の攻撃力以下になった次のターンで倒せるので、あらかじめ引いておく
     h = h - a;
+    ll count = 1;
 
     if (h <= 0)
     {
-
         cout << "YES" << endl;
-        cout << 1 << endl;
+        cout << count << endl;
+        return 0;
     }
 
     ll diff = a - b;
 
     if (diff > 0)
     {
-        ll count = h / diff + 1;
-        if (h % diff > 0)
+        count += h / diff;
+        if (h % diff != 0)
             count++;
+
         cout << "YES" << endl;
         cout << count << endl;
     }
@@ -43,6 +44,44 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int main()
+// {
+
+//     ll h, a, b;
+//     cin >> h >> a >> b;
+
+//     // 　勇者の攻撃力以下になった次のターンで倒せるので、あらかじめ引いておく
+//     h = h - a;
+
+//     if (h <= 0)
+//     {
+
+//         cout << "YES" << endl;
+//         cout << 1 << endl;
+//     }
+
+//     ll diff = a - b;
+
+//     if (diff > 0)
+//     {
+//         ll count = h / diff + 1;
+//         if (h % diff > 0)
+//             count++;
+//         cout << "YES" << endl;
+//         cout << count << endl;
+//     }
+//     else
+//     {
+//         cout << "NO" << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
