@@ -1,4 +1,4 @@
-from primery_judge import is_prime_v3 as is_prime
+from primery_judge import is_prime_v4 as is_prime
 import unittest
 
 
