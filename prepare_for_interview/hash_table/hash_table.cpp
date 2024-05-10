@@ -13,20 +13,22 @@ public:
         table.resize(size);
     }
 
-    int hash(const string &key)
+    int hash(string key)
     {
+
         int hash_value = 0;
+
         for (char c : key)
         {
             hash_value = (hash_value * 31 + c) % size;
         }
 
-        return abs(hash_value);
+        return hash_value;
     }
-    void add(const string &key, const string &value)
+
+    void add(string key, string value)
     {
         int index = hash(key);
-
         for (auto &data : table[index])
         {
             if (data[0] == key)
@@ -37,19 +39,18 @@ public:
         }
 
         table[index].push_back({key, value});
-        return;
     }
 
-    string get(const string &key)
+    string get(string key)
     {
-
         int index = hash(key);
-        for (auto &data : table[index])
+        for (auto data : table[index])
         {
-            if (key == data[0])
+            if (data[0] == key)
+            {
                 return data[1];
+            }
         }
-
         return "";
     }
 
@@ -58,30 +59,131 @@ public:
         int index = hash(key);
         for (auto &data : table[index])
         {
-            if (key == data[0])
+            if (data[0] == key)
+            {
                 return data[1];
+            }
         }
 
         table[index].push_back({key, ""});
         return table[index].back()[1];
     }
+
+    void remove(string key)
+    {
+        int index = hash(key);
+        for (int i = 0; i < table[index].size(); i++)
+        {
+            auto data = table[index][i];
+            if (data[0] == key)
+            {
+                table[index].erase(table[index].begin() + i);
+            }
+        }
+
+        return;
+    }
 };
 
 int main()
 {
-    HashTable *hash = new HashTable(10);
-    hash->add("ghq", "マッカーサー");
-    hash->add("ghq", "マッカーサー2");
-    hash->add("ghq", "マッカーサー3");
-    hash->add("映画", "ヒトラーの逆襲");
+    HashTable *hash_table = new HashTable(10);
+    hash_table->add("michel", "jackson");
+    hash_table->add("hogehoge", "pichipichi");
 
-    cout << hash->get("ghq") << endl;
-    cout << hash->get("映画") << endl;
-    cout << hash->get("gdshafjsd") << endl;
-    (*hash)["gdshafjsd"] = "gfjdsakgfjds";
-    (*hash)["映画"] = "ゴジラ";
+    (*hash_table)["hogehoge"] = "bogibogi";
+    (*hash_table)["bakibaki"] = "doutei";
+
+    cout << (*hash_table)["hogehoge"] << endl;
+    cout << (*hash_table)["bakibaki"] << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class HashTable
+// {
+// public:
+//     int size;
+//     vector<vector<array<string, 2>>> table;
+
+//     HashTable(int size)
+//     {
+//         this->size = size;
+//         table.resize(size);
+//     }
+
+//     int hash(const string &key)
+//     {
+//         int hash_value = 0;
+//         for (char c : key)
+//         {
+//             hash_value = (hash_value * 31 + c) % size;
+//         }
+
+//         return abs(hash_value);
+//     }
+//     void add(const string &key, const string &value)
+//     {
+//         int index = hash(key);
+
+//         for (auto &data : table[index])
+//         {
+//             if (data[0] == key)
+//             {
+//                 data[1] = value;
+//                 return;
+//             }
+//         }
+
+//         table[index].push_back({key, value});
+//         return;
+//     }
+
+//     string get(const string &key)
+//     {
+
+//         int index = hash(key);
+//         for (auto &data : table[index])
+//         {
+//             if (key == data[0])
+//                 return data[1];
+//         }
+
+//         return "";
+//     }
+
+//     string &operator[](const string &key)
+//     {
+//         int index = hash(key);
+//         for (auto &data : table[index])
+//         {
+//             if (key == data[0])
+//                 return data[1];
+//         }
+
+//         table[index].push_back({key, ""});
+//         return table[index].back()[1];
+//     }
+// };
+
+// int main()
+// {
+//     HashTable *hash = new HashTable(10);
+//     hash->add("ghq", "マッカーサー");
+//     hash->add("ghq", "マッカーサー2");
+//     hash->add("ghq", "マッカーサー3");
+//     hash->add("映画", "ヒトラーの逆襲");
+
+//     cout << hash->get("ghq") << endl;
+//     cout << hash->get("映画") << endl;
+//     cout << hash->get("gdshafjsd") << endl;
+//     (*hash)["gdshafjsd"] = "gfjdsakgfjds";
+//     (*hash)["映画"] = "ゴジラ";
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
