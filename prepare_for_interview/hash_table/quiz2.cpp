@@ -1,4 +1,4 @@
-// 問題：[1,2,6,9,10,15,14] 二つペアを選んだ時に、その二つの数字の合計と
+// 問題：[11, 2, 5, 9, 10, 3] 二つペアを選んだ時に、その二つの数字の合計と
 // 残りの数字をすべて足したものが等しくなる組はあるか？
 
 // 2024_03_25もう一度
@@ -7,39 +7,88 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-pair<int, int> get_half_sum_pair(vector<int> &nums)
+struct Result
+{
+    pair<int, int> value;
+    Result(int first, int second)
+    {
+        value = {first, second};
+    }
+};
+
+unique_ptr<Result> get_sum_pair(vector<int> &nums)
 {
     int sum = 0;
     int n = nums.size();
-
     rep(i, n) sum += nums[i];
 
     if (sum % 2 != 0)
-        return {0, 0};
-    unordered_map<int, int> cache;
+        return nullptr;
 
-    rep(i, n)
+    unordered_map<int, bool> cache;
+    for (int &ni : nums)
     {
-        int x = nums[i];
-        if (cache[sum / 2 - x])
+        if (cache[ni])
         {
-            return {sum / 2 - x, x};
+            return make_unique<Result>(ni, sum / 2 - ni);
         }
-        cache[x]++;
+
+        cache[sum / 2 - ni] = true;
     }
 
-    return {0, 0};
+    return nullptr;
 }
 
 int main()
 {
+
     vector<int> nums = {11, 2, 5, 9, 10, 3};
 
-    pair<int, int> ans = get_half_sum_pair(nums);
+    auto ans = get_sum_pair(nums);
 
-    cout << ans.first << "," << ans.second << endl;
+    if (ans)
+        cout << ans->value.first << "," << ans->value.second << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// pair<int, int> get_half_sum_pair(vector<int> &nums)
+// {
+//     int sum = 0;
+//     int n = nums.size();
+
+//     rep(i, n) sum += nums[i];
+
+//     if (sum % 2 != 0)
+//         return {0, 0};
+//     unordered_map<int, int> cache;
+
+//     rep(i, n)
+//     {
+//         int x = nums[i];
+//         if (cache[sum / 2 - x])
+//         {
+//             return {sum / 2 - x, x};
+//         }
+//         cache[x]++;
+//     }
+
+//     return {0, 0};
+// }
+
+// int main()
+// {
+//     vector<int> nums = {11, 2, 5, 9, 10, 3};
+
+//     pair<int, int> ans = get_half_sum_pair(nums);
+
+//     cout << ans.first << "," << ans.second << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

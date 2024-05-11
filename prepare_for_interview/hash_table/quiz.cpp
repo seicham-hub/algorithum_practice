@@ -1,48 +1,91 @@
 // 問題：[1,5,6,8,2,10] 足して14となるペアはあるか？
 
 #include <bits/stdc++.h>
+#include <optional>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-pair<int, int> get_pair(vector<int> &nums, int &target)
+struct Result
 {
-    // 数字：個数を記録
-    unordered_map<int, int> cache;
-    int n = nums.size();
+    pair<int, int> pai;
+    Result(int first, int second) : pai({first, second}){};
+};
 
-    rep(i, n)
-    {
-        cache[nums[i]]++;
-    }
+unique_ptr<Result> get_pair(vector<int> &nums, int target_sum)
+{
 
-    rep(i, n)
+    unordered_map<int, bool> cache;
+
+    for (int n : nums)
     {
-        int current = nums[i];
-        cache[current]--;
-        int remain = target - nums[i];
-        if (cache[remain])
+        int remain = target_sum - n;
+        if (cache[n])
         {
-            return {current, remain};
+            return make_unique<Result>(remain, n);
         }
-        cache[current]++;
+
+        cache[remain] = true;
     }
 
-    return {0, 0};
+    return nullptr;
 }
 
 int main()
 {
+    vector<int> nums = {1, 5, 6, 8, 2, 10};
 
-    vector<int> nums;
-    rep(i, 10) nums.push_back(rand() % 100);
-    int target = 50;
+    auto ans = get_pair(nums, 14);
 
-    pair<int, int> ans = get_pair(nums, target);
-
-    cout << ans.first << "," << ans.second << endl;
+    // nullptrはfalseと判定される
+    if (ans)
+        cout << ans->pai.first << "," << ans->pai.second << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// pair<int, int> get_pair(vector<int> &nums, int &target)
+// {
+//     // 数字：個数を記録
+//     unordered_map<int, int> cache;
+//     int n = nums.size();
+
+//     rep(i, n)
+//     {
+//         cache[nums[i]]++;
+//     }
+
+//     rep(i, n)
+//     {
+//         int current = nums[i];
+//         cache[current]--;
+//         int remain = target - nums[i];
+//         if (cache[remain])
+//         {
+//             return {current, remain};
+//         }
+//         cache[current]++;
+//     }
+
+//     return {0, 0};
+// }
+
+// int main()
+// {
+
+//     vector<int> nums;
+//     rep(i, 10) nums.push_back(rand() % 100);
+//     int target = 50;
+
+//     pair<int, int> ans = get_pair(nums, target);
+
+//     cout << ans.first << "," << ans.second << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
