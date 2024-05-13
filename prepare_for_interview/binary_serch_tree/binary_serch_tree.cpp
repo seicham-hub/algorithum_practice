@@ -9,49 +9,306 @@ struct Node
     Node *left;
     Node *right;
 
-    Node(int value) : value(value) {}
+    Node(int value) : value(value){};
 };
 
 class BinarySearchTree
 {
-
 public:
     Node *root;
 
     BinarySearchTree() : root(nullptr){};
 
-    Node *insert(int value)
+    void insert(int value)
     {
-
-        function<Node *(int, Node *)> _insert = [&](int value, Node *node) -> Node *
+        function<void(int &, Node *&)> _insert = [&](int &value, Node *&node)
         {
             if (node == nullptr)
             {
-                return new Node(value);
+                node = new Node(value);
+                return;
             }
+
             if (value < node->value)
-                node->left = _insert(value, node->left);
+                _insert(value, node->left);
             else
-                node->right = _insert(value, node->right);
-            return node;
+                _insert(value, node->right);
         };
 
-        root = _insert(value, root);
+        _insert(value, root);
+    }
+
+    void inorder()
+    {
+        function<void(Node *)> _inorder = [&](Node *node)
+        {
+            if (node == nullptr)
+                return;
+
+            _inorder(node->left);
+            cout << node->value << endl;
+            _inorder(node->right);
+        };
+
+        _inorder(root);
+    }
+
+    bool search(int value)
+    {
+        function<bool(int &, Node *)> _search = [&](int &value, Node *node) -> bool
+        {
+            if (node == nullptr)
+                return false;
+
+            if (value == node->value)
+                return true;
+            else if (value < node->value)
+                return _search(value, node->left);
+            else
+                return _search(value, node->right);
+        };
+
+        return _search(value, root);
+    }
+
+    int get_min_value(Node *node)
+    {
+
+        Node *current = node;
+        while (current->left != nullptr)
+        {
+            current = current->left;
+        }
+        return current->value;
+    }
+
+    void remove(int value)
+    {
+        function<void(int &, Node *&)> _remove = [&](int &value, Node *&node)
+        {
+            if (node == nullptr)
+                return;
+
+            if (value < node->value)
+                _remove(value, node->left);
+            else if (value > node->value)
+                _remove(value, node->right);
+            else
+            {
+                if (node->right == nullptr)
+                    node = node->left;
+                else if (node->left == nullptr)
+                    node = node->right;
+                else
+                {
+                    int right_min_value = get_min_value(node->right);
+                    _remove(right_min_value, node->right);
+                    node->value = right_min_value;
+                }
+            }
+        };
+        _remove(value, root);
     }
 };
 
 int main()
 {
-
     BinarySearchTree *tree = new BinarySearchTree();
 
+    tree->insert(15);
+    tree->insert(5);
+    tree->insert(13);
+    tree->insert(14);
+    tree->insert(12);
+    tree->insert(9);
     tree->insert(3);
     tree->insert(2);
     tree->insert(1);
-    tree->insert(8);
+    tree->insert(20);
+    tree->insert(21);
+    tree->inorder();
+
+    tree->remove(20);
+    cout << tree->search(1) << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// struct Node
+// {
+//     int value;
+//     Node *left;
+//     Node *right;
+
+//     Node(int value) : value(value) {}
+// };
+
+// class BinarySearchTree
+// {
+
+// public:
+//     Node *root;
+
+//     BinarySearchTree() : root(nullptr){};
+
+//     Node *insert(int value)
+//     {
+
+//         function<Node *(int, Node *)> _insert = [&](int value, Node *node) -> Node *
+//         {
+//             if (node == nullptr)
+//             {
+//                 return new Node(value);
+//             }
+//             if (value < node->value)
+//                 node->left = _insert(value, node->left);
+//             else
+//                 node->right = _insert(value, node->right);
+//             return node;
+//         };
+
+//         root = _insert(value, root);
+//     }
+
+//     void inorder()
+//     {
+//         function<void(Node *)> _inorder = [&](Node *node)
+//         {
+//             if (node == nullptr)
+//                 return;
+
+//             _inorder(node->left);
+//             cout << node->value << endl;
+//             _inorder(node->right);
+//         };
+
+//         _inorder(root);
+//     }
+
+//     bool search(int value)
+//     {
+
+//         function<bool(int &, Node *)> _search = [&](int &value, Node *node)
+//         {
+//             if (node == nullptr)
+//                 return false;
+
+//             if (value == node->value)
+//                 return true;
+
+//             if (value < node->value)
+//                 return _search(value, node->left);
+//             else
+//                 return _search(value, node->right);
+//         };
+
+//         return _search(value, root);
+//     }
+
+//     int min_value(Node *node)
+//     {
+//         if (node == nullptr)
+//             return 0;
+//         Node *current = node;
+//         while (current->left != nullptr)
+//         {
+//             current = current->left;
+//         }
+
+//         return current->value;
+//     }
+
+//     void test(int value)
+//     {
+//         function<void(int &, Node *)> _test = [&](int &value, Node *node)
+//         {
+//             node->value = value;
+//         };
+
+//         _test(value, root);
+//     }
+
+//     void remove_v1(int value)
+//     {
+
+//         function<void(int &, Node *&)> _remove = [&](int &value, Node *&node) -> void
+//         {
+//             if (node == nullptr)
+//                 return;
+//             if (value == node->value)
+//             {
+//                 if (node->right == nullptr)
+//                     node = node->left;
+//                 else if (node->left == nullptr)
+//                     node = node->right;
+//                 else
+//                 {
+//                     int right_min_value = min_value(node->right);
+//                     _remove(right_min_value, node->right);
+//                     node->value = right_min_value;
+//                 }
+//             }
+//             else if (value < node->value)
+//                 _remove(value, node->left);
+//             else
+//                 _remove(value, node->right);
+//         };
+
+//         _remove(value, root);
+//     }
+//     void remove_v2(int value)
+//     {
+
+//         function<Node *(int &, Node *)> _remove = [&](int &value, Node *node) -> Node *
+//         {
+//             if (node == nullptr)
+//                 return nullptr;
+//             if (value == node->value)
+//             {
+//                 if (node->right == nullptr)
+//                     return node->left;
+//                 else if (node->left == nullptr)
+//                     return node->right;
+//                 else
+//                 {
+//                     int right_min_value = min_value(node->right);
+//                     node->right = _remove(right_min_value, node->right);
+//                     node->value = right_min_value;
+//                 }
+//             }
+//             else if (value < node->value)
+//                 node->left = _remove(value, node->left);
+//             else
+//                 node->right = _remove(value, node->right);
+//             return node;
+//         };
+
+//         _remove(value, root);
+//     }
+// };
+
+// int main()
+// {
+
+//     BinarySearchTree *tree = new BinarySearchTree();
+
+//     tree->insert(5);
+
+//     tree->insert(3);
+//     tree->insert(4);
+//     tree->insert(2);
+//     tree->insert(1);
+//     tree->insert(6);
+//     tree->insert(7);
+//     tree->insert(8);
+//     tree->inorder();
+//     tree->remove_v2(2);
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
