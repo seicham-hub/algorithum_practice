@@ -9,15 +9,18 @@ using namespace std;
 
 struct Result
 {
-    pair<int, int> value;
-    Result(int first, int second)
+    pair<int, int> result;
+
+    Result(int x, int y)
     {
-        value = {first, second};
-    }
+        result = {x, y};
+    };
 };
 
-unique_ptr<Result> get_sum_pair(vector<int> &nums)
+unique_ptr<Result> get_sum_pair(vector<int> nums)
 {
+    unordered_map<int, bool> cache;
+
     int sum = 0;
     int n = nums.size();
     rep(i, n) sum += nums[i];
@@ -25,15 +28,13 @@ unique_ptr<Result> get_sum_pair(vector<int> &nums)
     if (sum % 2 != 0)
         return nullptr;
 
-    unordered_map<int, bool> cache;
-    for (int &ni : nums)
+    for (int &x : nums)
     {
-        if (cache[ni])
+        if (cache[x])
         {
-            return make_unique<Result>(ni, sum / 2 - ni);
+            return make_unique<Result>(x, sum / 2 - x);
         }
-
-        cache[sum / 2 - ni] = true;
+        cache[sum / 2 - x] = true;
     }
 
     return nullptr;
@@ -41,16 +42,65 @@ unique_ptr<Result> get_sum_pair(vector<int> &nums)
 
 int main()
 {
-
     vector<int> nums = {11, 2, 5, 9, 10, 3};
-
-    auto ans = get_sum_pair(nums);
+    unique_ptr<Result> ans = get_sum_pair(nums);
 
     if (ans)
-        cout << ans->value.first << "," << ans->value.second << endl;
+    {
+        cout << ans->result.first << "," << ans->result.second << endl;
+    }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// struct Result
+// {
+//     pair<int, int> value;
+//     Result(int first, int second)
+//     {
+//         value = {first, second};
+//     }
+// };
+
+// unique_ptr<Result> get_sum_pair(vector<int> &nums)
+// {
+//     int sum = 0;
+//     int n = nums.size();
+//     rep(i, n) sum += nums[i];
+
+//     if (sum % 2 != 0)
+//         return nullptr;
+
+//     unordered_map<int, bool> cache;
+//     for (int &ni : nums)
+//     {
+//         if (cache[ni])
+//         {
+//             return make_unique<Result>(ni, sum / 2 - ni);
+//         }
+
+//         cache[sum / 2 - ni] = true;
+//     }
+
+//     return nullptr;
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {11, 2, 5, 9, 10, 3};
+
+//     auto ans = get_sum_pair(nums);
+
+//     if (ans)
+//         cout << ans->value.first << "," << ans->value.second << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
