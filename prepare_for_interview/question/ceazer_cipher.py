@@ -1,3 +1,6 @@
+# シーザー暗号
+# 任意の数だけアルファベットをずらす
+
 import string
 def ceasar_cipher_v1(text:str,shift:int)->str:
     result = ''

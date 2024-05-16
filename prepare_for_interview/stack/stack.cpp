@@ -3,38 +3,76 @@ using namespace std;
 
 class Stack
 {
-
 public:
-    vector<int> stack;
+    vector<int> list;
 
-    void push(int value)
+    Stack() : list(0){};
+
+    void psuh(int value)
     {
-        stack.push_back(value);
+        list.push_back(value);
     }
     int pop()
     {
-
-        if (stack.empty())
+        if (list.empty())
             return -1;
 
-        int top = stack.back();
-        stack.erase(stack.end() - 1);
+        int result = list.back();
+        list.pop_back();
 
-        return top;
+        return result;
     }
 };
 
 int main()
 {
+    Stack st = Stack();
 
-    Stack *st = new Stack();
-
-    st->push(3);
-    st->push(4);
-    st->push(5);
-
-    cout << st->pop() << endl;
+    st.psuh(5);
+    st.psuh(6);
+    st.psuh(7);
+    st.psuh(8);
+    cout << st.pop() << endl;
+    return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Stack
+// {
+
+// public:
+//     vector<int> stack;
+
+//     void push(int value)
+//     {
+//         stack.push_back(value);
+//     }
+//     int pop()
+//     {
+
+//         if (stack.empty())
+//             return -1;
+
+//         int top = stack.back();
+//         stack.erase(stack.end() - 1);
+
+//         return top;
+//     }
+// };
+
+// int main()
+// {
+
+//     Stack *st = new Stack();
+
+//     st->push(3);
+//     st->push(4);
+//     st->push(5);
+
+//     cout << st->pop() << endl;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

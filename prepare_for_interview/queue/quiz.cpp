@@ -4,26 +4,23 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-stack<int> reverse_queue(queue<int> &q)
+stack<int> reverse_queue(queue<int> q)
 {
 
-    stack<int> res;
+    stack<int> result;
     while (!q.empty())
     {
-        res.push(q.front());
-
+        result.push(q.front());
         q.pop();
     }
-    return res;
+
+    return result;
 }
 
 int main()
 {
-
     queue<int> q;
-
     rep(i, 10) q.push(i);
-
     stack<int> ans = reverse_queue(q);
 
     while (!ans.empty())
@@ -31,9 +28,45 @@ int main()
         cout << ans.top() << endl;
         ans.pop();
     }
-
     return 0;
+
+    priority_queue<int> q;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// stack<int> reverse_queue(queue<int> &q)
+// {
+
+//     stack<int> res;
+//     while (!q.empty())
+//     {
+//         res.push(q.front());
+
+//         q.pop();
+//     }
+//     return res;
+// }
+
+// int main()
+// {
+
+//     queue<int> q;
+
+//     rep(i, 10) q.push(i);
+
+//     stack<int> ans = reverse_queue(q);
+
+//     while (!ans.empty())
+//     {
+//         cout << ans.top() << endl;
+//         ans.pop();
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
