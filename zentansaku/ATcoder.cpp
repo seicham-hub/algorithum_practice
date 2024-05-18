@@ -9,28 +9,55 @@ using namespace std;
 int main()
 {
     string s;
-    int maxLength = 0;
-    cin >> s;
 
-    for (int i = 0; i < s.size();)
+    unordered_map<char, bool> is_acgt = {{'A', true}, {'C', true}, {'G', true}, {'T', true}};
+    int ans = 0;
+    for (int i = 0; i < s.size(); i++)
     {
-
-        int tmpMax = 0;
-
-        while (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C')
+        int j = i;
+        int tmp_max = 0;
+        while (is_acgt.count(s[j]))
         {
-            tmpMax++;
-            i++;
+            tmp_max++;
+            j++;
         }
 
-        if (tmpMax == 0)
-            i++;
-
-        maxLength = max(tmpMax, maxLength);
+        ans = max(ans, tmp_max);
     }
-    cout << maxLength << endl;
+
+    cout << ans << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     string s;
+//     int maxLength = 0;
+//     cin >> s;
+
+//     for (int i = 0; i < s.size();)
+//     {
+
+//         int tmpMax = 0;
+
+//         while (s[i] == 'A' || s[i] == 'T' || s[i] == 'G' || s[i] == 'C')
+//         {
+//             tmpMax++;
+//             i++;
+//         }
+
+//         if (tmpMax == 0)
+//             i++;
+
+//         maxLength = max(tmpMax, maxLength);
+//     }
+//     cout << maxLength << endl;
+//     return 0;
+// }
 
 // 0414実施分
 // #include <bits/stdc++.h>

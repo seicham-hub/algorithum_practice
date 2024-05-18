@@ -2,9 +2,8 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; i++)
 
-class Node
+struct Node
 {
-public:
     int value;
     Node *prev;
     Node *next;
@@ -14,13 +13,14 @@ public:
 
 class DublyLinkedList
 {
+
 public:
     Node *head;
-
     DublyLinkedList() : head(nullptr){};
 
     void add(int value)
     {
+
         Node *currentNode = head;
         Node *newNode = new Node(value);
 
@@ -38,43 +38,40 @@ public:
         currentNode->next = newNode;
         newNode->prev = currentNode;
     }
+
     void insert(int value)
     {
         Node *newNode = new Node(value);
-        if (head == nullptr)
-        {
-            head = newNode;
-            return;
-        }
-
         newNode->next = head;
-        head->prev = newNode;
+
+        if (head != nullptr)
+            head->prev = newNode;
         head = newNode;
     }
 
     void remove(int value)
     {
+
         Node *currentNode = head;
 
-        if (currentNode != nullptr && currentNode->value == value)
+        if (currentNode != nullptr && value == currentNode->value)
         {
-            if (currentNode->next == nullptr)
+            Node *nextNode = currentNode->next;
+            if (nextNode != nullptr)
             {
-                head = nullptr;
-                delete currentNode;
-                return;
-            }
-            else
-            {
-                Node *nextNode = currentNode->next;
                 head = nextNode;
                 nextNode->prev = nullptr;
                 delete currentNode;
-                return;
             }
+            else
+            {
+                head = nextNode;
+                delete currentNode;
+            }
+            return;
         }
 
-        while (currentNode != nullptr && currentNode->value != value)
+        while (currentNode != nullptr && value != currentNode->value)
         {
             currentNode = currentNode->next;
         }
@@ -82,98 +79,288 @@ public:
         if (currentNode == nullptr)
             return;
 
-        if (currentNode->next == nullptr)
-        {
-            Node *prevNode = currentNode->prev;
-            prevNode->next = nullptr;
-            delete currentNode;
-        }
-        else
-        {
-            Node *prevNode = currentNode->prev;
-            Node *nextNode = currentNode->next;
-            prevNode->next = nextNode;
+        Node *prevNode = currentNode->prev;
+        Node *nextNode = currentNode->next;
+        prevNode->next = nextNode;
+
+        if (nextNode != nullptr)
             nextNode->prev = prevNode;
-            delete currentNode;
-        }
+        delete currentNode;
     }
 
     void reverse_iterative()
     {
-        Node *previousNode = nullptr;
         Node *currentNode = head;
+        Node *prevNode = nullptr;
 
         while (currentNode != nullptr)
         {
-            previousNode = currentNode->prev;
+            prevNode = currentNode->prev;
             currentNode->prev = currentNode->next;
-            currentNode->next = previousNode;
+            currentNode->next = prevNode;
 
             currentNode = currentNode->prev;
         }
 
-        if (previousNode != nullptr)
-            head = previousNode->prev;
+        if (prevNode != nullptr)
+            head = prevNode->prev;
     }
 
     void reverse_recursive()
     {
+        function<Node *(Node *)> _reverse_recursive = [&](Node *currentNode) -> Node *
+        {
+            if (currentNode == nullptr)
+            {
+                return nullptr;
+            }
+            Node *prevNode = currentNode->prev;
+            currentNode->prev = currentNode->next;
+            currentNode->next = prevNode;
+
+            if (currentNode->prev == nullptr)
+            {
+                return currentNode;
+            }
+            return _reverse_recursive(currentNode->prev);
+        };
+
         head = _reverse_recursive(head);
+    }
+
+    void reverse_recursive_v2()
+    {
+        function<Node *(Node *, Node *)> _reverse_recursive = [&](Node *currentNode, Node *prevNode) -> Node *
+        {
+            if (currentNode == nullptr)
+            {
+                if (prevNode != nullptr)
+                    return prevNode->prev;
+                else
+                    return nullptr;
+            }
+
+            prevNode = currentNode->prev;
+            currentNode->prev = currentNode->next;
+            currentNode->next = prevNode;
+
+            if (prevNode == nullptr && currentNode->prev == nullptr)
+                return currentNode;
+            _reverse_recursive(currentNode->prev, prevNode);
+        };
+        head = _reverse_recursive(head, nullptr);
     }
 
     void sort()
     {
-
-        Node *currentNode = head;
-
-        while (currentNode->next != nullptr)
+        // 小さいの見つけて最初と入れ替える
+        Node *startNode = head;
+        while (startNode != nullptr)
         {
-            Node *startNode = currentNode->next;
-            while (startNode != nullptr)
+            Node *current = startNode;
+            while (current != nullptr)
             {
-                if (currentNode->value > startNode->value)
+                if (startNode->value > current->value)
                 {
-                    int tmp_value = currentNode->value;
-                    currentNode->value = startNode->value;
-                    startNode->value = tmp_value;
+                    int tmp = startNode->value;
+                    startNode->value = current->value;
+                    current->value = tmp;
                 }
-                startNode = startNode->next;
+                current = current->next;
             }
-            currentNode = currentNode->next;
+
+            startNode = startNode->next;
         }
-    }
-
-private:
-    Node *_reverse_recursive(Node *currentNode)
-    {
-        if (currentNode == nullptr)
-            return nullptr;
-
-        Node *previousNode = currentNode->prev;
-        currentNode->prev = currentNode->next;
-        currentNode->next = previousNode;
-
-        if (currentNode->prev == nullptr)
-        {
-            return currentNode;
-        }
-
-        return _reverse_recursive(currentNode->prev);
     }
 };
 
 int main()
 {
-    DublyLinkedList list;
-    list.add(3);
-    list.insert(2);
-    list.insert(1);
+    DublyLinkedList list = DublyLinkedList();
 
-    list.reverse_recursive();
+    list.add(10);
+    list.add(5);
+    list.add(30);
+    list.add(2);
+    list.add(6);
     list.sort();
 
+    list.reverse_recursive();
     return 0;
 }
+
+// class Node
+// {
+// public:
+//     int value;
+//     Node *prev;
+//     Node *next;
+
+//     Node(int value) : value(value){};
+// };
+
+// class DublyLinkedList
+// {
+// public:
+//     Node *head;
+
+//     DublyLinkedList() : head(nullptr){};
+
+//     void add(int value)
+//     {
+//         Node *currentNode = head;
+//         Node *newNode = new Node(value);
+
+//         if (currentNode == nullptr)
+//         {
+//             head = newNode;
+//             return;
+//         }
+
+//         while (currentNode->next != nullptr)
+//         {
+//             currentNode = currentNode->next;
+//         }
+
+//         currentNode->next = newNode;
+//         newNode->prev = currentNode;
+//     }
+//     void insert(int value)
+//     {
+//         Node *newNode = new Node(value);
+//         if (head == nullptr)
+//         {
+//             head = newNode;
+//             return;
+//         }
+
+//         newNode->next = head;
+//         head->prev = newNode;
+//         head = newNode;
+//     }
+
+//     void remove(int value)
+//     {
+//         Node *currentNode = head;
+
+//         if (currentNode != nullptr && currentNode->value == value)
+//         {
+//             if (currentNode->next == nullptr)
+//             {
+//                 head = nullptr;
+//                 delete currentNode;
+//                 return;
+//             }
+//             else
+//             {
+//                 Node *nextNode = currentNode->next;
+//                 head = nextNode;
+//                 nextNode->prev = nullptr;
+//                 delete currentNode;
+//                 return;
+//             }
+//         }
+
+//         while (currentNode != nullptr && currentNode->value != value)
+//         {
+//             currentNode = currentNode->next;
+//         }
+
+//         if (currentNode == nullptr)
+//             return;
+
+//         if (currentNode->next == nullptr)
+//         {
+//             Node *prevNode = currentNode->prev;
+//             prevNode->next = nullptr;
+//             delete currentNode;
+//         }
+//         else
+//         {
+//             Node *prevNode = currentNode->prev;
+//             Node *nextNode = currentNode->next;
+//             prevNode->next = nextNode;
+//             nextNode->prev = prevNode;
+//             delete currentNode;
+//         }
+//     }
+
+//     void reverse_iterative()
+//     {
+//         Node *previousNode = nullptr;
+//         Node *currentNode = head;
+
+//         while (currentNode != nullptr)
+//         {
+//             previousNode = currentNode->prev;
+//             currentNode->prev = currentNode->next;
+//             currentNode->next = previousNode;
+
+//             currentNode = currentNode->prev;
+//         }
+
+//         if (previousNode != nullptr)
+//             head = previousNode->prev;
+//     }
+
+//     void reverse_recursive()
+//     {
+//         head = _reverse_recursive(head);
+//     }
+
+//     void sort()
+//     {
+
+//         Node *currentNode = head;
+
+//         while (currentNode->next != nullptr)
+//         {
+//             Node *startNode = currentNode->next;
+//             while (startNode != nullptr)
+//             {
+//                 if (currentNode->value > startNode->value)
+//                 {
+//                     int tmp_value = currentNode->value;
+//                     currentNode->value = startNode->value;
+//                     startNode->value = tmp_value;
+//                 }
+//                 startNode = startNode->next;
+//             }
+//             currentNode = currentNode->next;
+//         }
+//     }
+
+// private:
+//     Node *_reverse_recursive(Node *currentNode)
+//     {
+//         if (currentNode == nullptr)
+//             return nullptr;
+
+//         Node *previousNode = currentNode->prev;
+//         currentNode->prev = currentNode->next;
+//         currentNode->next = previousNode;
+
+//         if (currentNode->prev == nullptr)
+//         {
+//             return currentNode;
+//         }
+
+//         return _reverse_recursive(currentNode->prev);
+//     }
+// };
+
+// int main()
+// {
+//     DublyLinkedList list;
+//     list.add(3);
+//     list.insert(2);
+//     list.insert(1);
+
+//     list.reverse_recursive();
+//     list.sort();
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

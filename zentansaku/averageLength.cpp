@@ -2,45 +2,137 @@
 // 0420もう一度
 // 0421もう一度
 
+// double型の精度は約15桁,floatは6か7桁
 // 最初に要素を昇順に並べておき、do - while ループで、next_permutation() がfalse を返すまでループすると、 全順列が生成されることになる。
-
-/*
-0425解きなおし
-*/
 
 #include <bits/stdc++.h>
 using namespace std;
 
 int main()
 {
-    int n, x[10], y[10];
+    int n;
     cin >> n;
+    vector<int> x(n), y(n);
     for (int i = 0; i < n; i++)
     {
         cin >> x[i] >> y[i];
     }
 
-    vector<int> indices(n);
-    iota(indices.begin(), indices.end(), 0);
-    double total_distance = 0, cnt = 0;
+    vector<int> indices;
+    for (int i = 0; i < n; i++)
+        indices.push_back(i);
+
+    double dist_total = 0;
+    double permutation_count = 0;
 
     do
     {
-        double tmp_distance = 0;
-        for (int i = 0; i < n - 1; i++)
+
+        double dist = 0;
+        for (int j = 1; j < indices.size(); j++)
         {
-            int now = indices[i], next = indices[i + 1];
-            tmp_distance += sqrt(pow(x[next] - x[now], 2) + pow(y[next] - y[now], 2));
+
+            int before_index = indices[j - 1];
+            int index = indices[j];
+            int xi = x[before_index];
+            int yi = y[before_index];
+            int xj = x[index];
+            int yj = y[index];
+
+            dist += sqrt(pow(xi - xj, 2) + pow(yi - yj, 2));
         }
-        total_distance += tmp_distance;
-        cnt++;
+        dist_total += dist;
+        permutation_count++;
 
     } while (next_permutation(indices.begin(), indices.end()));
 
-    // printf("%.10f\n", total_distance / cnt);
-    cout << fixed << setprecision(10) << total_distance / cnt << endl;
+    printf("%.10f\n", dist_total / permutation_count);
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> x(n), y(n);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> x[i] >> y[i];
+//     }
+
+//     vector<int> indices(n);
+//     for (int i = 0; i < n; i++)
+//         indices[i] = i;
+
+//     double dist_sum = 0;
+//     double division_num = 0;
+
+//     do
+//     {
+//         double dist = 0;
+//         for (int j = 1; j < indices.size(); j++)
+//         {
+//             int index = indices[j];
+//             int i = indices[j - 1];
+//             int xi = x[i];
+//             int yi = y[i];
+//             int xj = x[index];
+//             int yj = y[index];
+
+//             dist += pow(pow(xi - xj, 2) + pow(yi - yj, 2), 0.5);
+//         }
+//         dist_sum += dist;
+//         division_num++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     printf("%.10f\n", dist_sum / division_num);
+
+//     return 0;
+// }
+
+/*
+0425解きなおし
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, x[10], y[10];
+//     cin >> n;
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> x[i] >> y[i];
+//     }
+
+//     vector<int> indices(n);
+//     iota(indices.begin(), indices.end(), 0);
+//     double total_distance = 0, cnt = 0;
+
+//     do
+//     {
+//         double tmp_distance = 0;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             int now = indices[i], next = indices[i + 1];
+//             tmp_distance += sqrt(pow(x[next] - x[now], 2) + pow(y[next] - y[now], 2));
+//         }
+//         total_distance += tmp_distance;
+//         cnt++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     // printf("%.10f\n", total_distance / cnt);
+//     cout << fixed << setprecision(10) << total_distance / cnt << endl;
+//     return 0;
+// }
 
 /*
 0424解きなおし
