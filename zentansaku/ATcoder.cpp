@@ -8,27 +8,55 @@ using namespace std;
 
 int main()
 {
-    string s;
 
-    unordered_map<char, bool> is_acgt = {{'A', true}, {'C', true}, {'G', true}, {'T', true}};
-    int ans = 0;
-    for (int i = 0; i < s.size(); i++)
+    string s;
+    cin >> s;
+
+    unordered_map<char, bool> acgt_mp = {{'A', true}, {'C', true}, {'G', true}, {'T', true}};
+    int acgt_max_length = 0;
+    for (int i = 0; i < s.size();)
     {
         int j = i;
         int tmp_max = 0;
-        while (is_acgt.count(s[j]))
+        while (acgt_mp[s[j]])
         {
             tmp_max++;
             j++;
         }
+        i = j + 1;
 
-        ans = max(ans, tmp_max);
+        acgt_max_length = max(acgt_max_length, tmp_max);
     }
 
-    cout << ans << endl;
-
+    cout << acgt_max_length << endl;
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     string s;
+
+//     unordered_map<char, bool> is_acgt = {{'A', true}, {'C', true}, {'G', true}, {'T', true}};
+//     int ans = 0;
+//     for (int i = 0; i < s.size(); i++)
+//     {
+//         int j = i;
+//         int tmp_max = 0;
+//         while (is_acgt.count(s[j]))
+//         {
+//             tmp_max++;
+//             j++;
+//         }
+
+//         ans = max(ans, tmp_max);
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

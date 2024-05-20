@@ -12,43 +12,85 @@ int main()
 {
     int n;
     cin >> n;
+
     vector<int> x(n), y(n);
+
     for (int i = 0; i < n; i++)
     {
         cin >> x[i] >> y[i];
     }
 
-    vector<int> indices;
+    vector<int> indices(n);
     for (int i = 0; i < n; i++)
-        indices.push_back(i);
+        indices[i] = i;
 
-    double dist_total = 0;
-    double permutation_count = 0;
+    double total_dist = 0;
+    double division_num = 0;
 
     do
     {
-
         double dist = 0;
-        for (int j = 1; j < indices.size(); j++)
+        for (int k = 1; k < n; k++)
         {
+            int i = indices[k - 1];
+            int j = indices[k];
 
-            int before_index = indices[j - 1];
-            int index = indices[j];
-            int xi = x[before_index];
-            int yi = y[before_index];
-            int xj = x[index];
-            int yj = y[index];
-
-            dist += sqrt(pow(xi - xj, 2) + pow(yi - yj, 2));
+            dist += pow(pow(x[i] - x[j], 2) + pow(y[i] - y[j], 2), 0.5);
         }
-        dist_total += dist;
-        permutation_count++;
+        total_dist += dist;
+        division_num++;
 
     } while (next_permutation(indices.begin(), indices.end()));
 
-    printf("%.10f\n", dist_total / permutation_count);
+    printf("%.10f\n", total_dist / division_num);
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> x(n), y(n);
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> x[i] >> y[i];
+//     }
+
+//     vector<int> indices;
+//     for (int i = 0; i < n; i++)
+//         indices.push_back(i);
+
+//     double dist_total = 0;
+//     double permutation_count = 0;
+
+//     do
+//     {
+
+//         double dist = 0;
+//         for (int j = 1; j < indices.size(); j++)
+//         {
+
+//             int before_index = indices[j - 1];
+//             int index = indices[j];
+//             int xi = x[before_index];
+//             int yi = y[before_index];
+//             int xj = x[index];
+//             int yj = y[index];
+
+//             dist += sqrt(pow(xi - xj, 2) + pow(yi - yj, 2));
+//         }
+//         dist_total += dist;
+//         permutation_count++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     printf("%.10f\n", dist_total / permutation_count);
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
