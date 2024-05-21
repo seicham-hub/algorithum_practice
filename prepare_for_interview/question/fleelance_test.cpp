@@ -13,37 +13,72 @@ using ll = long long;
 int main()
 {
     ll h, a, b;
-
     cin >> h >> a >> b;
 
     h = h - a;
+    ll decrease_wankosoba = a - b;
     ll count = 1;
 
     if (h <= 0)
     {
         cout << "YES" << endl;
-        cout << count << endl;
+        cout << count * 5 << endl;
         return 0;
     }
 
-    ll diff = a - b;
-
-    if (diff > 0)
+    if (decrease_wankosoba > 0)
     {
-        count += h / diff;
-        if (h % diff != 0)
+
+        count += h / decrease_wankosoba;
+        if (h % decrease_wankosoba != 0)
             count++;
 
         cout << "YES" << endl;
-        cout << count << endl;
+        cout << count * 5 << endl;
     }
     else
-    {
         cout << "NO" << endl;
-    }
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int main()
+// {
+//     ll h, a, b;
+
+//     cin >> h >> a >> b;
+
+//     h = h - a;
+//     ll count = 1;
+
+//     if (h <= 0)
+//     {
+//         cout << "YES" << endl;
+//         cout << count << endl;
+//         return 0;
+//     }
+
+//     ll diff = a - b;
+
+//     if (diff > 0)
+//     {
+//         count += h / diff;
+//         if (h % diff != 0)
+//             count++;
+
+//         cout << "YES" << endl;
+//         cout << count << endl;
+//     }
+//     else
+//     {
+//         cout << "NO" << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
