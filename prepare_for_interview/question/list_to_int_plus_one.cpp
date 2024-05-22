@@ -1,60 +1,108 @@
 // {1} →{2} output 2
 // {1.2} → {1,3} output 13
 // {9,9} → {1,0,0} output 100
-// {0,0,0, 9,9,9,9} → {1,0,0,0,0} output 10000
+// {0,0,0,9,9,9,9} → {1,0,0,0,0} output 10000
 
 #include <bits/stdc++.h>
 using namespace std;
 
-void remove_zero(vector<int> &nums)
+int convert_list_to_int(vector<int> &nums)
 {
-    while (nums.size() && nums[0] == 0)
+    int result = 0;
+    int multiplier = 1;
+
+    for (auto it = nums.rbegin(); it != nums.rend(); it++)
     {
-        nums.erase(nums.begin());
+
+        result += (*it) * multiplier;
+        multiplier *= 10;
     }
+
+    return result;
+}
+
+int list_to_int_plus_one(vector<int> nums)
+{
+    for (auto it = nums.rbegin(); it != nums.rend(); it++)
+    {
+        (*it) += 1;
+
+        if ((*it) <= 9)
+            break;
+        else
+            (*it) = 0;
+
+        if (it == nums.rend() - 1 && (*it) == 0)
+        {
+            nums.insert(nums.begin(), 1);
+        }
+    }
+
+    return convert_list_to_int(nums);
 }
 
 int main()
 {
 
-    vector<int> nums = {9, 9, 9};
+    vector<int> nums = {1, 3, 5};
+    int ans = list_to_int_plus_one(nums);
 
-    int n = nums.size();
+    cout << ans << endl;
 
-    int i = 1;
-
-    nums[n - i]++;
-
-    while (n - i - 1 >= 0)
-    {
-
-        if (nums[n - i] < 10)
-        {
-            break;
-        }
-        else
-        {
-            nums[n - i] = 0;
-            nums[n - i - 1]++;
-        }
-        i++;
-    }
-
-    remove_zero(nums);
-
-    if (nums[0] > 9)
-    {
-        nums[0] = 0;
-        nums.insert(nums.begin(), 1);
-    }
-
-    string ans = "";
-    for (int i = 0; i < nums.size(); i++)
-        ans += nums[i] + '0';
-
-    cout << stoi(ans) << endl;
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// void remove_zero(vector<int> &nums)
+// {
+//     while (nums.size() && nums[0] == 0)
+//     {
+//         nums.erase(nums.begin());
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {9, 9, 9};
+
+//     int n = nums.size();
+
+//     int i = 1;
+
+//     nums[n - i]++;
+
+//     while (n - i - 1 >= 0)
+//     {
+
+//         if (nums[n - i] < 10)
+//         {
+//             break;
+//         }
+//         else
+//         {
+//             nums[n - i] = 0;
+//             nums[n - i - 1]++;
+//         }
+//         i++;
+//     }
+
+//     remove_zero(nums);
+
+//     if (nums[0] > 9)
+//     {
+//         nums[0] = 0;
+//         nums.insert(nums.begin(), 1);
+//     }
+
+//     string ans = "";
+//     for (int i = 0; i < nums.size(); i++)
+//         ans += nums[i] + '0';
+
+//     cout << stoi(ans) << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

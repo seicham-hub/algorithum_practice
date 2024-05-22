@@ -2,50 +2,59 @@
 
 // 0425もう一度
 
-/*
-0425解きなおし分
-*/
-
 #include "bits/stdc++.h"
 using namespace std;
-
-int n, k, c[10] = {0, 1, 2, 3, 4, 1, 2, 3, 4, 5}, minCoin = 10000000;
-long long a[33];
-
-void dfs(long long sum, int takeNum, int nowInd)
-{
-    if (takeNum == k)
-    {
-        int tmp_coin = 0;
-        while (sum > 0)
-        {
-            tmp_coin += c[sum % 10];
-            sum /= 10;
-        }
-        minCoin = min(tmp_coin, minCoin);
-        return;
-    }
-    else if (nowInd < n)
-    {
-        dfs(sum, takeNum, nowInd + 1);
-        dfs(sum + a[nowInd], takeNum + 1, nowInd + 1);
-    }
-}
 
 int main()
 {
 
-    cin >> n >> k;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-
-    dfs(0, 0, 0);
-    cout << minCoin << endl;
-
     return 0;
 }
+
+/*
+0425解きなおし分
+*/
+
+// #include "bits/stdc++.h"
+// using namespace std;
+
+// int n, k, c[10] = {0, 1, 2, 3, 4, 1, 2, 3, 4, 5}, minCoin = 10000000;
+// long long a[33];
+
+// void dfs(long long sum, int takeNum, int nowInd)
+// {
+//     if (takeNum == k)
+//     {
+//         int tmp_coin = 0;
+//         while (sum > 0)
+//         {
+//             tmp_coin += c[sum % 10];
+//             sum /= 10;
+//         }
+//         minCoin = min(tmp_coin, minCoin);
+//         return;
+//     }
+//     else if (nowInd < n)
+//     {
+//         dfs(sum, takeNum, nowInd + 1);
+//         dfs(sum + a[nowInd], takeNum + 1, nowInd + 1);
+//     }
+// }
+
+// int main()
+// {
+
+//     cin >> n >> k;
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> a[i];
+//     }
+
+//     dfs(0, 0, 0);
+//     cout << minCoin << endl;
+
+//     return 0;
+// }
 
 // #include "bits/stdc++.h"
 // using namespace std;
