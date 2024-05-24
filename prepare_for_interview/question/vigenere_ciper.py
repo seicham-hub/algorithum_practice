@@ -1,3 +1,7 @@
+# 暗号化する文字 SILLICON VALLAYをkeyを使って暗号化
+# keyは暗号化する文字と同じ長さで特定の文字が繰り返される（CATCATCAT等）
+# 暗号化する際はkeyのインデックス分アルファベットをずらす
+
 import string 
 
 ALPHABET = string.ascii_uppercase

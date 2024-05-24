@@ -1,3 +1,6 @@
+# ハノイの塔を実装しろ
+# move 1 from A to C
+
 from typing import List,Tuple
 
 # A,B,C

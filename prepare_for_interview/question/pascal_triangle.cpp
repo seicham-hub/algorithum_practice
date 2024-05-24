@@ -14,39 +14,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<vector<int>> generate_pascal_triangle(int depth)
+vector<vector<int>> generate_triangle(int depth)
 {
 
     vector<vector<int>> triangle(depth);
 
-    for (int i = 0; i < depth; ++i)
+    for (int i = 0; i < depth; i++)
     {
         triangle[i] = vector<int>(i + 1, 1);
     }
 
-    for (int line = 2; line < depth; ++line)
+    for (int i = 2; i < depth; i++)
     {
-        for (int i = 1; i < line; ++i)
+        for (int j = 1; j < i; j++)
         {
-            triangle[line][i] = triangle[line - 1][i] + triangle[line - 1][i - 1];
+            triangle[i][j] = triangle[i - 1][j] + triangle[i - 1][j - 1];
         }
     }
 
     return triangle;
 }
 
-void print_pascal(vector<vector<int>> &triangle)
+void print_pascal_triangle(vector<vector<int>> &triangle)
 {
-    int max_digit = to_string(*max_element(triangle.back().begin(), triangle.back().end())).size();
 
+    int max_num = *max_element(triangle.back().begin(), triangle.back().end());
+    int max_digit = to_string(max_num).size();
     int width = max_digit + (max_digit % 2) + 2;
 
     for (int i = 0; i < triangle.size(); i++)
     {
-        cout << string((width / 2) * (triangle.size() - i), ' ');
+
+        cout << string(width / 2 * (triangle.size() - i), ' ');
 
         for (int num : triangle[i])
+        {
             cout << setw(width) << setfill(' ') << num;
+        }
 
         cout << endl;
     }
@@ -55,20 +59,69 @@ void print_pascal(vector<vector<int>> &triangle)
 int main()
 {
 
-    auto triangle = generate_pascal_triangle(10);
-    print_pascal(triangle);
-
-    for (auto line : triangle)
-    {
-        for (auto e : line)
-        {
-            cout << e << ",";
-        }
-        cout << endl;
-    }
+    vector<vector<int>> triangle = generate_triangle(10);
+    print_pascal_triangle(triangle);
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<vector<int>> generate_pascal_triangle(int depth)
+// {
+
+//     vector<vector<int>> triangle(depth);
+
+//     for (int i = 0; i < depth; ++i)
+//     {
+//         triangle[i] = vector<int>(i + 1, 1);
+//     }
+
+//     for (int line = 2; line < depth; ++line)
+//     {
+//         for (int i = 1; i < line; ++i)
+//         {
+//             triangle[line][i] = triangle[line - 1][i] + triangle[line - 1][i - 1];
+//         }
+//     }
+
+//     return triangle;
+// }
+
+// void print_pascal(vector<vector<int>> &triangle)
+// {
+//     int max_digit = to_string(*max_element(triangle.back().begin(), triangle.back().end())).size();
+
+//     int width = max_digit + (max_digit % 2) + 2;
+
+//     for (int i = 0; i < triangle.size(); i++)
+//     {
+//         cout << string((width / 2) * (triangle.size() - i), ' ');
+
+//         for (int num : triangle[i])
+//             cout << setw(width) << setfill(' ') << num;
+
+//         cout << endl;
+//     }
+// }
+
+// int main()
+// {
+
+//     auto triangle = generate_pascal_triangle(10);
+//     print_pascal(triangle);
+
+//     for (auto line : triangle)
+//     {
+//         for (auto e : line)
+//         {
+//             cout << e << ",";
+//         }
+//         cout << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
