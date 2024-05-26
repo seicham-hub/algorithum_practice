@@ -55,16 +55,11 @@ def is_prime_v4(num:int)->bool:
         if num % i == 0:
             return False
     
-    # i =5
-    # while i * i <=num:
-    #     if num % i == 0 or num% (i+2) == 0:
-    #         return False
-    #     i += 6
-
     return True
 
 
 if __name__ == '__main__':
+ 
         
     numbers = [random.randint(0,1000) for _ in range(10000)]
 

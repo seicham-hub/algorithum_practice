@@ -2,11 +2,59 @@
 
 // 0425もう一度
 
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
+
+using ll = long long;
+int divisions[2] = {5, 1};
+
+ll count_coins(ll price)
+{
+    ll result = 0;
+    for (ll i = 1e9; i >= 1; i /= 10)
+    {
+
+        for (auto d : divisions)
+        {
+
+            result += price / ll(d * i);
+            price %= (d * i);
+        }
+    }
+
+    return result;
+}
 
 int main()
 {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+
+    ll ans = 1e18;
+
+    function<void(int, int, ll)> dfs = [&](int index, int count, ll sum_price)
+    {
+        if (count == k)
+        {
+            ans = min(ans, count_coins(sum_price));
+            return;
+        }
+
+        if (index == a.size() - 1)
+            return;
+
+        dfs(index + 1, count, sum_price);
+        ll new_price = sum_price + a[index];
+        dfs(index + 1, count + 1, new_price);
+    };
+
+    dfs(0, 0, 0);
+
+    cout << ans << endl;
 
     return 0;
 }
