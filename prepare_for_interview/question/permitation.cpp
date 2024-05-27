@@ -4,21 +4,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<vector<int>> all_perms(vector<int> &nums)
+vector<vector<int>> all_perms(vector<int> elements)
 {
 
-    if (nums.size() <= 1)
+    if (elements.size() <= 1)
     {
-        return {nums};
+        return {elements};
     }
+
     vector<vector<int>> result;
 
-    int first = nums[0];
-    vector<int> rest(nums.begin() + 1, nums.end());
+    int first = elements[0];
+    vector<int> rest(elements.begin() + 1, elements.end());
 
     for (auto &perm : all_perms(rest))
     {
-        for (int i = 0; i < perm.size() + 1; i++)
+
+        for (int i = 0; i <= perm.size(); i++)
         {
             vector<int> a(perm.begin(), perm.begin() + i);
             a.push_back(first);
@@ -33,9 +35,9 @@ vector<vector<int>> all_perms(vector<int> &nums)
 
 int main()
 {
+    vector<int> elements = {1, 2, 3, 4};
 
-    vector<int> nums = {1, 2, 3, 4};
-    auto ans = all_perms(nums);
+    auto ans = all_perms(elements);
 
     for (auto a : ans)
     {
@@ -45,8 +47,56 @@ int main()
         }
         cout << endl;
     }
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<vector<int>> all_perms(vector<int> &nums)
+// {
+
+//     if (nums.size() <= 1)
+//     {
+//         return {nums};
+//     }
+//     vector<vector<int>> result;
+
+//     int first = nums[0];
+//     vector<int> rest(nums.begin() + 1, nums.end());
+
+//     for (auto &perm : all_perms(rest))
+//     {
+//         for (int i = 0; i < perm.size() + 1; i++)
+//         {
+//             vector<int> a(perm.begin(), perm.begin() + i);
+//             a.push_back(first);
+//             a.insert(a.end(), perm.begin() + i, perm.end());
+
+//             result.push_back(a);
+//         }
+//     }
+
+//     return result;
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {1, 2, 3, 4};
+//     auto ans = all_perms(nums);
+
+//     for (auto a : ans)
+//     {
+//         for (int num : a)
+//         {
+//             cout << num << ",";
+//         }
+//         cout << endl;
+//     }
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

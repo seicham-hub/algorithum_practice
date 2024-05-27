@@ -35,35 +35,90 @@ vector<vector<int>> generate_triangle(int depth)
     return triangle;
 }
 
-void print_pascal_triangle(vector<vector<int>> &triangle)
+void print_triangle(vector<vector<int>> &triangle)
 {
 
     int max_num = *max_element(triangle.back().begin(), triangle.back().end());
     int max_digit = to_string(max_num).size();
+
     int width = max_digit + (max_digit % 2) + 2;
 
     for (int i = 0; i < triangle.size(); i++)
     {
-
         cout << string(width / 2 * (triangle.size() - i), ' ');
 
         for (int num : triangle[i])
         {
             cout << setw(width) << setfill(' ') << num;
         }
-
         cout << endl;
     }
+
+    return;
 }
 
 int main()
 {
 
     vector<vector<int>> triangle = generate_triangle(10);
-    print_pascal_triangle(triangle);
 
+    print_triangle(triangle);
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<vector<int>> generate_triangle(int depth)
+// {
+
+//     vector<vector<int>> triangle(depth);
+
+//     for (int i = 0; i < depth; i++)
+//     {
+//         triangle[i] = vector<int>(i + 1, 1);
+//     }
+
+//     for (int i = 2; i < depth; i++)
+//     {
+//         for (int j = 1; j < i; j++)
+//         {
+//             triangle[i][j] = triangle[i - 1][j] + triangle[i - 1][j - 1];
+//         }
+//     }
+
+//     return triangle;
+// }
+
+// void print_pascal_triangle(vector<vector<int>> &triangle)
+// {
+
+//     int max_num = *max_element(triangle.back().begin(), triangle.back().end());
+//     int max_digit = to_string(max_num).size();
+//     int width = max_digit + (max_digit % 2) + 2;
+
+//     for (int i = 0; i < triangle.size(); i++)
+//     {
+
+//         cout << string(width / 2 * (triangle.size() - i), ' ');
+
+//         for (int num : triangle[i])
+//         {
+//             cout << setw(width) << setfill(' ') << num;
+//         }
+
+//         cout << endl;
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<vector<int>> triangle = generate_triangle(10);
+//     print_pascal_triangle(triangle);
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 
