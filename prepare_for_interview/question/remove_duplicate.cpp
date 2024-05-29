@@ -8,15 +8,13 @@ using namespace std;
 
 void remove_duplicate(vector<int> &nums)
 {
-    int index = nums.size() - 1;
-    while (index >= 1)
+    int i = nums.size() - 1;
+    while (i >= 1)
     {
-        if (nums[index] == nums[index - 1])
-        {
-            nums.erase(nums.begin() + index);
-        }
+        if (nums[i - 1] == nums[i])
+            nums.erase(nums.begin() + i);
 
-        index--;
+        i--;
     }
 }
 
@@ -24,16 +22,46 @@ int main()
 {
 
     vector<int> nums = {1, 3, 3, 5, 5, 7, 7, 7, 10, 12, 12, 15, 15};
-
     remove_duplicate(nums);
 
-    for (int &n : nums)
+    for (int a : nums)
     {
-        cout << n << " ";
+        cout << a << ",";
     }
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// void remove_duplicate(vector<int> &nums)
+// {
+//     int index = nums.size() - 1;
+//     while (index >= 1)
+//     {
+//         if (nums[index] == nums[index - 1])
+//         {
+//             nums.erase(nums.begin() + index);
+//         }
+
+//         index--;
+//     }
+// }
+
+// int main()
+// {
+
+//     vector<int> nums = {1, 3, 3, 5, 5, 7, 7, 7, 10, 12, 12, 15, 15};
+
+//     remove_duplicate(nums);
+
+//     for (int &n : nums)
+//     {
+//         cout << n << " ";
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
