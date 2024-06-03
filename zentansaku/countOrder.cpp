@@ -1,15 +1,12 @@
 // https://atcoder.jp/contests/abc150/tasks/abc150_c
 // 0421もう一度 時間かかりすぎ
 
-/*
-0424解きなおし
-*/
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(void)
+int main()
 {
-    int n, a = 0, b = 0;
+    int n;
     cin >> n;
 
     vector<int> p(n), q(n);
@@ -19,19 +16,59 @@ int main(void)
     for (int i = 0; i < n; i++)
         cin >> q[i];
 
+    vector<int> indices;
+    for (int i = 1; i <= n; i++)
+        indices.push_back(i);
+    int a, b = 0;
+    int order_num = 1;
     do
     {
-        a++;
-    } while (next_permutation(p.begin(), p.end()));
-    do
-    {
-        b++;
-    } while (next_permutation(q.begin(), q.end()));
+
+        if (indices == p)
+            a = order_num;
+        if (indices == q)
+            b = order_num;
+
+        order_num++;
+
+    } while (next_permutation(indices.begin(), indices.end()));
 
     cout << abs(a - b) << endl;
 
     return 0;
 }
+
+/*
+0424解きなおし
+*/
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(void)
+// {
+//     int n, a = 0, b = 0;
+//     cin >> n;
+
+//     vector<int> p(n), q(n);
+
+//     for (int i = 0; i < n; i++)
+//         cin >> p[i];
+//     for (int i = 0; i < n; i++)
+//         cin >> q[i];
+
+//     do
+//     {
+//         a++;
+//     } while (next_permutation(p.begin(), p.end()));
+//     do
+//     {
+//         b++;
+//     } while (next_permutation(q.begin(), q.end()));
+
+//     cout << abs(a - b) << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
