@@ -6,25 +6,53 @@ using namespace std;
 
 int main()
 {
-
     int a, b, c, x, y;
-    long long int minPrice = 1100000000;
-
     cin >> a >> b >> c >> x >> y;
 
-    for (int i = 0; i <= max(x, y) * 2; i++)
-    {
-        int aAmount = x - (i / 2) < 0 ? 0 : x - (i / 2);
-        int bAmount = y - (i / 2) < 0 ? 0 : y - (i / 2);
-        long long int tmpPrice = a * aAmount + b * bAmount + i * c;
+    // abピザの枚数を全探索
+    int max_count = x > y ? x : y;
 
-        minPrice = min(tmpPrice, minPrice);
+    int ans = 1e9;
+
+    for (int ab_count = 0; ab_count <= 2 * max_count; ab_count += 2)
+    {
+        int a_count = (x - ab_count / 2) >= 0 ? x - ab_count / 2 : 0;
+        int b_count = (y - ab_count / 2) >= 0 ? y - ab_count / 2 : 0;
+
+        int price = a * a_count + b * b_count + c * ab_count;
+
+        ans = min(ans, price);
     }
 
-    cout << minPrice << endl;
+    cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     int a, b, c, x, y;
+//     long long int minPrice = 1100000000;
+
+//     cin >> a >> b >> c >> x >> y;
+
+//     for (int i = 0; i <= max(x, y) * 2; i++)
+//     {
+//         int aAmount = x - (i / 2) < 0 ? 0 : x - (i / 2);
+//         int bAmount = y - (i / 2) < 0 ? 0 : y - (i / 2);
+//         long long int tmpPrice = a * aAmount + b * bAmount + i * c;
+
+//         minPrice = min(tmpPrice, minPrice);
+//     }
+
+//     cout << minPrice << endl;
+
+//     return 0;
+// }
 
 // 0414解答分
 // #include <bits/stdc++.h>

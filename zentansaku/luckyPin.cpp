@@ -1,6 +1,7 @@
 // https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_d
 // 0417もう一度
 // 0418もう一度
+// 2024_06_04もう一度　制約条件よく見る
 
 // 重複なしを考えるとき、以前出てきた数字は無視すればよい(02352789のとき023,025,027,028,029はすべて前半の2をとればよい)
 // nに着目するとO(n^3)だが、答えに注目すると10^3だなぁ
@@ -10,51 +11,91 @@ using namespace std;
 
 int main()
 {
-    int n, next_index[30005][10], result = 0;
+    int n;
     string s;
-
     cin >> n >> s;
 
-    for (int i = 0; i < 10; i++)
+    vector<string> candidate, ans;
+
+    for (int i = 0; i <= 999; i++)
     {
-        next_index[n][i] = n;
+        string num = to_string(i);
+        int size = num.size();
+        for (int i = 0; i < 3 - size; i++)
+            num.insert(num.begin(), '0');
+
+        candidate.push_back(num);
     }
 
-    for (int i = n - 1; i >= 0; i--)
+    for (string num : candidate)
     {
-        // 後ろのものをいったん引き継ぐ
-        for (int j = 0; j < 10; j++)
+        int ind = 0;
+        for (int i = 0; i < n; i++)
         {
-            next_index[i][j] = next_index[i + 1][j];
-        }
-        // 現在インデックスにある数字について、インデックス番号を格納
-        next_index[i][s[i] - '0'] = i;
-    }
-
-    for (int i = 0; i < 10; i++)
-    {
-
-        for (int j = 0; j < 10; j++)
-        {
-            for (int k = 0; k < 10; k++)
+            if (num[ind] == s[i])
             {
-
-                int curIndex = next_index[0][i];
-                curIndex++;
-                curIndex = next_index[min(curIndex, n)][j];
-                curIndex++;
-                curIndex = next_index[min(curIndex, n)][k];
-
-                if (curIndex < n)
-                    result++;
+                ind++;
             }
+            if (ind >= 3)
+                break;
         }
+
+        if (ind == 3)
+            ans.push_back(num);
     }
 
-    cout << result << endl;
-
-    return 0;
+    cout << ans.size() << endl;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, next_index[30005][10], result = 0;
+//     string s;
+
+//     cin >> n >> s;
+
+//     for (int i = 0; i < 10; i++)
+//     {
+//         next_index[n][i] = n;
+//     }
+
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         // 後ろのものをいったん引き継ぐ
+//         for (int j = 0; j < 10; j++)
+//         {
+//             next_index[i][j] = next_index[i + 1][j];
+//         }
+//         // 現在インデックスにある数字について、インデックス番号を格納
+//         next_index[i][s[i] - '0'] = i;
+//     }
+
+//     for (int i = 0; i < 10; i++)
+//     {
+
+//         for (int j = 0; j < 10; j++)
+//         {
+//             for (int k = 0; k < 10; k++)
+//             {
+
+//                 int curIndex = next_index[0][i];
+//                 curIndex++;
+//                 curIndex = next_index[min(curIndex, n)][j];
+//                 curIndex++;
+//                 curIndex = next_index[min(curIndex, n)][k];
+
+//                 if (curIndex < n)
+//                     result++;
+//             }
+//         }
+//     }
+
+//     cout << result << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
