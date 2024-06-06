@@ -3,57 +3,110 @@
 // 0421もう一度
 // 0424もう一度
 
-/*
-0425解きなおし分
-*/
-
 #include <bits/stdc++.h>
 using namespace std;
 
-bool g[8][8] = {};
+int n, m, ans = 0;
+
+void dfs(int node, vector<vector<int>> graph, vector<int> count, map<int, bool> visited)
+{
+
+    count.push_back(node);
+    visited[node] = true;
+
+    if (count.size() == n)
+    {
+        ans++;
+        return;
+    }
+
+    for (int next : graph[node])
+    {
+        if (!visited[next])
+        {
+            vector<int> copy = count;
+            dfs(next, graph, copy, visited);
+        }
+    }
+}
 
 int main()
 {
 
-    int n, m, ans = 0;
-
     cin >> n >> m;
+
+    vector<vector<int>> graph(n);
 
     for (int i = 0; i < m; i++)
     {
         int a, b;
         cin >> a >> b;
+        a--;
+        b--;
 
-        g[a][b] = true;
-        g[b][a] = true;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
     }
 
-    vector<int> indices(n);
-    iota(indices.begin(), indices.end(), 1);
-
-    do
-    {
-        if (indices[0] != 1)
-            break;
-
-        bool ok = true;
-        for (int i = 0; i < n - 1; i++)
-        {
-            int now = indices[i], next = indices[i + 1];
-            if (!g[now][next])
-            {
-                ok = false;
-                break;
-            }
-        }
-
-        if (ok)
-            ans++;
-    } while (next_permutation(indices.begin(), indices.end()));
+    map<int, bool> visited;
+    dfs(0, graph, {}, visited);
 
     cout << ans << endl;
+
     return 0;
 }
+
+/*
+0425解きなおし分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool g[8][8] = {};
+
+// int main()
+// {
+
+//     int n, m, ans = 0;
+
+//     cin >> n >> m;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+
+//         g[a][b] = true;
+//         g[b][a] = true;
+//     }
+
+//     vector<int> indices(n);
+//     iota(indices.begin(), indices.end(), 1);
+
+//     do
+//     {
+//         if (indices[0] != 1)
+//             break;
+
+//         bool ok = true;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             int now = indices[i], next = indices[i + 1];
+//             if (!g[now][next])
+//             {
+//                 ok = false;
+//                 break;
+//             }
+//         }
+
+//         if (ok)
+//             ans++;
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     cout << ans << endl;
+//     return 0;
+// }
 
 /*
 0424解きなおし分

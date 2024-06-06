@@ -9,12 +9,13 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
 int n, m, q;
-vector<int> a, b, c, d, ans;
+int ans = 0;
+vector<int> a, b, c, d;
 
 int calc_d_sum(vector<int> &A)
 {
     int result = 0;
-    rep(i, q)
+    for (int i = 0; i < q; i++)
     {
         int ai = a[i] - 1;
         int bi = b[i] - 1;
@@ -26,25 +27,25 @@ int calc_d_sum(vector<int> &A)
     return result;
 }
 
-void get_ans_arr(vector<int> &A)
+void find_A(vector<int> A)
 {
     if (A.size() == n)
     {
-        int candidate = calc_d_sum(A);
-        ans.push_back(candidate);
+        ans = max(ans, calc_d_sum(A));
         return;
     }
 
     for (int i = A.back(); i <= m; i++)
     {
-        vector<int> A_copy = A;
-        A_copy.push_back(i);
-        get_ans_arr(A_copy);
+        vector<int> copy_A = A;
+        copy_A.push_back(i);
+        find_A(copy_A);
     }
 }
 
 int main()
 {
+
     cin >> n >> m >> q;
 
     a.resize(q);
@@ -52,15 +53,73 @@ int main()
     c.resize(q);
     d.resize(q);
 
-    rep(i, q) cin >> a[i] >> b[i] >> c[i] >> d[i];
-    vector<int> A(1, 1);
-    get_ans_arr(A);
+    for (int i = 0; i < q; i++)
+        cin >> a[i] >> b[i] >> c[i] >> d[i];
 
-    auto answer = max_element(ans.begin(), ans.end());
-    cout << *answer << endl;
+    for (int i = 1; i <= m; i++)
+        find_A({i});
+
+    cout << ans << endl;
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int n, m, q;
+// vector<int> a, b, c, d, ans;
+
+// int calc_d_sum(vector<int> &A)
+// {
+//     int result = 0;
+//     rep(i, q)
+//     {
+//         int ai = a[i] - 1;
+//         int bi = b[i] - 1;
+
+//         if (A[bi] - A[ai] == c[i])
+//             result += d[i];
+//     }
+
+//     return result;
+// }
+
+// void get_ans_arr(vector<int> &A)
+// {
+//     if (A.size() == n)
+//     {
+//         int candidate = calc_d_sum(A);
+//         ans.push_back(candidate);
+//         return;
+//     }
+
+//     for (int i = A.back(); i <= m; i++)
+//     {
+//         vector<int> A_copy = A;
+//         A_copy.push_back(i);
+//         get_ans_arr(A_copy);
+//     }
+// }
+
+// int main()
+// {
+//     cin >> n >> m >> q;
+
+//     a.resize(q);
+//     b.resize(q);
+//     c.resize(q);
+//     d.resize(q);
+
+//     rep(i, q) cin >> a[i] >> b[i] >> c[i] >> d[i];
+//     vector<int> A(1, 1);
+//     get_ans_arr(A);
+
+//     auto answer = max_element(ans.begin(), ans.end());
+//     cout << *answer << endl;
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 

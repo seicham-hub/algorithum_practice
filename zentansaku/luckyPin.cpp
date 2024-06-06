@@ -9,43 +9,93 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+vector<string> create_candidate()
+{
+    vector<string> result;
+
+    for (int i = 0; i <= 999; i++)
+    {
+        string num = to_string(i);
+        for (int j = num.size(); j < 3; j++)
+        {
+            num.insert(num.begin(), '0');
+        }
+
+        result.push_back(num);
+    }
+
+    return result;
+}
+
 int main()
 {
     int n;
     string s;
     cin >> n >> s;
 
-    vector<string> candidate, ans;
+    vector<string> candidate = create_candidate();
 
-    for (int i = 0; i <= 999; i++)
-    {
-        string num = to_string(i);
-        int size = num.size();
-        for (int i = 0; i < 3 - size; i++)
-            num.insert(num.begin(), '0');
-
-        candidate.push_back(num);
-    }
-
+    vector<string> ans;
     for (string num : candidate)
     {
         int ind = 0;
-        for (int i = 0; i < n; i++)
+        for (char c : s)
         {
-            if (num[ind] == s[i])
-            {
+            if (c == num[ind])
                 ind++;
-            }
             if (ind >= 3)
+            {
+                ans.push_back(num);
                 break;
+            }
         }
-
-        if (ind == 3)
-            ans.push_back(num);
     }
 
     cout << ans.size() << endl;
+
+    return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     string s;
+//     cin >> n >> s;
+
+//     vector<string> candidate, ans;
+
+//     for (int i = 0; i <= 999; i++)
+//     {
+//         string num = to_string(i);
+//         int size = num.size();
+//         for (int i = 0; i < 3 - size; i++)
+//             num.insert(num.begin(), '0');
+
+//         candidate.push_back(num);
+//     }
+
+//     for (string num : candidate)
+//     {
+//         int ind = 0;
+//         for (int i = 0; i < n; i++)
+//         {
+//             if (num[ind] == s[i])
+//             {
+//                 ind++;
+//             }
+//             if (ind >= 3)
+//                 break;
+//         }
+
+//         if (ind == 3)
+//             ans.push_back(num);
+//     }
+
+//     cout << ans.size() << endl;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 

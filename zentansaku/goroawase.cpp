@@ -11,82 +11,92 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-    int k, n;
-    cin >> k >> n;
+int k, n;
+vector<string> v, w;
+vector<int> s_size;
 
-    vector<string> v(n), w(n);
+bool check(vector<int> candidate)
+{
 
     for (int i = 0; i < n; i++)
+    {
+        string nums = v[i];
+        string word = w[i];
+        int size = 0;
+
+        for (char c : nums)
+        {
+            int num = c - '0';
+            size += candidate[num];
+        }
+
+        if (size != word.size())
+            return false;
+    }
+
+    return true;
+}
+
+void find_s_size_candidate(int now_num, vector<int> tmp_s_size)
+{
+    if (s_size.size())
+        return;
+    if (now_num > k)
+    {
+        if (check(tmp_s_size))
+        {
+            s_size = tmp_s_size;
+        }
+        return;
+    }
+    for (int i = 1; i <= 3; i++)
+    {
+        vector<int> copy = tmp_s_size;
+        copy[now_num] = i;
+        find_s_size_candidate(now_num + 1, copy);
+    }
+}
+
+vector<string> find_s()
+{
+
+    find_s_size_candidate(1, vector<int>(k + 1));
+
+    vector<int> ans_size = s_size;
+    vector<string> ans(k + 1);
+
+    for (int i = 0; i < n; i++)
+    {
+        string nums = v[i];
+        string word = w[i];
+
+        int ind = 0;
+        for (char c : nums)
+        {
+            int num = c - '0';
+            int size = ans_size[num];
+            ans[num] = word.substr(ind, size);
+            ind += size;
+        }
+    }
+
+    return ans;
+}
+
+int main()
+{
+
+    cin >> k >> n;
+
+    v.resize(n);
+    w.resize(n);
+
+    for (int i = 0; i < n; i++)
+    {
         cin >> v[i] >> w[i];
+    }
 
-    vector<int> s_size;
-
-    function<bool(vector<int>)> check = [&](vector<int> candidate)
-    {
-        for (int i = 0; i < n; i++)
-        {
-            string nums = v[i];
-            int size = 0;
-            for (char c : nums)
-            {
-                int num = c - '0';
-                size += candidate[num];
-            }
-
-            if (size != w[i].size())
-                return false;
-        }
-
-        return true;
-    };
-
-    function<void(int, vector<int>)> find_candidate = [&](int ind, vector<int> tmp_s_size)
-    {
-        if (s_size.size())
-            return;
-        if (ind > k)
-        {
-            if (check(tmp_s_size))
-            {
-                s_size = tmp_s_size;
-            };
-            return;
-        }
-
-        for (int j = 1; j <= 3; j++)
-        {
-            vector<int> copy = tmp_s_size;
-            copy[ind] = j;
-            find_candidate(ind + 1, copy);
-        }
-    };
-
-    find_candidate(1, vector<int>(k + 1));
-
-    function<vector<string>(vector<int>)> create_ans = [&](vector<int> s_ans)
-    {
-        vector<string> result(k + 1);
-
-        for (int i = 0; i < n; i++)
-        {
-            string nums = v[i];
-            string word = w[i];
-            int ind = 0;
-            for (char c : nums)
-            {
-                int num = c - '0';
-                int size = s_ans[num];
-                result[num] = word.substr(ind, size);
-                ind += size;
-            }
-        }
-
-        return result;
-    };
-
-    vector<string> ans = create_ans(s_size);
+    vector<string> ans = find_s();
 
     for (int i = 1; i <= k; i++)
     {
@@ -95,6 +105,94 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int k, n;
+//     cin >> k >> n;
+
+//     vector<string> v(n), w(n);
+
+//     for (int i = 0; i < n; i++)
+//         cin >> v[i] >> w[i];
+
+//     vector<int> s_size;
+
+//     function<bool(vector<int>)> check = [&](vector<int> candidate)
+//     {
+//         for (int i = 0; i < n; i++)
+//         {
+//             string nums = v[i];
+//             int size = 0;
+//             for (char c : nums)
+//             {
+//                 int num = c - '0';
+//                 size += candidate[num];
+//             }
+
+//             if (size != w[i].size())
+//                 return false;
+//         }
+
+//         return true;
+//     };
+
+//     function<void(int, vector<int>)> find_candidate = [&](int ind, vector<int> tmp_s_size)
+//     {
+//         if (s_size.size())
+//             return;
+//         if (ind > k)
+//         {
+//             if (check(tmp_s_size))
+//             {
+//                 s_size = tmp_s_size;
+//             };
+//             return;
+//         }
+
+//         for (int j = 1; j <= 3; j++)
+//         {
+//             vector<int> copy = tmp_s_size;
+//             copy[ind] = j;
+//             find_candidate(ind + 1, copy);
+//         }
+//     };
+
+//     find_candidate(1, vector<int>(k + 1));
+
+//     function<vector<string>(vector<int>)> create_ans = [&](vector<int> s_ans)
+//     {
+//         vector<string> result(k + 1);
+
+//         for (int i = 0; i < n; i++)
+//         {
+//             string nums = v[i];
+//             string word = w[i];
+//             int ind = 0;
+//             for (char c : nums)
+//             {
+//                 int num = c - '0';
+//                 int size = s_ans[num];
+//                 result[num] = word.substr(ind, size);
+//                 ind += size;
+//             }
+//         }
+
+//         return result;
+//     };
+
+//     vector<string> ans = create_ans(s_size);
+
+//     for (int i = 1; i <= k; i++)
+//     {
+//         cout << ans[i] << endl;
+//     }
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 
