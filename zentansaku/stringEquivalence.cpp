@@ -5,27 +5,28 @@
 // 方針が思いつかなかった。操作の法則が見つけられなかった
 
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int n;
+vector<string> ans;
 
-void dfs(string str, int uniqueNum)
+void dfs(string text, int used_char_count)
 {
-    if (str.size() == n)
+
+    if (text.size() == n)
     {
-        cout << str << endl;
+        ans.push_back(text);
         return;
     }
-    else
+
+    for (int i = 0; i <= used_char_count; i++)
     {
-        for (int i = 0; i < uniqueNum; i++)
-        {
-            char add = 'a' + i;
-            dfs(str + add, uniqueNum);
-        }
-        char add = 'a' + uniqueNum;
-        dfs(str + add, uniqueNum + 1);
+        char add_char = 'a' + i;
+
+        if (i == used_char_count)
+            dfs(text + add_char, used_char_count + 1);
+        else
+            dfs(text + add_char, used_char_count);
     }
 }
 
@@ -34,10 +35,50 @@ int main()
 
     cin >> n;
 
-    dfs("", 0);
+    dfs("a", 1);
+
+    for (string a : ans)
+    {
+        cout << a << endl;
+    }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int n;
+
+// void dfs(string str, int uniqueNum)
+// {
+//     if (str.size() == n)
+//     {
+//         cout << str << endl;
+//         return;
+//     }
+//     else
+//     {
+//         for (int i = 0; i < uniqueNum; i++)
+//         {
+//             char add = 'a' + i;
+//             dfs(str + add, uniqueNum);
+//         }
+//         char add = 'a' + uniqueNum;
+//         dfs(str + add, uniqueNum + 1);
+//     }
+// }
+
+// int main()
+// {
+
+//     cin >> n;
+
+//     dfs("", 0);
+
+//     return 0;
+// }
 
 /*
 お手本解答
