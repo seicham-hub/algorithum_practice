@@ -5,66 +5,197 @@
 // 解けなかった...→一つの電球が点灯しているとき次の電球は？のループしか思いつかない、どう書けば実装できるか思いつかない
 // 初めにあり得る電球のONOFFパターンすべてを持っておく！
 
-/*
-4/20解きなおし
-*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
 
 int main()
 {
-    int n, m, k[11], s[11][11], p[11], ans = 0;
+    int n, m, ans = 0;
     cin >> n >> m;
+
+    vector<vector<int>> s(m);
+
     for (int i = 0; i < m; i++)
     {
-        cin >> k[i];
-        for (int j = 0; j < k[i]; j++)
+        int k;
+        cin >> k;
+
+        vector<int> si(k);
+        for (int j = 0; j < k; j++)
         {
-            cin >> s[i][j];
-            s[i][j]--;
+            cin >> si[j];
+            si[j]--;
         }
+        s[i] = si;
     }
 
+    vector<int> p(m);
     for (int i = 0; i < m; i++)
         cin >> p[i];
 
     for (int msk = 0; msk < (1 << n); msk++)
     {
+        bool is_all_on = true;
 
-        int lumpOnAmount = 0;
-        bool isAllOn = true;
-        for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
         {
+            vector<int> swi = s[j];
 
-            if (isAllOn == false)
-                break;
-
-            int switchOn = 0;
-            for (int j = 0; j < k[i]; j++)
+            int on_count = 0;
+            for (int si : swi)
             {
-                if (msk & (1 << s[i][j]))
-                    switchOn++;
+                if (msk & (1 << si))
+                    on_count++;
             }
 
-            if (switchOn % 2 == p[i])
-                lumpOnAmount++;
-            else
-            {
-                isAllOn = false;
-                break;
-            }
+            if (on_count % 2 != p[j])
+                is_all_on = false;
         }
 
-        if (isAllOn)
+        if (is_all_on)
             ans++;
     }
 
     cout << ans << endl;
-
-    return 0;
 }
+
+// bit演算使わない場合
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int n, m;
+// vector<vector<bool>> switchies;
+
+// void generate_candidate(vector<bool> swi)
+// {
+
+//     if (swi.size() == n)
+//     {
+//         switchies.push_back(swi);
+//         return;
+//     }
+
+//     swi.push_back(true);
+//     generate_candidate(swi);
+//     swi.back() = false;
+//     generate_candidate(swi);
+// }
+
+// int main()
+// {
+
+//     cin >> n >> m;
+
+//     vector<vector<int>> s(m);
+//     vector<int> p(m);
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int k;
+//         cin >> k;
+
+//         vector<int> si(k);
+
+//         for (int j = 0; j < k; j++)
+//         {
+//             cin >> si[j];
+//         }
+//         s[i] = si;
+//     }
+
+//     for (int i = 0; i < m; i++)
+//         cin >> p[i];
+
+//     generate_candidate({});
+
+//     int count = 0;
+
+//     for (int i = 0; i < switchies.size(); i++)
+//     {
+//         vector<bool> swi = switchies[i];
+
+//         bool is_all_power = true;
+//         for (int j = 0; j < m; j++)
+//         {
+//             int swi_count = 0;
+//             for (int si : s[j])
+//                 if (swi[si - 1])
+//                     swi_count++;
+//             if (swi_count % 2 != p[j])
+//                 is_all_power = false;
+//         }
+
+//         if (is_all_power)
+//             count++;
+//     }
+
+//     cout << count << endl;
+
+//     return 0;
+// }
+
+/*
+4/20解きなおし
+*/
+
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+//     int n, m, k[11], s[11][11], p[11], ans = 0;
+//     cin >> n >> m;
+//     for (int i = 0; i < m; i++)
+//     {
+//         cin >> k[i];
+//         for (int j = 0; j < k[i]; j++)
+//         {
+//             cin >> s[i][j];
+//             s[i][j]--;
+//         }
+//     }
+
+//     for (int i = 0; i < m; i++)
+//         cin >> p[i];
+
+//     for (int msk = 0; msk < (1 << n); msk++)
+//     {
+
+//         int lumpOnAmount = 0;
+//         bool isAllOn = true;
+//         for (int i = 0; i < m; i++)
+//         {
+
+//             if (isAllOn == false)
+//                 break;
+
+//             int switchOn = 0;
+//             for (int j = 0; j < k[i]; j++)
+//             {
+//                 if (msk & (1 << s[i][j]))
+//                     switchOn++;
+//             }
+
+//             if (switchOn % 2 == p[i])
+//                 lumpOnAmount++;
+//             else
+//             {
+//                 isAllOn = false;
+//                 break;
+//             }
+//         }
+
+//         if (isAllOn)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // *
 // 4/19解きなおし
