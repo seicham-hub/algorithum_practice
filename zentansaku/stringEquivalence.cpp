@@ -7,26 +7,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
 vector<string> ans;
+int n;
 
-void dfs(string text, int used_char_count)
+void dfs(string now, int used_count)
 {
-
-    if (text.size() == n)
+    if (now.size() == n)
     {
-        ans.push_back(text);
+        ans.push_back(now);
         return;
     }
 
-    for (int i = 0; i <= used_char_count; i++)
+    char last = now.back();
+    for (int i = 0; i <= used_count; i++)
     {
-        char add_char = 'a' + i;
-
-        if (i == used_char_count)
-            dfs(text + add_char, used_char_count + 1);
+        char next = 'a' + i;
+        if (i != used_count)
+            dfs(now + next, used_count);
         else
-            dfs(text + add_char, used_char_count);
+            dfs(now + next, used_count + 1);
     }
 }
 
@@ -38,12 +37,51 @@ int main()
     dfs("a", 1);
 
     for (string a : ans)
-    {
         cout << a << endl;
-    }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int n;
+// vector<string> ans;
+
+// void dfs(string text, int used_char_count)
+// {
+
+//     if (text.size() == n)
+//     {
+//         ans.push_back(text);
+//         return;
+//     }
+
+//     for (int i = 0; i <= used_char_count; i++)
+//     {
+//         char add_char = 'a' + i;
+
+//         if (i == used_char_count)
+//             dfs(text + add_char, used_char_count + 1);
+//         else
+//             dfs(text + add_char, used_char_count);
+//     }
+// }
+
+// int main()
+// {
+
+//     cin >> n;
+
+//     dfs("a", 1);
+
+//     for (string a : ans)
+//     {
+//         cout << a << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 

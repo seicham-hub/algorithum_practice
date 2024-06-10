@@ -6,6 +6,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool next_node_exist(int &current_node, int &next_node, vector<vector<int>> &graph)
+{
+    for (int next : graph[current_node])
+    {
+        if (next == next_node)
+            return true;
+    }
+    return false;
+}
+
 int main()
 {
     int n, m, ans = 0;
@@ -19,44 +29,97 @@ int main()
         cin >> a >> b;
         a--;
         b--;
-
         graph[a].push_back(b);
         graph[b].push_back(a);
     }
 
     vector<int> indices;
+
     for (int i = 0; i < n; i++)
         indices.push_back(i);
 
-    // 0,2,4,5,1
-
     do
     {
+
         if (indices[0] != 0)
             break;
 
-        bool all_ok = true;
+        bool is_finish = true;
         for (int i = 0; i < n - 1; i++)
         {
-            bool ok = false;
-            for (int next : graph[indices[i]])
+            int current_node = indices[i];
+            int next_node = indices[i + 1];
+
+            if (!next_node_exist(current_node, next_node, graph))
             {
-                if (next == indices[i + 1])
-                    ok = true;
+                is_finish = false;
+                break;
             }
-            if (!ok)
-                all_ok = false;
         }
 
-        if (all_ok)
+        if (is_finish)
             ans++;
 
     } while (next_permutation(indices.begin(), indices.end()));
 
-    cout << ans << endl;
+    std::cout << ans << endl;
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n, m, ans = 0;
+//     cin >> n >> m;
+
+//     vector<vector<int>> graph(n);
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+//         a--;
+//         b--;
+
+//         graph[a].push_back(b);
+//         graph[b].push_back(a);
+//     }
+
+//     vector<int> indices;
+//     for (int i = 0; i < n; i++)
+//         indices.push_back(i);
+
+//     // 0,2,4,5,1
+
+//     do
+//     {
+//         if (indices[0] != 0)
+//             break;
+
+//         bool all_ok = true;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             bool ok = false;
+//             for (int next : graph[indices[i]])
+//             {
+//                 if (next == indices[i + 1])
+//                     ok = true;
+//             }
+//             if (!ok)
+//                 all_ok = false;
+//         }
+
+//         if (all_ok)
+//             ans++;
+
+//     } while (next_permutation(indices.begin(), indices.end()));
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 

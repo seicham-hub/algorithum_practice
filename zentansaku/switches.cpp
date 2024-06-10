@@ -6,7 +6,6 @@
 // 初めにあり得る電球のONOFFパターンすべてを持っておく！
 
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main()
@@ -38,10 +37,9 @@ int main()
     {
         bool is_all_on = true;
 
-        for (int j = 0; j < m; j++)
+        for (int i = 0; i < m; i++)
         {
-            vector<int> swi = s[j];
-
+            vector<int> swi = s[i];
             int on_count = 0;
             for (int si : swi)
             {
@@ -49,16 +47,72 @@ int main()
                     on_count++;
             }
 
-            if (on_count % 2 != p[j])
+            if (on_count % 2 != p[i])
                 is_all_on = false;
         }
 
         if (is_all_on)
             ans++;
     }
-
     cout << ans << endl;
+
+    return 0;
 }
+
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// int main()
+// {
+//     int n, m, ans = 0;
+//     cin >> n >> m;
+
+//     vector<vector<int>> s(m);
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int k;
+//         cin >> k;
+
+//         vector<int> si(k);
+//         for (int j = 0; j < k; j++)
+//         {
+//             cin >> si[j];
+//             si[j]--;
+//         }
+//         s[i] = si;
+//     }
+
+//     vector<int> p(m);
+//     for (int i = 0; i < m; i++)
+//         cin >> p[i];
+
+//     for (int msk = 0; msk < (1 << n); msk++)
+//     {
+//         bool is_all_on = true;
+
+//         for (int j = 0; j < m; j++)
+//         {
+//             vector<int> swi = s[j];
+
+//             int on_count = 0;
+//             for (int si : swi)
+//             {
+//                 if (msk & (1 << si))
+//                     on_count++;
+//             }
+
+//             if (on_count % 2 != p[j])
+//                 is_all_on = false;
+//         }
+
+//         if (is_all_on)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+// }
 
 // bit演算使わない場合
 // #include <bits/stdc++.h>
