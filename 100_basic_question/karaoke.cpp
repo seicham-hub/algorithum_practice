@@ -1,27 +1,13 @@
 // https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_c
 
-// 解説見て書いたコード
-// わざわざDFSしなくてよい
-
 #include <bits/stdc++.h>
 using namespace std;
-
-long long calc_total_score(int first, int second, vector<vector<int>> &A)
-{
-    long long result = 0;
-
-    for (auto a : A)
-    {
-        result += max(a[first], a[second]);
-    }
-
-    return result;
-}
 
 int main()
 {
     int n, m;
     cin >> n >> m;
+
     vector<vector<int>> A(n, vector<int>(m));
 
     for (int i = 0; i < n; i++)
@@ -38,7 +24,13 @@ int main()
     {
         for (int j = i + 1; j < m; j++)
         {
-            long long total_score = calc_total_score(i, j, A);
+            // i曲目、j曲目をうたう
+            long long total_score = 0;
+            for (auto a : A)
+            {
+                total_score += max(a[i], a[j]);
+            }
+
             ans = max(ans, total_score);
         }
     }
@@ -47,6 +39,54 @@ int main()
 
     return 0;
 }
+
+// 解説見て書いたコード
+// わざわざDFSしなくてよい
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// long long calc_total_score(int first, int second, vector<vector<int>> &A)
+// {
+//     long long result = 0;
+
+//     for (auto a : A)
+//     {
+//         result += max(a[first], a[second]);
+//     }
+
+//     return result;
+// }
+
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+//     vector<vector<int>> A(n, vector<int>(m));
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < m; j++)
+//         {
+//             cin >> A[i][j];
+//         }
+//     }
+
+//     long long ans = 0;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         for (int j = i + 1; j < m; j++)
+//         {
+//             long long total_score = calc_total_score(i, j, A);
+//             ans = max(ans, total_score);
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 

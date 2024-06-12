@@ -4,42 +4,38 @@
 using namespace std;
 using P = pair<int, int>;
 
-int n;
-vector<array<pair<int, int>, 2>> candidate;
-vector<pair<int, int>> poll;
-
 int main()
 {
-
+    int n, ans = 0;
     cin >> n;
 
-    poll.resize(n);
+    vector<P> pillars;
     set<P> st;
 
     for (int i = 0; i < n; i++)
     {
         int x, y;
         cin >> x >> y;
-        poll[i] = {x, y};
+        pillars.push_back({x, y});
         st.insert({x, y});
     }
 
-    int ans = 0;
+    sort(pillars.begin(), pillars.end());
 
     for (int i = 0; i < n; i++)
     {
         for (int j = i + 1; j < n; j++)
         {
-            pair<int, int> A = poll[i];
-            pair<int, int> B = poll[j];
-
+            P A = pillars[i];
             int x1 = A.first;
             int y1 = A.second;
+
+            P B = pillars[j];
             int x2 = B.first;
             int y2 = B.second;
 
-            pair<int, int> C = {x1 + y1 - y2, y1 - x1 + x2};
-            pair<int, int> D = {x2 + y1 - y2, y2 - x1 + x2};
+            P C = {x1 + y1 - y2, y1 - x1 + x2};
+            P D = {x2 + y1 - y2, y2 - x1 + x2};
 
             if (st.count(C) && st.count(D))
             {
@@ -52,6 +48,59 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using P = pair<int, int>;
+
+// int n;
+// vector<array<pair<int, int>, 2>> candidate;
+// vector<pair<int, int>> poll;
+
+// int main()
+// {
+
+//     cin >> n;
+
+//     poll.resize(n);
+//     set<P> st;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x, y;
+//         cin >> x >> y;
+//         poll[i] = {x, y};
+//         st.insert({x, y});
+//     }
+
+//     int ans = 0;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = i + 1; j < n; j++)
+//         {
+//             pair<int, int> A = poll[i];
+//             pair<int, int> B = poll[j];
+
+//             int x1 = A.first;
+//             int y1 = A.second;
+//             int x2 = B.first;
+//             int y2 = B.second;
+
+//             pair<int, int> C = {x1 + y1 - y2, y1 - x1 + x2};
+//             pair<int, int> D = {x2 + y1 - y2, y2 - x1 + x2};
+
+//             if (st.count(C) && st.count(D))
+//             {
+//                 ans = max(ans, (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+//             }
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分で書いたコード（解けなかった）
 // 4点全探索→O(n^4)
