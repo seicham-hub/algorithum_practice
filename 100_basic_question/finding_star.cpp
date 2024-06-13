@@ -18,10 +18,9 @@ int main()
         cin >> x >> y;
         stars.push_back({x, y});
     }
-    sort(stars.begin(), stars.end());
-
     int n;
     cin >> n;
+
     for (int i = 0; i < n; i++)
     {
         int x, y;
@@ -29,22 +28,19 @@ int main()
         picture.insert({x, y});
     }
 
-    vector<P> dxdy;
+    vector<P> candidate_dxdy;
 
     for (auto p : picture)
     {
-        int dx = p.first - stars[0].first;
-        int dy = p.second - stars[0].second;
-
-        dxdy.push_back({dx, dy});
+        candidate_dxdy.push_back({p.first - stars[0].first, p.second - stars[0].second});
     }
 
-    for (auto dd : dxdy)
+    for (P dxdy : candidate_dxdy)
     {
         bool ok = true;
-        for (auto star : stars)
+        for (P star : stars)
         {
-            if (!picture.count({star.first + dd.first, star.second + dd.second}))
+            if (!picture.count({star.first + dxdy.first, star.second + dxdy.second}))
             {
                 ok = false;
                 break;
@@ -53,13 +49,74 @@ int main()
 
         if (ok)
         {
-            cout << dd.first << " " << dd.second << endl;
+            cout << dxdy.first << " " << dxdy.second << endl;
             return 0;
         }
     }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int m;
+//     cin >> m;
+
+//     vector<P> stars;
+//     set<P> picture;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         int x, y;
+//         cin >> x >> y;
+//         stars.push_back({x, y});
+//     }
+//     sort(stars.begin(), stars.end());
+
+//     int n;
+//     cin >> n;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x, y;
+//         cin >> x >> y;
+//         picture.insert({x, y});
+//     }
+
+//     vector<P> dxdy;
+
+//     for (auto p : picture)
+//     {
+//         int dx = p.first - stars[0].first;
+//         int dy = p.second - stars[0].second;
+
+//         dxdy.push_back({dx, dy});
+//     }
+
+//     for (auto dd : dxdy)
+//     {
+//         bool ok = true;
+//         for (auto star : stars)
+//         {
+//             if (!picture.count({star.first + dd.first, star.second + dd.second}))
+//             {
+//                 ok = false;
+//                 break;
+//             }
+//         }
+
+//         if (ok)
+//         {
+//             cout << dd.first << " " << dd.second << endl;
+//             return 0;
+//         }
+//     }
+
+//     return 0;
+// }
 
 // 自分で書いたコード
 // 合格だけど解説のほうが分かりやすいかも
