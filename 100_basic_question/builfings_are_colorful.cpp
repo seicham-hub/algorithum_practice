@@ -1,4 +1,5 @@
 // https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b
+// 2024_06_19もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -8,27 +9,29 @@ int count_bit(int &msk, int &n)
 {
     int result = 0;
     for (int i = 0; i < n; i++)
-    {
         if (msk & (1 << i))
             result++;
-    }
 
     return result;
 }
 
 int main()
 {
-    int n, k;
-    ll ans = 1e18;
-    cin >> n >> k;
-    vector<int> a(n);
 
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> a(n);
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
+    ll ans = 1e18;
+
     for (int msk = 1; msk < (1 << n); msk++)
     {
-        if (count_bit(msk, n) != k)
+        int count = count_bit(msk, n);
+
+        if (count != k)
             continue;
 
         int before = a[0];
@@ -37,26 +40,86 @@ int main()
         {
             if (msk & (1 << i))
             {
-                if (a[i] > before)
-                    before = a[i];
-                else
+                if (a[i] <= before)
                 {
-                    int diff = abs(before - a[i]) + 1;
+                    int diff = abs(a[i] - before) + 1;
                     cost += diff;
                     before = a[i] + diff;
                 }
+                else
+                    before = a[i];
             }
             else
+            {
                 before = max(before, a[i]);
+            }
         }
 
         ans = min(ans, cost);
     }
 
     cout << ans << endl;
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int count_bit(int &msk, int &n)
+// {
+//     int result = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (msk & (1 << i))
+//             result++;
+//     }
+
+//     return result;
+// }
+
+// int main()
+// {
+//     int n, k;
+//     ll ans = 1e18;
+//     cin >> n >> k;
+//     vector<int> a(n);
+
+//     for (int i = 0; i < n; i++)
+//         cin >> a[i];
+
+//     for (int msk = 1; msk < (1 << n); msk++)
+//     {
+//         if (count_bit(msk, n) != k)
+//             continue;
+
+//         int before = a[0];
+//         ll cost = 0;
+//         for (int i = 1; i < n; i++)
+//         {
+//             if (msk & (1 << i))
+//             {
+//                 if (a[i] > before)
+//                     before = a[i];
+//                 else
+//                 {
+//                     int diff = abs(before - a[i]) + 1;
+//                     cost += diff;
+//                     before = a[i] + diff;
+//                 }
+//             }
+//             else
+//                 before = max(before, a[i]);
+//         }
+
+//         ans = min(ans, cost);
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
 // #include <bits/stdc++.h>
 // using namespace std;
 // using ll = long long;

@@ -1,63 +1,59 @@
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_13_A&lang=ja
 
+// 2024_06_19もう一度
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int n = 8;
-vector<pair<int, int>> pre_placed;
-
-bool is_valid(vector<int> column)
+bool is_valid(vector<int> &col, vector<pair<int, int>> &preplaced)
 {
-    // すでに置いてあるqueenと比較
-    for (auto p : pre_placed)
+    for (auto p : preplaced)
     {
         int r = p.first;
         int c = p.second;
 
-        if (column[r] != c)
+        if (col[r] != c)
             return false;
     }
 
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < 8; i++)
     {
-        for (int j = i + 1; j < n; j++)
+        for (int j = i + 1; j < 8; j++)
         {
-            int diff = abs(i - j);
-            if (column[i] == column[j] || column[i] + diff == column[j] || column[i] - diff == column[j])
-            {
+            int row_diff = j - i;
+            if (col[i] == col[j] || col[i] + row_diff == col[j] || col[i] - row_diff == col[j])
                 return false;
-            }
         }
     }
+
     return true;
 }
 
 int main()
 {
     int k;
-
+    int n = 8;
     cin >> k;
 
-    pre_placed.resize(k);
+    vector<pair<int, int>> preplaced(k);
 
     for (int i = 0; i < k; i++)
-    {
-        cin >> pre_placed[i].first >> pre_placed[i].second;
-    }
+        cin >> preplaced[i].first >> preplaced[i].second;
 
-    vector<int> column;
+    vector<int> col;
     for (int i = 0; i < n; i++)
-        column.push_back(i);
+        col.push_back(i);
 
     do
     {
-        if (is_valid(column))
+        if (is_valid(col, preplaced))
         {
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (j == column[i])
+
+                    if (j == col[i])
                         cout << 'Q';
                     else
                         cout << '.';
@@ -66,10 +62,81 @@ int main()
             }
         }
 
-    } while (next_permutation(column.begin(), column.end()));
+    } while (next_permutation(col.begin(), col.end()));
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int n = 8;
+// vector<pair<int, int>> pre_placed;
+
+// bool is_valid(vector<int> column)
+// {
+//     // すでに置いてあるqueenと比較
+//     for (auto p : pre_placed)
+//     {
+//         int r = p.first;
+//         int c = p.second;
+
+//         if (column[r] != c)
+//             return false;
+//     }
+
+//     for (int i = 0; i < n; ++i)
+//     {
+//         for (int j = i + 1; j < n; j++)
+//         {
+//             int diff = abs(i - j);
+//             if (column[i] == column[j] || column[i] + diff == column[j] || column[i] - diff == column[j])
+//             {
+//                 return false;
+//             }
+//         }
+//     }
+//     return true;
+// }
+
+// int main()
+// {
+//     int k;
+
+//     cin >> k;
+
+//     pre_placed.resize(k);
+
+//     for (int i = 0; i < k; i++)
+//     {
+//         cin >> pre_placed[i].first >> pre_placed[i].second;
+//     }
+
+//     vector<int> column;
+//     for (int i = 0; i < n; i++)
+//         column.push_back(i);
+
+//     do
+//     {
+//         if (is_valid(column))
+//         {
+//             for (int i = 0; i < n; i++)
+//             {
+//                 for (int j = 0; j < n; j++)
+//                 {
+//                     if (j == column[i])
+//                         cout << 'Q';
+//                     else
+//                         cout << '.';
+//                 }
+//                 cout << endl;
+//             }
+//         }
+
+//     } while (next_permutation(column.begin(), column.end()));
+
+//     return 0;
+// }
 
 // お手本コード
 // 各行、各列に一つだけqueenが存在するのでこれを全探索
