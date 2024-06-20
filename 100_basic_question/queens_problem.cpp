@@ -5,9 +5,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool is_valid(vector<int> &col, vector<pair<int, int>> &preplaced)
+vector<pair<int, int>> pre_placed;
+
+bool is_valid(vector<int> &col, int &n)
 {
-    for (auto p : preplaced)
+
+    for (auto p : pre_placed)
     {
         int r = p.first;
         int c = p.second;
@@ -16,12 +19,12 @@ bool is_valid(vector<int> &col, vector<pair<int, int>> &preplaced)
             return false;
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < n; i++)
     {
-        for (int j = i + 1; j < 8; j++)
+        for (int j = i + 1; j < n; j++)
         {
-            int row_diff = j - i;
-            if (col[i] == col[j] || col[i] + row_diff == col[j] || col[i] - row_diff == col[j])
+            int diff = j - i;
+            if (col[i] == col[j] || col[i] + diff == col[j] || col[i] - diff == col[j])
                 return false;
         }
     }
@@ -31,14 +34,13 @@ bool is_valid(vector<int> &col, vector<pair<int, int>> &preplaced)
 
 int main()
 {
-    int k;
     int n = 8;
+    int k;
     cin >> k;
 
-    vector<pair<int, int>> preplaced(k);
-
+    pre_placed.resize(k);
     for (int i = 0; i < k; i++)
-        cin >> preplaced[i].first >> preplaced[i].second;
+        cin >> pre_placed[i].first >> pre_placed[i].second;
 
     vector<int> col;
     for (int i = 0; i < n; i++)
@@ -46,14 +48,15 @@ int main()
 
     do
     {
-        if (is_valid(col, preplaced))
+
+        if (is_valid(col, n))
         {
+
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-
-                    if (j == col[i])
+                    if (col[i] == j)
                         cout << 'Q';
                     else
                         cout << '.';
@@ -66,6 +69,70 @@ int main()
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool is_valid(vector<int> &col, vector<pair<int, int>> &preplaced)
+// {
+//     for (auto p : preplaced)
+//     {
+//         int r = p.first;
+//         int c = p.second;
+
+//         if (col[r] != c)
+//             return false;
+//     }
+
+//     for (int i = 0; i < 8; i++)
+//     {
+//         for (int j = i + 1; j < 8; j++)
+//         {
+//             int row_diff = j - i;
+//             if (col[i] == col[j] || col[i] + row_diff == col[j] || col[i] - row_diff == col[j])
+//                 return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+// int main()
+// {
+//     int k;
+//     int n = 8;
+//     cin >> k;
+
+//     vector<pair<int, int>> preplaced(k);
+
+//     for (int i = 0; i < k; i++)
+//         cin >> preplaced[i].first >> preplaced[i].second;
+
+//     vector<int> col;
+//     for (int i = 0; i < n; i++)
+//         col.push_back(i);
+
+//     do
+//     {
+//         if (is_valid(col, preplaced))
+//         {
+//             for (int i = 0; i < n; i++)
+//             {
+//                 for (int j = 0; j < n; j++)
+//                 {
+
+//                     if (j == col[i])
+//                         cout << 'Q';
+//                     else
+//                         cout << '.';
+//                 }
+//                 cout << endl;
+//             }
+//         }
+
+//     } while (next_permutation(col.begin(), col.end()));
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

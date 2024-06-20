@@ -8,6 +8,7 @@ using ll = long long;
 int count_bit(int &msk, int &n)
 {
     int result = 0;
+
     for (int i = 0; i < n; i++)
         if (msk & (1 << i))
             result++;
@@ -21,30 +22,32 @@ int main()
     int n, k;
     cin >> n >> k;
 
+    ll ans = 1e18;
+
     vector<int> a(n);
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
-    ll ans = 1e18;
-
     for (int msk = 1; msk < (1 << n); msk++)
     {
+
         int count = count_bit(msk, n);
 
         if (count != k)
             continue;
 
-        int before = a[0];
         ll cost = 0;
-        for (int i = 1; i < n; i++)
+        int before = 0;
+
+        for (int i = 0; i < n; i++)
         {
             if (msk & (1 << i))
             {
-                if (a[i] <= before)
+                if (before >= a[i])
                 {
-                    int diff = abs(a[i] - before) + 1;
+                    int diff = before - a[i] + 1;
                     cost += diff;
-                    before = a[i] + diff;
+                    before += 1;
                 }
                 else
                     before = a[i];
@@ -59,8 +62,70 @@ int main()
     }
 
     cout << ans << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int count_bit(int &msk, int &n)
+// {
+//     int result = 0;
+//     for (int i = 0; i < n; i++)
+//         if (msk & (1 << i))
+//             result++;
+
+//     return result;
+// }
+
+// int main()
+// {
+
+//     int n, k;
+//     cin >> n >> k;
+
+//     vector<int> a(n);
+//     for (int i = 0; i < n; i++)
+//         cin >> a[i];
+
+//     ll ans = 1e18;
+
+//     for (int msk = 1; msk < (1 << n); msk++)
+//     {
+//         int count = count_bit(msk, n);
+
+//         if (count != k)
+//             continue;
+
+//         int before = a[0];
+//         ll cost = 0;
+//         for (int i = 1; i < n; i++)
+//         {
+//             if (msk & (1 << i))
+//             {
+//                 if (a[i] <= before)
+//                 {
+//                     int diff = abs(a[i] - before) + 1;
+//                     cost += diff;
+//                     before = a[i] + diff;
+//                 }
+//                 else
+//                     before = a[i];
+//             }
+//             else
+//             {
+//                 before = max(before, a[i]);
+//             }
+//         }
+
+//         ans = min(ans, cost);
+//     }
+
+//     cout << ans << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

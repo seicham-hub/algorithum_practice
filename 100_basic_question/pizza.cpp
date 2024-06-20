@@ -4,34 +4,72 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int calc_dist(int &dist, vector<int> &s)
+{
+    int index = upper_bound(s.begin(), s.end(), dist) - s.begin();
+
+    return min(s[index] - dist, dist - s[index - 1]);
+}
+
 int main()
 {
     int d, n, m, ans = 0;
     cin >> d >> n >> m;
 
     vector<int> s(n);
-    for (int i = 1; i < n; i++)
+
+    for (int i = 1; i <= n - 1; i++)
         cin >> s[i];
     s.push_back(d);
+
     sort(s.begin(), s.end());
 
     vector<int> deli(m);
+
     for (int i = 0; i < m; i++)
         cin >> deli[i];
 
     for (int dist : deli)
     {
-        int ind = lower_bound(s.begin(), s.end(), dist) - s.begin();
-        int tmp = s[ind] - dist;
-        if (ind > 0)
-            tmp = min(tmp, dist - s[ind - 1]);
-        ans += tmp;
+        ans += calc_dist(dist, s);
     }
-
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int d, n, m, ans = 0;
+//     cin >> d >> n >> m;
+
+//     vector<int> s(n);
+//     for (int i = 1; i < n; i++)
+//         cin >> s[i];
+//     s.push_back(d);
+//     sort(s.begin(), s.end());
+
+//     vector<int> deli(m);
+//     for (int i = 0; i < m; i++)
+//         cin >> deli[i];
+
+//     for (int dist : deli)
+//     {
+//         int ind = lower_bound(s.begin(), s.end(), dist) - s.begin();
+//         int tmp = s[ind] - dist;
+//         if (ind > 0)
+//             tmp = min(tmp, dist - s[ind - 1]);
+//         ans += tmp;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
 // #include <bits/stdc++.h>
 // using namespace std;
 
