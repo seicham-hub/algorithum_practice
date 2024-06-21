@@ -6,14 +6,10 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-
 int main()
 {
-
     int n;
     cin >> n;
-
-    long long ans = 0;
 
     vector<int> a(n), b(n), c(n);
 
@@ -28,20 +24,59 @@ int main()
     sort(b.begin(), b.end());
     sort(c.begin(), c.end());
 
+    long long ans = 0;
     for (int bi : b)
     {
-        long long a_ind = lower_bound(a.begin(), a.end(), bi) - a.begin();
+        int a_ind = lower_bound(a.begin(), a.end(), bi) - a.begin();
+        long long a_count = a_ind;
 
         int c_ind = upper_bound(c.begin(), c.end(), bi) - c.begin();
         long long c_count = n - c_ind;
-
-        ans += a_ind * c_count;
+        ans += a_count * c_count;
     }
 
     cout << ans << endl;
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     int n;
+//     cin >> n;
+
+//     long long ans = 0;
+
+//     vector<int> a(n), b(n), c(n);
+
+//     for (int i = 0; i < n; i++)
+//         cin >> a[i];
+//     for (int i = 0; i < n; i++)
+//         cin >> b[i];
+//     for (int i = 0; i < n; i++)
+//         cin >> c[i];
+
+//     sort(a.begin(), a.end());
+//     sort(b.begin(), b.end());
+//     sort(c.begin(), c.end());
+
+//     for (int bi : b)
+//     {
+//         long long a_ind = lower_bound(a.begin(), a.end(), bi) - a.begin();
+
+//         int c_ind = upper_bound(c.begin(), c.end(), bi) - c.begin();
+//         long long c_count = n - c_ind;
+
+//         ans += a_ind * c_count;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

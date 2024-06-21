@@ -5,21 +5,21 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 double f(double &x, double &p)
 {
-
     return x + p / pow(2.0, x / 1.5);
 }
 
-double find_minmun_time(double &p)
+double find_min_time(double &p)
 {
-
     double left = 0;
     double right = 1e18;
 
     while (right - left > 1e-9)
     {
+
         double l1 = (2 * left + right) / 3;
         double l2 = (left + 2 * right) / 3;
 
@@ -38,12 +38,52 @@ int main()
     double p;
     cin >> p;
 
-    double ans = find_minmun_time(p);
+    double ans = find_min_time(p);
 
-    printf("%.10f\n", ans);
-
-    return 0;
+    printf("%.10f", ans);
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// double f(double &x, double &p)
+// {
+
+//     return x + p / pow(2.0, x / 1.5);
+// }
+
+// double find_minmun_time(double &p)
+// {
+
+//     double left = 0;
+//     double right = 1e18;
+
+//     while (right - left > 1e-9)
+//     {
+//         double l1 = (2 * left + right) / 3;
+//         double l2 = (left + 2 * right) / 3;
+
+//         if (f(l1, p) > f(l2, p))
+//             left = l1;
+//         else
+//             right = l2;
+//     }
+
+//     return f(left, p);
+// }
+
+// int main()
+// {
+
+//     double p;
+//     cin >> p;
+
+//     double ans = find_minmun_time(p);
+
+//     printf("%.10f\n", ans);
+
+//     return 0;
+// }
 
 // お手本コード
 // #include <iostream>
