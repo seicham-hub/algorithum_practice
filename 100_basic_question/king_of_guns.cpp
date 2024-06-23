@@ -5,34 +5,34 @@
 using namespace std;
 using ll = long long;
 
-bool check(ll x, vector<pair<int, int>> &balloons)
+bool is_achieve(ll x, vector<pair<int, int>> &balloons)
 {
 
     vector<ll> time_limits;
     for (auto b : balloons)
     {
-        int hi = b.first;
-        int si = b.second;
-
-        if (x < hi)
+        ll hi = b.first;
+        ll si = b.second;
+        if (x - hi < 0)
             return false;
 
-        time_limits.push_back((x - hi) / si);
+        ll time = (x - hi) / si;
+        time_limits.push_back(time);
     }
 
     sort(time_limits.begin(), time_limits.end());
 
-    for (int i = 0; i < balloons.size(); i++)
+    for (int i = 0; i < time_limits.size(); i++)
     {
         if (time_limits[i] < i)
             return false;
     }
+
     return true;
 }
 
 int main()
 {
-
     int n;
     cin >> n;
 
@@ -42,12 +42,14 @@ int main()
         cin >> balloons[i].first >> balloons[i].second;
 
     ll left = 0;
-    ll right = 1e18;
+    ll right = 2e15;
 
     while (abs(left - right) > 1)
     {
+
         ll mid = (left + right) / 2;
-        if (check(mid, balloons))
+
+        if (is_achieve(mid, balloons))
             right = mid;
         else
             left = mid;
@@ -57,6 +59,62 @@ int main()
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// bool check(ll x, vector<pair<int, int>> &balloons)
+// {
+
+//     vector<ll> time_limits;
+//     for (auto b : balloons)
+//     {
+//         int hi = b.first;
+//         int si = b.second;
+
+//         if (x < hi)
+//             return false;
+
+//         time_limits.push_back((x - hi) / si);
+//     }
+
+//     sort(time_limits.begin(), time_limits.end());
+
+//     for (int i = 0; i < balloons.size(); i++)
+//     {
+//         if (time_limits[i] < i)
+//             return false;
+//     }
+//     return true;
+// }
+
+// int main()
+// {
+
+//     int n;
+//     cin >> n;
+
+//     vector<pair<int, int>> balloons(n);
+
+//     for (int i = 0; i < n; i++)
+//         cin >> balloons[i].first >> balloons[i].second;
+
+//     ll left = 0;
+//     ll right = 1e18;
+
+//     while (abs(left - right) > 1)
+//     {
+//         ll mid = (left + right) / 2;
+//         if (check(mid, balloons))
+//             right = mid;
+//         else
+//             left = mid;
+//     }
+
+//     cout << right << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
