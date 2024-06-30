@@ -3,22 +3,23 @@
 
 // 2024_06_22もう一度
 // 2024_06_24もう一度
+// 2024_06_25もう一度
 
-// お手本解答
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> to[200005];
-vector<int> ans;
+vector<vector<int>> graph;
 
-void dfs(int v, int p = -1)
+void dfs(int node, int parent, vector<int> &counter)
 {
-    for (int u : to[v])
+
+    for (int next : graph[node])
     {
-        if (u == p)
+        if (next == parent)
             continue;
-        ans[u] += ans[v];
-        dfs(u, v);
+
+        counter[next] += counter[node];
+        dfs(next, node, counter);
     }
 }
 
@@ -26,34 +27,149 @@ int main()
 {
     int n, q;
     cin >> n >> q;
+
+    graph.resize(n);
+
     for (int i = 0; i < n - 1; i++)
     {
         int a, b;
         cin >> a >> b;
         --a;
         --b;
-
-        to[a].push_back(b);
-        to[b].push_back(a);
+        graph[a].push_back(b);
+        graph[b].push_back(a);
     }
 
-    ans.resize(n);
+    vector<pair<int, int>> operations(q);
 
     for (int i = 0; i < q; i++)
     {
         int p, x;
         cin >> p >> x;
         --p;
-        ans[p] += x;
+
+        operations[i] = {p, x};
     }
 
-    dfs(0);
+    vector<int> counter(n);
+
+    for (auto op : operations)
+    {
+        counter[op.first] += op.second;
+    }
+
+    dfs(0, -1, counter);
 
     for (int i = 0; i < n; i++)
-        cout << ans[i] << endl;
+        cout << counter[i] << " ";
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// void dfs(int node, int parent, vector<int> &counter, vector<vector<int>> &graph)
+// {
+
+//     for (int next : graph[node])
+//     {
+//         if (next == parent)
+//             continue;
+//         counter[next] += counter[node];
+//         dfs(next, node, counter, graph);
+//     }
+// }
+
+// int main()
+// {
+//     int n, q;
+//     cin >> n >> q;
+
+//     vector<vector<int>> graph(n);
+
+//     for (int i = 0; i < n - 1; i++)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+//         a--;
+//         b--;
+//         graph[a].push_back(b);
+//         graph[b].push_back(a);
+//     }
+
+//     vector<pair<int, int>> ops(q);
+//     for (int i = 0; i < q; ++i)
+//     {
+//         int p, x;
+//         cin >> p >> x;
+//         --p;
+
+//         ops[i] = {p, x};
+//     }
+//     vector<int> counter(n);
+//     for (auto op : ops)
+//     {
+//         counter[op.first] += op.second;
+//     }
+
+//     dfs(0, -1, counter, graph);
+
+//     for (int i = 0; i < n; i++)
+//         cout << counter[i] << endl;
+
+//     return 0;
+// }
+
+// お手本解答
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> to[200005];
+// vector<int> ans;
+
+// void dfs(int v, int p = -1)
+// {
+//     for (int u : to[v])
+//     {
+//         if (u == p)
+//             continue;
+//         ans[u] += ans[v];
+//         dfs(u, v);
+//     }
+// }
+
+// int main()
+// {
+//     int n, q;
+//     cin >> n >> q;
+//     for (int i = 0; i < n - 1; i++)
+//     {
+//         int a, b;
+//         cin >> a >> b;
+//         --a;
+//         --b;
+
+//         to[a].push_back(b);
+//         to[b].push_back(a);
+//     }
+
+//     ans.resize(n);
+
+//     for (int i = 0; i < q; i++)
+//     {
+//         int p, x;
+//         cin >> p >> x;
+//         --p;
+//         ans[p] += x;
+//     }
+
+//     dfs(0);
+
+//     for (int i = 0; i < n; i++)
+//         cout << ans[i] << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
