@@ -9,26 +9,53 @@ int main()
     int n, m;
     cin >> n >> m;
 
-    vector<int> coins(m);
+    vector<int> c(m);
+
     for (int i = 0; i < m; i++)
-        cin >> coins[i];
+        cin >> c[i];
 
     vector<int> dp(n + 1, INT_MAX);
     dp[0] = 0;
 
-    for (int i = 0; i < m; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = coins[i]; j <= n; ++j)
-        {
-            if (j - coins[i] >= 0)
-                dp[j] = min(dp[j], dp[j - coins[i]] + 1);
-        }
+        for (int j = 0; j < m; j++)
+            if (i - c[j] >= 0)
+                dp[i] = min(dp[i], dp[i - c[j]] + 1);
     }
 
     cout << dp[n] << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<int> coins(m);
+//     for (int i = 0; i < m; i++)
+//         cin >> coins[i];
+
+//     vector<int> dp(n + 1, INT_MAX);
+//     dp[0] = 0;
+
+//     for (int i = 0; i < m; i++)
+//     {
+//         for (int j = coins[i]; j <= n; ++j)
+//         {
+//             if (j - coins[i] >= 0)
+//                 dp[j] = min(dp[j], dp[j - coins[i]] + 1);
+//         }
+//     }
+
+//     cout << dp[n] << endl;
+
+//     return 0;
+// }
 
 // 自分で書いたコード
 
