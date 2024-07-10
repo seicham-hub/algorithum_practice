@@ -11,24 +11,24 @@ const int MOD = 10000;
 
 int main()
 {
-
     int n, k;
     cin >> n >> k;
 
-    unordered_map<int, int> pre;
+    unordered_map<int, int> schedule;
 
     for (int i = 0; i < k; i++)
     {
         int day, taste;
         cin >> day >> taste;
 
-        pre[day] = taste;
+        schedule[day] = taste;
     }
 
-    vector<vector<vector<long long>>> dp(n + 1, vector<vector<long long>>(3, vector<long long>(3, 0)));
+    vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(3, vector<int>(3, 0)));
+
     dp[0][0][0] = 1;
 
-    for (int day = 1; day <= n; ++day)
+    for (int day = 1; day <= n; day++)
     {
         for (int cur = 0; cur < 3; ++cur)
         {
@@ -36,15 +36,13 @@ int main()
             {
                 for (int prevprev = 0; prevprev < 3; ++prevprev)
                 {
-
                     if (day != 1 && day != 2 && cur == prev && prev == prevprev)
                         continue;
-
-                    if (!pre.count(day))
+                    if (!schedule.count(day))
                         dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
                     else
                     {
-                        if (pre[day] - 1 == cur)
+                        if (schedule[day] - 1 == cur)
                             dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
                     }
                 }
@@ -55,17 +53,76 @@ int main()
     long long ans = 0;
 
     for (int i = 0; i < 3; i++)
-    {
         for (int j = 0; j < 3; j++)
-        {
             ans = (ans + dp[n][i][j]) % MOD;
-        }
-    }
 
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// const int MOD = 10000;
+
+// int main()
+// {
+
+//     int n, k;
+//     cin >> n >> k;
+
+//     unordered_map<int, int> pre;
+
+//     for (int i = 0; i < k; i++)
+//     {
+//         int day, taste;
+//         cin >> day >> taste;
+
+//         pre[day] = taste;
+//     }
+
+//     vector<vector<vector<long long>>> dp(n + 1, vector<vector<long long>>(3, vector<long long>(3, 0)));
+//     dp[0][0][0] = 1;
+
+//     for (int day = 1; day <= n; ++day)
+//     {
+//         for (int cur = 0; cur < 3; ++cur)
+//         {
+//             for (int prev = 0; prev < 3; ++prev)
+//             {
+//                 for (int prevprev = 0; prevprev < 3; ++prevprev)
+//                 {
+
+//                     if (day != 1 && day != 2 && cur == prev && prev == prevprev)
+//                         continue;
+
+//                     if (!pre.count(day))
+//                         dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+//                     else
+//                     {
+//                         if (pre[day] - 1 == cur)
+//                             dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     long long ans = 0;
+
+//     for (int i = 0; i < 3; i++)
+//     {
+//         for (int j = 0; j < 3; j++)
+//         {
+//             ans = (ans + dp[n][i][j]) % MOD;
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
