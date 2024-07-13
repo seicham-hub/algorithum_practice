@@ -11,55 +11,118 @@ const int MOD = 10000;
 
 int main()
 {
+
     int n, k;
     cin >> n >> k;
 
     unordered_map<int, int> schedule;
-
     for (int i = 0; i < k; i++)
     {
         int day, taste;
         cin >> day >> taste;
-
+        --taste;
         schedule[day] = taste;
     }
 
     vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(3, vector<int>(3, 0)));
-
     dp[0][0][0] = 1;
 
     for (int day = 1; day <= n; day++)
     {
-        for (int cur = 0; cur < 3; ++cur)
+        for (int cur = 0; cur < 3; cur++)
         {
-            for (int prev = 0; prev < 3; ++prev)
+            for (int prev = 0; prev < 3; prev++)
             {
+
                 for (int prevprev = 0; prevprev < 3; ++prevprev)
                 {
                     if (day != 1 && day != 2 && cur == prev && prev == prevprev)
                         continue;
+
                     if (!schedule.count(day))
-                        dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+                        dp[day][cur][prev] += dp[day - 1][prev][prevprev];
                     else
                     {
-                        if (schedule[day] - 1 == cur)
-                            dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+                        if (cur == schedule[day])
+                            dp[day][cur][prev] += dp[day - 1][prev][prevprev];
                     }
+
+                    dp[day][cur][prev] = dp[day][cur][prev] % MOD;
                 }
             }
         }
     }
 
     long long ans = 0;
-
     for (int i = 0; i < 3; i++)
+    {
         for (int j = 0; j < 3; j++)
-            ans = (ans + dp[n][i][j]) % MOD;
+        {
+            ans += dp[n][i][j];
+            ans = ans % MOD;
+        }
+    }
 
     cout << ans << endl;
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// const int MOD = 10000;
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     unordered_map<int, int> schedule;
+
+//     for (int i = 0; i < k; i++)
+//     {
+//         int day, taste;
+//         cin >> day >> taste;
+
+//         schedule[day] = taste;
+//     }
+
+//     vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(3, vector<int>(3, 0)));
+
+//     dp[0][0][0] = 1;
+
+//     for (int day = 1; day <= n; day++)
+//     {
+//         for (int cur = 0; cur < 3; ++cur)
+//         {
+//             for (int prev = 0; prev < 3; ++prev)
+//             {
+//                 for (int prevprev = 0; prevprev < 3; ++prevprev)
+//                 {
+//                     if (day != 1 && day != 2 && cur == prev && prev == prevprev)
+//                         continue;
+//                     if (!schedule.count(day))
+//                         dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+//                     else
+//                     {
+//                         if (schedule[day] - 1 == cur)
+//                             dp[day][cur][prev] = (dp[day][cur][prev] + dp[day - 1][prev][prevprev]) % MOD;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     long long ans = 0;
+
+//     for (int i = 0; i < 3; i++)
+//         for (int j = 0; j < 3; j++)
+//             ans = (ans + dp[n][i][j]) % MOD;
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
