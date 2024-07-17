@@ -12,15 +12,13 @@ int main()
 
     vector<int> dist(n + 1);
     for (int i = 1; i <= n; i++)
-    {
         cin >> dist[i];
-    }
 
-    vector<int> wether(m + 1);
+    vector<int> whether(m + 1);
     for (int i = 1; i <= m; i++)
-        cin >> wether[i];
+        cin >> whether[i];
 
-    vector<vector<ll>> dp(n + 1, vector<ll>(m + 1, 1e18));
+    vector<vector<ll>> dp(n + 1, vector<ll>(m + 1, LONG_LONG_MAX));
     for (int i = 0; i <= m; i++)
         dp[0][i] = 0;
 
@@ -28,17 +26,57 @@ int main()
     {
         for (int day = city; day <= m; day++)
         {
-            dp[city][day] = min(dp[city][day - 1], dp[city - 1][day - 1] + wether[day] * dist[city]);
+            dp[city][day] = min(dp[city - 1][day - 1] + dist[city] * whether[day], dp[city][day - 1]);
         }
     }
 
-    ll ans = 1e18;
-    for (int i = n; i <= m; i++)
-        ans = min(ans, dp[n][i]);
-    cout << ans << endl;
+    ll ans = LONG_LONG_MAX;
 
+    for (int i = 0; i <= m; i++)
+        ans = min(ans, dp[n][i]);
+
+    cout << ans << endl;
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<int> dist(n + 1);
+//     for (int i = 1; i <= n; i++)
+//     {
+//         cin >> dist[i];
+//     }
+
+//     vector<int> wether(m + 1);
+//     for (int i = 1; i <= m; i++)
+//         cin >> wether[i];
+
+//     vector<vector<ll>> dp(n + 1, vector<ll>(m + 1, 1e18));
+//     for (int i = 0; i <= m; i++)
+//         dp[0][i] = 0;
+
+//     for (int city = 1; city <= n; city++)
+//     {
+//         for (int day = city; day <= m; day++)
+//         {
+//             dp[city][day] = min(dp[city][day - 1], dp[city - 1][day - 1] + wether[day] * dist[city]);
+//         }
+//     }
+
+//     ll ans = 1e18;
+//     for (int i = n; i <= m; i++)
+//         ans = min(ans, dp[n][i]);
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分で書いたコード、遷移が冗長
 // #include <bits/stdc++.h>
