@@ -1,6 +1,7 @@
 // https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2199&lang=jp
 
 // 2024_07_22もう一度
+// 2024_07_23もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,19 +11,19 @@ int main()
 
     while (true)
     {
+
         int n, m;
         cin >> n >> m;
 
         if (!n && !m)
             break;
 
-        vector<int> code_book(m);
-
+        vector<int> c(m);
         for (int i = 0; i < m; i++)
-            cin >> code_book[i];
+            cin >> c[i];
 
-        vector<int> x(n + 1);
-        for (int i = 1; i <= n; i++)
+        vector<int> x(n);
+        for (int i = 0; i < n; i++)
             cin >> x[i];
 
         vector<vector<int>> dp(n + 1, vector<int>(256, INT_MAX));
@@ -32,31 +33,83 @@ int main()
         {
             for (int y = 0; y <= 255; y++)
             {
-                if (dp[i - 1][y] != INT_MAX)
+                for (int ci : c)
                 {
-                    for (int cb : code_book)
-                    {
-                        int ny = y + cb;
-
-                        if (ny < 0)
-                            ny = 0;
-                        if (ny > 255)
-                            ny = 255;
-
-                        dp[i][ny] = min(dp[i][ny], dp[i - 1][y] + (x[i] - ny) * (x[i] - ny));
-                    }
+                    if (dp[i - 1][y] == INT_MAX)
+                        continue;
+                    int ny = y + ci;
+                    ny = ny > 255 ? 255 : ny;
+                    ny = ny < 0 ? 0 : ny;
+                    dp[i][ny] = min(dp[i][ny], dp[i - 1][y] + (ny - x[i - 1]) * (ny - x[i - 1]));
                 }
             }
         }
 
         int ans = INT_MAX;
+
         for (int i = 0; i <= 255; i++)
             ans = min(ans, dp[n][i]);
-
         cout << ans << endl;
     }
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+
+//     while (true)
+//     {
+//         int n, m;
+//         cin >> n >> m;
+
+//         if (!n && !m)
+//             break;
+
+//         vector<int> code_book(m);
+
+//         for (int i = 0; i < m; i++)
+//             cin >> code_book[i];
+
+//         vector<int> x(n + 1);
+//         for (int i = 1; i <= n; i++)
+//             cin >> x[i];
+
+//         vector<vector<int>> dp(n + 1, vector<int>(256, INT_MAX));
+//         dp[0][128] = 0;
+
+//         for (int i = 1; i <= n; i++)
+//         {
+//             for (int y = 0; y <= 255; y++)
+//             {
+//                 if (dp[i - 1][y] != INT_MAX)
+//                 {
+//                     for (int cb : code_book)
+//                     {
+//                         int ny = y + cb;
+
+//                         if (ny < 0)
+//                             ny = 0;
+//                         if (ny > 255)
+//                             ny = 255;
+
+//                         dp[i][ny] = min(dp[i][ny], dp[i - 1][y] + (x[i] - ny) * (x[i] - ny));
+//                     }
+//                 }
+//             }
+//         }
+
+//         int ans = INT_MAX;
+//         for (int i = 0; i <= 255; i++)
+//             ans = min(ans, dp[n][i]);
+
+//         cout << ans << endl;
+//     }
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

@@ -2,6 +2,10 @@
 // 2024_07_21もう一度
 // 2024_07_22もう一度
 
+// 重複を許して複数個とるような場合
+// Dpが使えるかも
+// その際2次元dpを1次元に削減することができるかも
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -9,15 +13,16 @@ vector<int> create_dp(vector<int> &t)
 {
 
     vector<int> dp(1e6 + 1, 1e6);
-
     dp[0] = 0;
 
-    for (int i = 1; i < t.size(); i++)
-        for (int num = 1; num <= 1e6; num++)
+    for (int i = 0; i <= 1e6; i++)
+    {
+        for (int ti : t)
         {
-            if (num - t[i] >= 0)
-                dp[num] = min(dp[num], dp[num - t[i]] + 1);
+            if (i - ti >= 0)
+                dp[i] = min(dp[i], dp[i - ti] + 1);
         }
+    }
 
     return dp;
 }
@@ -25,15 +30,15 @@ vector<int> create_dp(vector<int> &t)
 int main()
 {
 
-    vector<int> t(1, 0), t_odd(1, 0);
+    vector<int> t, t_odd;
 
-    for (int i = 1; i <= 200; i++)
+    for (int i = 0; i <= 200; i++)
     {
-        int ti = (i * (i + 1) * (i + 2)) / 6;
-        t.push_back(ti);
+        int re = i * (i + 1) * (i + 2) / 6;
+        t.push_back(re);
 
-        if (ti % 2 == 1)
-            t_odd.push_back(ti);
+        if (re % 2 == 1)
+            t_odd.push_back(re);
     }
 
     vector<int> dp = create_dp(t);
@@ -41,10 +46,10 @@ int main()
 
     while (true)
     {
+
         int n;
         cin >> n;
-
-        if (n == 0)
+        if (!n)
             break;
 
         cout << dp[n] << " " << dp_odd[n] << endl;
@@ -52,6 +57,108 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> create_dp(vector<int> &t)
+// {
+//     vector<int> dp(1e6 + 1, 1e6);
+//     dp[0] = 0;
+
+//     for (int ti : t)
+//     {
+//         for (int num = 0; num <= 1e6; num++)
+//         {
+//             if (num - ti >= 0)
+//                 dp[num] = min(dp[num - ti] + 1, dp[num]);
+//         }
+//     }
+
+//     return dp;
+// }
+
+// int main()
+// {
+
+//     vector<int> t;
+//     vector<int> t_odd;
+//     for (int i = 1; i <= 200; i++)
+//     {
+//         int re = i * (i + 1) * (i + 2) / 6;
+//         t.push_back(re);
+
+//         if (re % 2 == 1)
+//             t_odd.push_back(re);
+//     }
+
+//     vector<int> dp = create_dp(t);
+//     vector<int> dp_odd = create_dp(t_odd);
+
+//     while (true)
+//     {
+//         int n;
+//         cin >> n;
+
+//         if (!n)
+//             break;
+
+//         cout << dp[n] << " " << dp_odd[n] << endl;
+//     }
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> create_dp(vector<int> &t)
+// {
+
+//     vector<int> dp(1e6 + 1, 1e6);
+
+//     dp[0] = 0;
+
+//     for (int i = 1; i < t.size(); i++)
+//         for (int num = 1; num <= 1e6; num++)
+//         {
+//             if (num - t[i] >= 0)
+//                 dp[num] = min(dp[num], dp[num - t[i]] + 1);
+//         }
+
+//     return dp;
+// }
+
+// int main()
+// {
+
+//     vector<int> t(1, 0), t_odd(1, 0);
+
+//     for (int i = 1; i <= 200; i++)
+//     {
+//         int ti = (i * (i + 1) * (i + 2)) / 6;
+//         t.push_back(ti);
+
+//         if (ti % 2 == 1)
+//             t_odd.push_back(ti);
+//     }
+
+//     vector<int> dp = create_dp(t);
+//     vector<int> dp_odd = create_dp(t_odd);
+
+//     while (true)
+//     {
+//         int n;
+//         cin >> n;
+
+//         if (n == 0)
+//             break;
+
+//         cout << dp[n] << " " << dp_odd[n] << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
