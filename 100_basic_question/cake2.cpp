@@ -2,12 +2,69 @@
 //
 // めちゃくちゃ時間かけたのにうまくできなかった
 // 2024_08_13もう一度
+// 2024_08_14もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 int main()
 {
+    int n;
+    cin >> n;
+
+    vector<int> cake(2 * n + 1);
+
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> cake[i];
+        cake[i + n] = cake[i];
+    }
+    cake[0] = cake[n];
+
+    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1));
+    for (int i = 1; i <= n; i++)
+        dp[i][1] = cake[i];
+
+    for (int l = 2; l <= n; l++)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            int iPlus = (i + 1) % n;
+            if (iPlus == 0)
+                iPlus = n;
+
+            int j = i + l - 1;
+            if (l == n)
+            {
+                if (l % 2 == 0)
+                    dp[i][l] = max(dp[i][l - 1], dp[iPlus][l - 1]);
+                else
+                    dp[i][l] = max(dp[i][l - 1] + cake[j], dp[iPlus][l - 1] + cake[i]);
+            }
+            else if (l % 2 == 0)
+            {
+
+                if (cake[j] > cake[i - 1])
+                    dp[i][l] = max(dp[i][l], dp[i][l - 1]);
+                if (cake[j + 1] < cake[i])
+                    dp[i][l] = max(dp[i][l], dp[iPlus][l - 1]);
+            }
+            else
+            {
+                dp[i][l] = max(dp[i][l - 1] + cake[j], dp[iPlus][l - 1] + cake[i]);
+            }
+        }
+    }
+
+    ll ans = 0;
+
+    for (int i = 1; i <= n; i++)
+    {
+        ans = max(ans, dp[i][n]);
+    }
+
+    cout << ans << endl;
 
     return 0;
 }
