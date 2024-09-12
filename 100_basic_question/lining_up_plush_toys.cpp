@@ -16,27 +16,33 @@ int main()
     int n, m;
     cin >> n >> m;
 
-    vector<int> init(n);
-    vector<int> count_kinds(m, 0);
+    vector<int> plush(n);
+    vector<int> kind_count(m, 0);
     vector<vector<int>> accum(n, vector<int>(m, 0));
 
     for (int i = 0; i < n; i++)
     {
-        int p;
-        cin >> p;
-        p--;
-        init[i] = p;
-        count_kinds[p]++;
+
+        cin >> plush[i];
+        plush[i]--;
+        kind_count[plush[i]]++;
     }
 
     for (int i = 0; i < n; i++)
     {
-        accum[i][init[i]]++;
-        if (i - 1 >= 0)
+        for (int j = 0; j < m; j++)
         {
-            for (int j = 0; j < m; j++)
+            if (i - 1 < 0)
             {
+                if (plush[i] == j)
+                    accum[i][j] = 1;
+            }
+            else
+            {
+
                 accum[i][j] += accum[i - 1][j];
+                if (plush[i] == j)
+                    accum[i][j]++;
             }
         }
     }
@@ -44,22 +50,20 @@ int main()
     vector<int> dp(1 << m, 1e6);
     dp[0] = 0;
 
-    function<int(int, int)> count = [&](int kind, int msk) -> int
+    auto count = [&](int &kind, int &msk) -> int
     {
-        // インデックス開始位置を調べる
-        int start = 0;
+        int done = 0;
         for (int i = 0; i < m; i++)
         {
-            if (msk & (1 << i))
-                start += count_kinds[i];
+            if (msk & 1 << i)
+                done += kind_count[i];
         }
 
-        int exist = accum[start + count_kinds[kind] - 1][kind];
-        if (start - 1 >= 0)
-            exist -= accum[start - 1][kind];
+        int exist = accum[done + kind_count[kind] - 1][kind];
+        if (done - 1 >= 0)
+            exist -= accum[done - 1][kind];
 
-        // 今回区間に並べる種類を何個持ってくる必要があるか
-        return count_kinds[kind] - exist;
+        return kind_count[kind] - exist;
     };
 
     for (int msk = 0; msk < (1 << m) - 1; msk++)
@@ -76,6 +80,77 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+
+// int main()
+// {
+
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<int> init(n);
+//     vector<int> count_kinds(m, 0);
+//     vector<vector<int>> accum(n, vector<int>(m, 0));
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int p;
+//         cin >> p;
+//         p--;
+//         init[i] = p;
+//         count_kinds[p]++;
+//     }
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         accum[i][init[i]]++;
+//         if (i - 1 >= 0)
+//         {
+//             for (int j = 0; j < m; j++)
+//             {
+//                 accum[i][j] += accum[i - 1][j];
+//             }
+//         }
+//     }
+
+//     vector<int> dp(1 << m, 1e6);
+//     dp[0] = 0;
+
+//     function<int(int, int)> count = [&](int kind, int msk) -> int
+//     {
+//         // インデックス開始位置を調べる
+//         int start = 0;
+//         for (int i = 0; i < m; i++)
+//         {
+//             if (msk & (1 << i))
+//                 start += count_kinds[i];
+//         }
+
+//         int exist = accum[start + count_kinds[kind] - 1][kind];
+//         if (start - 1 >= 0)
+//             exist -= accum[start - 1][kind];
+
+//         // 今回区間に並べる種類を何個持ってくる必要があるか
+//         return count_kinds[kind] - exist;
+//     };
+
+//     for (int msk = 0; msk < (1 << m) - 1; msk++)
+//     {
+//         for (int i = 0; i < m; i++)
+//         {
+//             int bit = 1 << i;
+//             if (!(msk & bit))
+//                 dp[msk | bit] = min(dp[msk | bit], dp[msk] + count(i, msk));
+//         }
+//     }
+
+//     cout << dp[(1 << m) - 1] << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

@@ -8,29 +8,27 @@ using ll = long long;
 
 int main()
 {
-
     int h, w, q;
     cin >> h >> w >> q;
 
     vector<int> r(q), c(q);
 
-    vector<vector<bool>> is_block(h, vector<bool>(w, true));
-
     for (int i = 0; i < q; i++)
     {
         cin >> r[i] >> c[i];
-
         r[i]--;
         c[i]--;
     }
-    vector<set<int>> block_column(w), block_row(h);
 
+    vector<set<int>> block_r(h), block_c(w);
     for (int i = 0; i < h; i++)
+    {
         for (int j = 0; j < w; j++)
         {
-            block_column[j].insert(i);
-            block_row[i].insert(j);
+            block_r[i].insert(j);
+            block_c[j].insert(i);
         }
+    }
 
     ll ans = h * w;
 
@@ -38,61 +36,50 @@ int main()
     {
         int x = r[i];
         int y = c[i];
-        if (is_block[x][y])
+
+        if (block_r[x].count(y))
         {
-            is_block[x][y] = false;
-            block_column[y].erase(x);
-            block_row[x].erase(y);
+            block_r[x].erase(y);
+            block_c[y].erase(x);
             ans--;
         }
         else
         {
+            // right
+            auto it = block_r[x].lower_bound(y);
+            if (it != block_r[x].end())
+            {
+                block_r[x].erase(*it);
+                block_c[*it].erase(x);
+                ans--;
+            }
 
             // left
-            auto it_left = block_row[x].lower_bound(y);
-
-            if (it_left != block_row[x].begin())
+            auto it_l = block_r[x].lower_bound(y);
+            if (it_l != block_r[x].begin())
             {
-                it_left--;
-
-                is_block[x][*it_left] = false;
-                block_column[*it_left].erase(x);
-                block_row[x].erase(*it_left);
-                ans--;
-            }
-
-            // right
-            auto it_right = block_row[x].upper_bound(y);
-
-            if (it_right != block_row[x].end())
-            {
-                is_block[x][*it_right] = false;
-                block_column[*it_right].erase(x);
-                block_row[x].erase(*it_right);
-                ans--;
-            }
-
-            // up
-            auto it_up = block_column[y].lower_bound(x);
-
-            if (it_up != block_column[y].begin())
-            {
-                it_up--;
-
-                is_block[*it_up][y] = false;
-                block_column[y].erase(*it_up);
-                block_row[*it_up].erase(y);
+                it_l--;
+                block_r[x].erase(*it_l);
+                block_c[*it_l].erase(x);
                 ans--;
             }
 
             // down
-            auto it_down = block_column[y].upper_bound(x);
-
-            if (it_down != block_column[y].end())
+            auto it_d = block_c[y].lower_bound(x);
+            if (it_d != block_c[y].end())
             {
-                is_block[*it_down][y] = false;
-                block_column[y].erase(*it_down);
-                block_row[*it_down].erase(y);
+                block_r[*it_d].erase(y);
+                block_c[y].erase(*it_d);
+                ans--;
+            }
+
+            auto it_up = block_c[y].lower_bound(x);
+            // up
+            if (it_up != block_c[y].begin())
+            {
+                it_up--;
+                block_r[*it_up].erase(y);
+                block_c[y].erase(*it_up);
                 ans--;
             }
         }
@@ -102,6 +89,108 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     int h, w, q;
+//     cin >> h >> w >> q;
+
+//     vector<int> r(q), c(q);
+
+//     vector<vector<bool>> is_block(h, vector<bool>(w, true));
+
+//     for (int i = 0; i < q; i++)
+//     {
+//         cin >> r[i] >> c[i];
+
+//         r[i]--;
+//         c[i]--;
+//     }
+//     vector<set<int>> block_column(w), block_row(h);
+
+//     for (int i = 0; i < h; i++)
+//         for (int j = 0; j < w; j++)
+//         {
+//             block_column[j].insert(i);
+//             block_row[i].insert(j);
+//         }
+
+//     ll ans = h * w;
+
+//     for (int i = 0; i < q; i++)
+//     {
+//         int x = r[i];
+//         int y = c[i];
+//         if (is_block[x][y])
+//         {
+//             is_block[x][y] = false;
+//             block_column[y].erase(x);
+//             block_row[x].erase(y);
+//             ans--;
+//         }
+//         else
+//         {
+
+//             // left
+//             auto it_left = block_row[x].lower_bound(y);
+
+//             if (it_left != block_row[x].begin())
+//             {
+//                 it_left--;
+
+//                 is_block[x][*it_left] = false;
+//                 block_column[*it_left].erase(x);
+//                 block_row[x].erase(*it_left);
+//                 ans--;
+//             }
+
+//             // right
+//             auto it_right = block_row[x].upper_bound(y);
+
+//             if (it_right != block_row[x].end())
+//             {
+//                 is_block[x][*it_right] = false;
+//                 block_column[*it_right].erase(x);
+//                 block_row[x].erase(*it_right);
+//                 ans--;
+//             }
+
+//             // up
+//             auto it_up = block_column[y].lower_bound(x);
+
+//             if (it_up != block_column[y].begin())
+//             {
+//                 it_up--;
+
+//                 is_block[*it_up][y] = false;
+//                 block_column[y].erase(*it_up);
+//                 block_row[*it_up].erase(y);
+//                 ans--;
+//             }
+
+//             // down
+//             auto it_down = block_column[y].upper_bound(x);
+
+//             if (it_down != block_column[y].end())
+//             {
+//                 is_block[*it_down][y] = false;
+//                 block_column[y].erase(*it_down);
+//                 block_row[*it_down].erase(y);
+//                 ans--;
+//             }
+//         }
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
