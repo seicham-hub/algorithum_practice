@@ -4,7 +4,6 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i, n) for (int i = 0; i < n; ++i)
 
 int main()
 {
@@ -13,9 +12,9 @@ int main()
 
     int lower = 0, upper = 0;
 
-    for (char si : s)
+    for (char c : s)
     {
-        if (islower(si))
+        if (islower(c))
             lower++;
         else
             upper++;
@@ -23,25 +22,60 @@ int main()
 
     if (lower < upper)
     {
-        for (char &si : s)
-        {
-            if (islower(si))
-                si = toupper(si);
-        }
+        for (char &c : s)
+            c = toupper(c);
     }
     else
     {
-        for (char &si : s)
-        {
-            if (isupper(si))
-                si = tolower(si);
-        }
+        for (char &c : s)
+            c = tolower(c);
     }
 
     cout << s << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+
+//     int lower = 0, upper = 0;
+
+//     for (char si : s)
+//     {
+//         if (islower(si))
+//             lower++;
+//         else
+//             upper++;
+//     }
+
+//     if (lower < upper)
+//     {
+//         for (char &si : s)
+//         {
+//             if (islower(si))
+//                 si = toupper(si);
+//         }
+//     }
+//     else
+//     {
+//         for (char &si : s)
+//         {
+//             if (isupper(si))
+//                 si = tolower(si);
+//         }
+//     }
+
+//     cout << s << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

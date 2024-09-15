@@ -1,4 +1,4 @@
-// https://atcoder.jp/contests/abc368/submissions/me
+// https://atcoder.jp/contests/abc368/tasks/abc368_a
 // iteratorは要素と要素の間にあるものと理解すると良い
 // 2024_09_14もう一度
 
@@ -11,17 +11,37 @@ int main()
     int n, k;
     cin >> n >> k;
 
-    vector<int> cards(n);
+    vector<int> c(n);
+    rep(i, n) cin >> c[i];
 
-    rep(i, n) cin >> cards[i];
+    rotate(c.begin(), c.begin() + (n - k), c.end());
 
-    rotate(cards.begin(), cards.begin() + (n - k), cards.end());
-
-    for (int a : cards)
-        cout << a << " ";
+    for (int &i : c)
+        cout << i << " ";
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     vector<int> cards(n);
+
+//     rep(i, n) cin >> cards[i];
+
+//     rotate(cards.begin(), cards.begin() + (n - k), cards.end());
+
+//     for (int a : cards)
+//         cout << a << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

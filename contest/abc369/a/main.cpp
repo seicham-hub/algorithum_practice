@@ -12,21 +12,13 @@ int main()
 
     int ans = 0;
 
-    for (int i = -200; i < 300; i++)
+    for (int x = -200; x < 300; x++)
     {
-        if (i - a == b - i)
+        if (x - b == b - a)
             ans++;
-        else if (i - b == a - i)
+        else if (b - x == x - a)
             ans++;
-
-        else if (b - a == i - b)
-            ans++;
-        else if (a - b == i - a)
-            ans++;
-
-        else if (a - i == b - a)
-            ans++;
-        else if (b - i == a - b)
+        else if (b - a == a - x)
             ans++;
     }
 
@@ -34,3 +26,37 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int a, b;
+//     cin >> a >> b;
+
+//     int ans = 0;
+
+//     for (int i = -200; i < 300; i++)
+//     {
+//         if (i - a == b - i)
+//             ans++;
+//         else if (i - b == a - i)
+//             ans++;
+
+//         else if (b - a == i - b)
+//             ans++;
+//         else if (a - b == i - a)
+//             ans++;
+
+//         else if (a - i == b - a)
+//             ans++;
+//         else if (b - i == a - b)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
