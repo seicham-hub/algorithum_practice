@@ -6,39 +6,88 @@ using namespace std;
 
 struct Point
 {
-    int x, y;
-    Point(int x = 0, int y = 0) : x(x), y(y) {};
 
-    Point operator-(const Point &p) const
-    {
-        return Point(x - p.x, y - p.y);
-    }
+    int x, y;
 };
 
-int norm2(Point a, Point b)
+void inputP(Point &p)
 {
-    Point p = b - a;
-    return p.x * p.x + p.y * p.y;
+    cin >> p.x >> p.y;
+}
+
+int suq(Point &a, Point &b)
+{
+
+    return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+}
+
+bool isValid(Point &c, Point &a, Point &b)
+{
+    return suq(a, b) == suq(a, c) + suq(b, c);
 }
 
 int main()
 {
+
     Point a, b, c;
-    cin >> a.x >> a.y;
-    cin >> b.x >> b.y;
-    cin >> c.x >> c.y;
 
-    int A = norm2(b, c);
-    int B = norm2(b, c);
-    int C = norm2(b, c);
+    inputP(a);
+    inputP(b);
+    inputP(c);
 
-    if (A + B == C || A + C == B || B + C == A)
+    bool ans = false;
+
+    ans = ans | isValid(a, b, c);
+    ans = ans | isValid(b, c, a);
+    ans = ans | isValid(c, a, b);
+
+    if (ans)
         cout << "Yes" << endl;
     else
         cout << "No" << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// struct Point
+// {
+//     int x, y;
+//     Point(int x = 0, int y = 0) : x(x), y(y) {};
+
+//     Point operator-(const Point &p) const
+//     {
+//         return Point(x - p.x, y - p.y);
+//     }
+// };
+
+// int norm2(Point a, Point b)
+// {
+//     Point p = b - a;
+//     return p.x * p.x + p.y * p.y;
+// }
+
+// int main()
+// {
+//     Point a, b, c;
+//     cin >> a.x >> a.y;
+//     cin >> b.x >> b.y;
+//     cin >> c.x >> c.y;
+
+//     int A = norm2(b, c);
+//     int B = norm2(b, c);
+//     int C = norm2(b, c);
+
+//     if (A + B == C || A + C == B || B + C == A)
+//         cout << "Yes" << endl;
+//     else
+//         cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
