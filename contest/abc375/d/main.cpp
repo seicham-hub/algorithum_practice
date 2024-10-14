@@ -16,23 +16,90 @@ int main()
     cin >> s;
     int n = s.size();
 
-    vector<int> lcnt(26);
-    vector<int> rcnt(26);
+    vector<array<int, 26>> rui(n + 1);
 
-    rep(i, n) rcnt[s[i] - 'A']++;
+    rep(i, n)
+    {
+        rui[i + 1] = rui[i];
+        rui[i + 1][s[i] - 'A']++;
+    }
 
     ll ans = 0;
-    rep(j, n)
+
+    rep(i, n)
     {
-        rcnt[s[j] - 'A']--;
-        rep(c, 26) ans += (ll)lcnt[c] * rcnt[c];
-        lcnt[s[j] - 'A']++;
+
+        rep(j, 26)
+        {
+            ans += (ll)rui[i][j] * (rui[n][j] - rui[i + 1][j]);
+        }
     }
 
     cout << ans << endl;
-
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     string s;
+//     cin >> s;
+//     int n = s.size();
+
+//     vector<int> lcnt(26), rcnt(26);
+//     rep(i, n) rcnt[s[i] - 'A']++;
+
+//     ll ans = 0;
+//     rep(i, n)
+//     {
+//         rcnt[s[i] - 'A']--;
+
+//         rep(j, 26)
+//         {
+//             ans += (ll)lcnt[j] * rcnt[j];
+//         }
+//         lcnt[s[i] - 'A']++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     string s;
+//     cin >> s;
+//     int n = s.size();
+
+//     vector<int> lcnt(26);
+//     vector<int> rcnt(26);
+
+//     rep(i, n) rcnt[s[i] - 'A']++;
+
+//     ll ans = 0;
+//     rep(j, n)
+//     {
+//         rcnt[s[j] - 'A']--;
+//         rep(c, 26) ans += (ll)lcnt[c] * rcnt[c];
+//         lcnt[s[j] - 'A']++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 解説みて書いた実装
 // #include <bits/stdc++.h>

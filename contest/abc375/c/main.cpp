@@ -10,30 +10,75 @@ int main()
 {
     int n;
     cin >> n;
-    vector<string> a(n);
 
-    rep(i, n) cin >> a[i];
+    vector<string> grid(n);
 
-    vector<string> b = a;
+    rep(i, n) cin >> grid[i];
+
+    vector<string> cp = grid;
 
     rep(i, n) rep(j, n)
     {
-        int ni = i, nj = j;
 
-        // 枠の番号計算
-        int k = min({ni + 1, nj + 1, n - ni, n - nj});
+        int ni = i;
+        int nj = j;
+        int k = min({i + 1, j + 1, n - i, n - j});
 
         rep(ki, k)
         {
-            swap(ni, nj);
-            nj = n - 1 - nj;
+            int tmp = ni;
+            ni = nj;
+            nj = n - 1 - tmp;
         }
-        b[ni][nj] = a[i][j];
+
+        cp[ni][nj] = grid[i][j];
     }
 
-    rep(i, n) cout << b[i] << '\n';
+    rep(i, n)
+    {
+        rep(j, n)
+        {
+            cout << cp[i][j];
+        }
+        cout << endl;
+    }
+
     return 0;
 }
+
+// お手本解答
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<string> a(n);
+
+//     rep(i, n) cin >> a[i];
+
+//     vector<string> b = a;
+
+//     rep(i, n) rep(j, n)
+//     {
+//         int ni = i, nj = j;
+
+//         // 枠の番号計算
+//         int k = min({ni + 1, nj + 1, n - ni, n - nj});
+
+//         rep(ki, k)
+//         {
+//             swap(ni, nj);
+//             nj = n - 1 - nj;
+//         }
+//         b[ni][nj] = a[i][j];
+//     }
+
+//     rep(i, n) cout << b[i] << '\n';
+//     return 0;
+// }
 
 // 方針聞いて実装してみたがダメだった
 // #include <bits/stdc++.h>
