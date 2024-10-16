@@ -10,41 +10,88 @@ int main()
 {
     int n;
     cin >> n;
+    vector<string> a(n);
 
-    vector<string> grid(n);
+    rep(i, n) cin >> a[i];
 
-    rep(i, n) cin >> grid[i];
+    vector<string> b = a;
 
-    vector<string> cp = grid;
-
-    rep(i, n) rep(j, n)
+    rep(i, n)
     {
-
-        int ni = i;
-        int nj = j;
-        int k = min({i + 1, j + 1, n - i, n - j});
-
-        rep(ki, k)
+        rep(j, n)
         {
-            int tmp = ni;
-            ni = nj;
-            nj = n - 1 - tmp;
-        }
+            int k = min({i, j, n - 1 - i, n - 1 - j});
+            k++;
 
-        cp[ni][nj] = grid[i][j];
+            int cnt = k % 4;
+
+            int ni = i;
+            int nj = j;
+
+            rep(ki, cnt)
+            {
+                int tmp = ni;
+                ni = nj;
+                nj = n - 1 - tmp;
+            }
+
+            b[ni][nj] = a[i][j];
+        }
     }
 
     rep(i, n)
     {
         rep(j, n)
         {
-            cout << cp[i][j];
+            cout << b[i][j];
         }
         cout << endl;
     }
-
-    return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<string> grid(n);
+
+//     rep(i, n) cin >> grid[i];
+
+//     vector<string> cp = grid;
+
+//     rep(i, n) rep(j, n)
+//     {
+
+//         int ni = i;
+//         int nj = j;
+//         int k = min({i + 1, j + 1, n - i, n - j});
+
+//         rep(ki, k)
+//         {
+//             int tmp = ni;
+//             ni = nj;
+//             nj = n - 1 - tmp;
+//         }
+
+//         cp[ni][nj] = grid[i][j];
+//     }
+
+//     rep(i, n)
+//     {
+//         rep(j, n)
+//         {
+//             cout << cp[i][j];
+//         }
+//         cout << endl;
+//     }
+
+//     return 0;
+// }
 
 // お手本解答
 // #include <bits/stdc++.h>
