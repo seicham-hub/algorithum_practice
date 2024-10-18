@@ -2,7 +2,7 @@
 // 3つあるような場合は真ん中固定するとそれぞれ独立に選べるかもね
 
 // わからなかった...
-// 2024_10_14もう一度
+// 2024_10_15もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,30 +14,63 @@ int main()
 
     string s;
     cin >> s;
+
     int n = s.size();
 
-    vector<array<int, 26>> rui(n + 1);
-
+    vector<int> lcnt(26), rcnt(26);
     rep(i, n)
     {
-        rui[i + 1] = rui[i];
-        rui[i + 1][s[i] - 'A']++;
+        rcnt[s[i] - 'A']++;
     }
 
     ll ans = 0;
 
-    rep(i, n)
+    rep(j, n)
     {
-
-        rep(j, 26)
-        {
-            ans += (ll)rui[i][j] * (rui[n][j] - rui[i + 1][j]);
-        }
+        rcnt[s[j] - 'A']--;
+        rep(i, 26) ans += (ll)lcnt[i] * rcnt[i];
+        lcnt[s[j] - 'A']++;
     }
 
     cout << ans << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     string s;
+//     cin >> s;
+//     int n = s.size();
+
+//     vector<array<int, 26>> rui(n + 1);
+
+//     rep(i, n)
+//     {
+//         rui[i + 1] = rui[i];
+//         rui[i + 1][s[i] - 'A']++;
+//     }
+
+//     ll ans = 0;
+
+//     rep(i, n)
+//     {
+
+//         rep(j, 26)
+//         {
+//             ans += (ll)rui[i][j] * (rui[n][j] - rui[i + 1][j]);
+//         }
+//     }
+
+//     cout << ans << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

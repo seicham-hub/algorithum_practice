@@ -15,21 +15,22 @@ int main()
     string s;
     cin >> s;
 
-    int ans = 0;
-
-    // これ必要
     sort(s.begin(), s.end());
+
+    int ans = 0;
 
     do
     {
+
         bool ok = true;
         rep(i, n - k + 1)
         {
             string sub = s.substr(i, k);
-            string palin = sub;
-            reverse(palin.begin(), palin.end());
+            string rvstr = sub;
 
-            if (sub == palin)
+            reverse(rvstr.begin(), rvstr.end());
+
+            if (rvstr == sub)
             {
                 ok = false;
                 break;
@@ -39,12 +40,54 @@ int main()
             ans++;
 
     } while (next_permutation(s.begin(), s.end()));
-    // next_permutation　重複がある場合は同じもの試さないようにしてくれる
 
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     string s;
+//     cin >> s;
+
+//     int ans = 0;
+
+//     // これ必要
+//     sort(s.begin(), s.end());
+
+//     do
+//     {
+//         bool ok = true;
+//         rep(i, n - k + 1)
+//         {
+//             string sub = s.substr(i, k);
+//             string palin = sub;
+//             reverse(palin.begin(), palin.end());
+
+//             if (sub == palin)
+//             {
+//                 ok = false;
+//                 break;
+//             }
+//         }
+//         if (ok)
+//             ans++;
+
+//     } while (next_permutation(s.begin(), s.end()));
+//     // next_permutation　重複がある場合は同じもの試さないようにしてくれる
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 // #include <bits/stdc++.h>
 // using namespace std;
 // #define rep(i, n) for (int i = 0; i < n; ++i)
