@@ -19,7 +19,6 @@ int main()
     sort(a.begin(), a.end());
 
     int ans = 1e9;
-
     rep(i, k + 1)
     {
         ans = min(ans, a[i + n - k - 1] - a[i]);
@@ -29,6 +28,33 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     vector<int> a(n);
+
+//     rep(i, n) cin >> a[i];
+
+//     sort(a.begin(), a.end());
+
+//     int ans = 1e9;
+
+//     rep(i, k + 1)
+//     {
+//         ans = min(ans, a[i + n - k - 1] - a[i]);
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分の回答　貪欲法は複数先考えると最適じゃないときがある
 // eraseは計算量n位かかる
