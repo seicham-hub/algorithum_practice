@@ -31,7 +31,12 @@
       "id": "abc359_c",
       "label": "C",
       "title": "Tile Distance 2",
-      "url": "https://atcoder.jp/contests/abc359/tasks/abc359_c"
+      "url": "https://atcoder.jp/contests/abc359/tasks/abc359_c",
+      "directory": {
+        "path": "c",
+        "testdir": "tests",
+        "submit": "main.cpp"
+      }
     },
     {
       "id": "abc359_d",
