@@ -13,29 +13,73 @@ int main()
     int n;
     cin >> n;
 
-    vector<string> s = {"#"};
-    rep(ni, n)
+    vector<string> g = {"#"};
+
+    rep(i, n)
     {
-        int m = s.size(), m3 = m * 3;
+        int m = g.size();
+        int m3 = m * 3;
 
-        vector<string> t(m3, string(m3, '.'));
+        vector<string> tmp(m3, string(m3, '.'));
 
-        rep(i, m3) rep(j, m3) t[i][j] = s[i % m][j % m];
-        rep(i, m) rep(j, m) t[i + m][j + m] = '.';
-        s = t;
+        rep(j, m3) rep(l, m3)
+        {
+            tmp[j][l] = g[j % m][l % m];
+        }
+
+        rep(j, m) rep(l, m)
+        {
+            tmp[j + m][l + m] = '.';
+        }
+
+        g = tmp;
     }
 
-    rep(i, s.size())
+    rep(i, g.size())
     {
-        rep(j, s.size())
+        rep(j, g.size())
         {
-            cout << s[i][j];
+            cout << g[i][j];
         }
+
         cout << endl;
     }
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<string> s = {"#"};
+//     rep(ni, n)
+//     {
+//         int m = s.size(), m3 = m * 3;
+
+//         vector<string> t(m3, string(m3, '.'));
+
+//         rep(i, m3) rep(j, m3) t[i][j] = s[i % m][j % m];
+//         rep(i, m) rep(j, m) t[i + m][j + m] = '.';
+//         s = t;
+//     }
+
+//     rep(i, s.size())
+//     {
+//         rep(j, s.size())
+//         {
+//             cout << s[i][j];
+//         }
+//         cout << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

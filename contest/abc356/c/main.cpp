@@ -3,32 +3,35 @@
 // 時間かかった、なぜ間違えてるのか分からなかった
 
 // 2024_11_07もう一度
+// 2024_11_14もう一度
 
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i, n) for (int i = 0; i < n; ++i)
+#define rep(i, n) for (int i = 0; i < n; i++)
 using ll = long long;
 
 int main()
 {
     int n, m, k;
     cin >> n >> m >> k;
-
-    vector<int> as(m);
+    vector<int> am;
     vector<char> r(m);
 
     rep(i, m)
     {
         int c;
         cin >> c;
+        int bit = 0;
         rep(j, c)
         {
             int a;
             cin >> a;
             a--;
-            as[i] = as[i] | 1 << a;
+
+            bit |= 1 << a;
         }
         cin >> r[i];
+        am.push_back(bit);
     }
 
     int ans = 0;
@@ -38,10 +41,14 @@ int main()
         bool ok = true;
         rep(i, m)
         {
-            int cnt = __builtin_popcount(msk & as[i]);
-            if ((cnt >= k) != (r[i] == 'o'))
+            int cnt = __builtin_popcount(msk & am[i]);
+
+            if (cnt >= k && r[i] != 'o')
+                ok = false;
+            if (cnt < k && r[i] != 'x')
                 ok = false;
         }
+
         if (ok)
             ans++;
     }
@@ -50,6 +57,53 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int n, m, k;
+//     cin >> n >> m >> k;
+
+//     vector<int> as(m);
+//     vector<char> r(m);
+
+//     rep(i, m)
+//     {
+//         int c;
+//         cin >> c;
+//         rep(j, c)
+//         {
+//             int a;
+//             cin >> a;
+//             a--;
+//             as[i] = as[i] | 1 << a;
+//         }
+//         cin >> r[i];
+//     }
+
+//     int ans = 0;
+
+//     rep(msk, 1 << n)
+//     {
+//         bool ok = true;
+//         rep(i, m)
+//         {
+//             int cnt = __builtin_popcount(msk & as[i]);
+//             if ((cnt >= k) != (r[i] == 'o'))
+//                 ok = false;
+//         }
+//         if (ok)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // 自分のコード mskが1始まりだったからこけてた
 // #include <bits/stdc++.h>
