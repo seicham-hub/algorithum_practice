@@ -14,41 +14,36 @@ int main()
 {
     int n, m, k;
     cin >> n >> m >> k;
-    vector<int> am;
+    vector<int> ab(m);
     vector<char> r(m);
 
     rep(i, m)
     {
         int c;
         cin >> c;
-        int bit = 0;
         rep(j, c)
         {
             int a;
             cin >> a;
             a--;
-
-            bit |= 1 << a;
+            ab[i] |= 1 << a;
         }
         cin >> r[i];
-        am.push_back(bit);
     }
 
     int ans = 0;
 
-    rep(msk, 1 << n)
+    rep(candidate, 1 << n)
     {
         bool ok = true;
         rep(i, m)
         {
-            int cnt = __builtin_popcount(msk & am[i]);
-
-            if (cnt >= k && r[i] != 'o')
+            int trueCnt = __builtin_popcount(candidate & ab[i]);
+            if (trueCnt >= k && r[i] != 'o')
                 ok = false;
-            if (cnt < k && r[i] != 'x')
+            if (trueCnt < k && r[i] != 'x')
                 ok = false;
         }
-
         if (ok)
             ans++;
     }
@@ -57,6 +52,59 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+// using ll = long long;
+
+// int main()
+// {
+//     int n, m, k;
+//     cin >> n >> m >> k;
+//     vector<int> am;
+//     vector<char> r(m);
+
+//     rep(i, m)
+//     {
+//         int c;
+//         cin >> c;
+//         int bit = 0;
+//         rep(j, c)
+//         {
+//             int a;
+//             cin >> a;
+//             a--;
+
+//             bit |= 1 << a;
+//         }
+//         cin >> r[i];
+//         am.push_back(bit);
+//     }
+
+//     int ans = 0;
+
+//     rep(msk, 1 << n)
+//     {
+//         bool ok = true;
+//         rep(i, m)
+//         {
+//             int cnt = __builtin_popcount(msk & am[i]);
+
+//             if (cnt >= k && r[i] != 'o')
+//                 ok = false;
+//             if (cnt < k && r[i] != 'x')
+//                 ok = false;
+//         }
+
+//         if (ok)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

@@ -2,6 +2,7 @@
 
 // 11_15もう一度
 // 10^8を少しでも超えたら間に合わないと考えろ
+// set eraseの操作はlogn だけどちょっとコスト高いらしい
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,40 +14,84 @@ int main()
     int n, t;
     cin >> n >> t;
 
-    vector<int> row(n), col(n);
+    vector<int> a(t);
 
-    int dia1 = 0, dia2 = 0;
+    rep(i, t) cin >> a[i];
+    vector<int> row(n, n);
+    vector<int> col(n, n);
+
+    int cross1 = n, cross2 = n;
 
     rep(ti, t)
     {
-        int a;
-        cin >> a;
-        a--;
+        int val = a[ti] - 1;
+        int i = val / n;
+        int j = val % n;
 
-        int i = a / n, j = a % n;
-
-        auto add = [&](int &x)
-        {
-            x++;
-            if (x == n)
-            {
-                cout << ti + 1 << endl;
-                exit(0);
-            }
-        };
-
-        add(row[i]);
-        add(col[j]);
+        row[i]--;
+        col[j]--;
         if (i == j)
-            add(dia1);
-        if (i + j == n)
-            add(dia2);
+            cross1--;
+        if (i + j == n - 1)
+            cross2--;
+
+        if (!row[i] || !col[j] || !cross1 || !cross2)
+        {
+            cout << ti + 1 << endl;
+            return 0;
+        }
     }
 
     cout << -1 << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n, t;
+//     cin >> n >> t;
+
+//     vector<int> row(n), col(n);
+
+//     int dia1 = 0, dia2 = 0;
+
+//     rep(ti, t)
+//     {
+//         int a;
+//         cin >> a;
+//         a--;
+
+//         int i = a / n, j = a % n;
+
+//         auto add = [&](int &x)
+//         {
+//             x++;
+//             if (x == n)
+//             {
+//                 cout << ti + 1 << endl;
+//                 exit(0);
+//             }
+//         };
+
+//         add(row[i]);
+//         add(col[j]);
+//         if (i == j)
+//             add(dia1);
+//         if (i + j == n)
+//             add(dia2);
+//     }
+
+//     cout << -1 << endl;
+
+//     return 0;
+// }
+
 // #include <bits/stdc++.h>
 // using namespace std;
 // #define rep(i, n) for (int i = 0; i < n; ++i)
