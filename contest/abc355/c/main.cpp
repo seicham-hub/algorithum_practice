@@ -8,36 +8,36 @@
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 using P = pair<int, int>;
+using ll = long long;
 
 int main()
 {
     int n, t;
     cin >> n >> t;
 
-    vector<int> a(t);
+    vector<ll> a(t);
 
     rep(i, t) cin >> a[i];
-    vector<int> row(n, n);
-    vector<int> col(n, n);
 
-    int cross1 = n, cross2 = n;
+    vector<int> row(n), col(n);
+    int cross1 = 0, cross2 = 0;
 
-    rep(ti, t)
+    for (int ai = 0; ai < a.size(); ai++)
     {
-        int val = a[ti] - 1;
-        int i = val / n;
-        int j = val % n;
+        ll ti = a[ai] - 1;
+        int i = ti / n;
+        int j = ti % n;
+        row[i]++;
+        col[j]++;
 
-        row[i]--;
-        col[j]--;
         if (i == j)
-            cross1--;
+            cross1++;
         if (i + j == n - 1)
-            cross2--;
+            cross2++;
 
-        if (!row[i] || !col[j] || !cross1 || !cross2)
+        if (row[i] == n || col[j] == n || cross1 == n || cross2 == n)
         {
-            cout << ti + 1 << endl;
+            cout << ai + 1 << endl;
             return 0;
         }
     }
@@ -46,6 +46,49 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n, t;
+//     cin >> n >> t;
+
+//     vector<int> a(t);
+
+//     rep(i, t) cin >> a[i];
+//     vector<int> row(n, n);
+//     vector<int> col(n, n);
+
+//     int cross1 = n, cross2 = n;
+
+//     rep(ti, t)
+//     {
+//         int val = a[ti] - 1;
+//         int i = val / n;
+//         int j = val % n;
+
+//         row[i]--;
+//         col[j]--;
+//         if (i == j)
+//             cross1--;
+//         if (i + j == n - 1)
+//             cross2--;
+
+//         if (!row[i] || !col[j] || !cross1 || !cross2)
+//         {
+//             cout << ti + 1 << endl;
+//             return 0;
+//         }
+//     }
+
+//     cout << -1 << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

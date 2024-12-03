@@ -10,9 +10,10 @@ using ll = long long;
 
 int main()
 {
+    int M = 1e8;
+
     int n;
     cin >> n;
-
     vector<int> a(n);
 
     ll total = 0;
@@ -21,28 +22,104 @@ int main()
         cin >> a[i];
         total += a[i];
     }
-
     ll ans = total * (n - 1);
 
     sort(a.begin(), a.end());
 
-    ll tInt = 0;
-    rep(i, n)
+    int r = n - 1;
+    rep(i, n - 1)
     {
-        ll target = 1e8 - a[i];
-        int ind = lower_bound(a.begin(), a.end(), target) - a.begin();
-        if (ind <= i)
-            tInt += n - i - 1;
-        else
-            tInt += n - ind;
+        int ind = lower_bound(a.begin() + i + 1, a.end(), M - a[i]) - a.begin();
+
+        ans -= ll(n - ind) * M;
     }
 
-    ans -= (ll)1e8 * tInt;
-
-    cout << ans << endl;
+    cout
+        << ans << endl;
 
     return 0;
 }
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int M = 1e8;
+
+//     int n;
+//     cin >> n;
+//     vector<int> a(n);
+
+//     ll total = 0;
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         total += a[i];
+//     }
+//     ll ans = total * (n - 1);
+
+//     sort(a.begin(), a.end());
+
+//     int r = n - 1;
+//     rep(i, n - 1)
+//     {
+//         // cout << a[i] + a[r] - M << endl;
+//         while (r >= 0 && a[i] + a[r] >= M)
+//         {
+//             r--;
+//         }
+
+//         int cnt = n - max(i + 1, r + 1);
+//         ans -= (ll)(n - max(i + 1, r + 1)) * M;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+
+//     ll total = 0;
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         total += a[i];
+//     }
+
+//     ll ans = total * (n - 1);
+
+//     sort(a.begin(), a.end());
+
+//     ll tInt = 0;
+//     rep(i, n)
+//     {
+//         ll target = 1e8 - a[i];
+//         int ind = lower_bound(a.begin(), a.end(), target) - a.begin();
+//         if (ind <= i)
+//             tInt += n - i - 1;
+//         else
+//             tInt += n - ind;
+//     }
+
+//     ans -= (ll)1e8 * tInt;
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

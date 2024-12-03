@@ -13,40 +13,124 @@ int main()
 {
     int n;
     cin >> n;
-
     vector<int> a(n), c(n);
+
     rep(i, n)
     {
-        cin >> a[i];
-        cin >> c[i];
+        cin >> a[i] >> c[i];
     }
 
-    vector<int> ind(n);
-    rep(i, n) ind[i] = i;
+    vector<int> indices;
+    rep(i, n) indices.push_back(i);
 
-    sort(ind.begin(), ind.end(), [&](int i, int j)
+    sort(indices.begin(), indices.end(), [&](int i, int j)
          { return a[i] > a[j]; });
 
     vector<int> ans;
-    for (int i : ind)
+
+    for (int ind : indices)
     {
-        if (ans.size() == 0 || c[ans.back()] > c[i])
-        {
-            ans.push_back(i);
-        }
+        if (!ans.size() || c[ans.back() - 1] > c[ind])
+            ans.push_back(ind + 1);
     }
 
     sort(ans.begin(), ans.end());
 
     cout << ans.size() << endl;
-    rep(i, ans.size())
-    {
-        cout << ans[i] + 1 << " ";
-    }
-    cout << endl;
+    for (int ansi : ans)
+        cout << ansi << " ";
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<P> ac(n);
+
+//     rep(i, n) cin >> ac[i].first >> ac[i].second;
+
+//     vector<int> indices;
+//     rep(i, n) indices.push_back(i);
+
+//     sort(indices.begin(), indices.end(), [&](int a, int b)
+//          { return ac[a].first > ac[b].first; });
+
+//     vector<int> ans;
+//     int before = 1e9;
+//     rep(i, n)
+//     {
+//         int now = indices[i];
+//         if (ac[now].second <= before)
+//         {
+//             ans.push_back(now + 1);
+//             before = ac[now].second;
+//         }
+//     }
+
+//     sort(ans.begin(), ans.end());
+
+//     cout << ans.size() << endl;
+//     rep(i, ans.size())
+//     {
+//         cout << ans[i] << " ";
+//     }
+
+//     cout << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n), c(n);
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         cin >> c[i];
+//     }
+
+//     vector<int> ind(n);
+//     rep(i, n) ind[i] = i;
+
+//     sort(ind.begin(), ind.end(), [&](int i, int j)
+//          { return a[i] > a[j]; });
+
+//     vector<int> ans;
+//     for (int i : ind)
+//     {
+//         if (ans.size() == 0 || c[ans.back()] > c[i])
+//         {
+//             ans.push_back(i);
+//         }
+//     }
+
+//     sort(ans.begin(), ans.end());
+
+//     cout << ans.size() << endl;
+//     rep(i, ans.size())
+//     {
+//         cout << ans[i] + 1 << " ";
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
