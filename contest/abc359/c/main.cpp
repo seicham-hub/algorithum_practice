@@ -11,14 +11,12 @@ using ll = long long;
 
 int main()
 {
-
     ll sx, sy, tx, ty;
-
     cin >> sx >> sy >> tx >> ty;
 
-    if ((sx + sy) % 2 == 1)
+    if ((sx + sy) % 2 != 0)
         sx--;
-    if ((tx + ty) % 2 == 1)
+    if ((tx + ty) % 2 != 0)
         tx--;
 
     ll dx = abs(tx - sx);
@@ -26,7 +24,7 @@ int main()
 
     ll ans = 0;
 
-    if (dy > dx)
+    if (dy >= dx)
     {
         ans = dy;
     }
@@ -36,8 +34,44 @@ int main()
     }
 
     cout << ans << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     ll sx, sy, tx, ty;
+
+//     cin >> sx >> sy >> tx >> ty;
+
+//     if ((sx + sy) % 2 == 1)
+//         sx--;
+//     if ((tx + ty) % 2 == 1)
+//         tx--;
+
+//     ll dx = abs(tx - sx);
+//     ll dy = abs(ty - sy);
+
+//     ll ans = 0;
+
+//     if (dy > dx)
+//     {
+//         ans = dy;
+//     }
+//     else
+//     {
+//         ans = (dx + dy) / 2;
+//     }
+
+//     cout << ans << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

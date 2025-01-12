@@ -8,26 +8,16 @@ using namespace std;
 using ll = long long;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 
-ll f(ll l, ll r, ll target)
+ll cntRight(ll left, ll right, ll target, ll cnt)
 {
+    if (abs(right - left) == 1)
+        return cnt;
 
-    if (abs(l - r) == 1)
-        return 0;
-
-    ll mid = (l + r) / 2;
-
+    ll mid = (left + right) / 2;
     if (mid <= target)
-        return f(mid, r, target) + 1;
+        cntRight(mid, right, target, cnt + 1);
     else
-        return f(l, mid, target);
-}
-
-char flip(char c)
-{
-    if (islower(c))
-        return toupper(c);
-    else
-        return tolower(c);
+        cntRight(left, mid, target, cnt);
 }
 
 int main()
@@ -37,28 +27,103 @@ int main()
     int q;
     cin >> q;
 
-    int n = s.size();
+    vector<ll> k(q);
     rep(i, q)
     {
-        ll k;
-        cin >> k;
-        k--;
+        cin >> k[i];
+        k[i]--;
+    }
 
-        ll ind = k % n;
-        ll t = k / n;
+    auto flipStr = [&](string sc)
+    {
+        string result;
+        for (char c : sc)
+        {
+            if (islower(c))
+                result += toupper(c);
+            else
+                result += tolower(c);
+        }
 
-        ll cnt = f(0, 1LL << 60, t);
+        return result;
+    };
 
-        if (cnt % 2 == 0)
-            cout << s[ind] << ' ';
+    string s_reverse = flipStr(s);
+
+    rep(i, q)
+    {
+
+        ll ind = k[i] / s.size();
+        ll ord = k[i] % s.size();
+        ll rightCnt = cntRight(0, 1LL << 60, ind, 0);
+
+        if (rightCnt % 2 == 1)
+            cout << s_reverse[ord] << " ";
         else
-            cout << flip(s[ind]) << ' ';
+            cout << s[ord] << " ";
     }
 
     cout << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// ll f(ll l, ll r, ll target)
+// {
+
+//     if (abs(l - r) == 1)
+//         return 0;
+
+//     ll mid = (l + r) / 2;
+
+//     if (mid <= target)
+//         return f(mid, r, target) + 1;
+//     else
+//         return f(l, mid, target);
+// }
+
+// char flip(char c)
+// {
+//     if (islower(c))
+//         return toupper(c);
+//     else
+//         return tolower(c);
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+//     int q;
+//     cin >> q;
+
+//     int n = s.size();
+//     rep(i, q)
+//     {
+//         ll k;
+//         cin >> k;
+//         k--;
+
+//         ll ind = k % n;
+//         ll t = k / n;
+
+//         ll cnt = f(0, 1LL << 60, t);
+
+//         if (cnt % 2 == 0)
+//             cout << s[ind] << ' ';
+//         else
+//             cout << flip(s[ind]) << ' ';
+//     }
+
+//     cout << endl;
+
+//     return 0;
+// }
 
 // 解答のコード
 // #include <bits/stdc++.h>

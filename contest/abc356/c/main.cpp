@@ -14,37 +14,42 @@ int main()
 {
     int n, m, k;
     cin >> n >> m >> k;
-    vector<int> ab(m);
+
+    vector<int> test(m);
     vector<char> r(m);
 
     rep(i, m)
     {
         int c;
         cin >> c;
+
+        int tmp = 0;
         rep(j, c)
         {
             int a;
             cin >> a;
             a--;
-            ab[i] |= 1 << a;
+            tmp = tmp | (1 << a);
         }
         cin >> r[i];
+        test[i] = tmp;
     }
 
     int ans = 0;
 
-    rep(candidate, 1 << n)
+    rep(msk, (1 << n))
     {
-        bool ok = true;
+        bool flg = true;
         rep(i, m)
         {
-            int trueCnt = __builtin_popcount(candidate & ab[i]);
-            if (trueCnt >= k && r[i] != 'o')
-                ok = false;
-            if (trueCnt < k && r[i] != 'x')
-                ok = false;
+            int cnt = __builtin_popcount(msk & test[i]);
+            if (cnt >= k && r[i] == 'x')
+                flg = false;
+            if (cnt < k && r[i] == 'o')
+                flg = false;
         }
-        if (ok)
+
+        if (flg)
             ans++;
     }
 
@@ -52,6 +57,54 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; i++)
+// using ll = long long;
+
+// int main()
+// {
+//     int n, m, k;
+//     cin >> n >> m >> k;
+//     vector<int> ab(m);
+//     vector<char> r(m);
+
+//     rep(i, m)
+//     {
+//         int c;
+//         cin >> c;
+//         rep(j, c)
+//         {
+//             int a;
+//             cin >> a;
+//             a--;
+//             ab[i] |= 1 << a;
+//         }
+//         cin >> r[i];
+//     }
+
+//     int ans = 0;
+
+//     rep(candidate, 1 << n)
+//     {
+//         bool ok = true;
+//         rep(i, m)
+//         {
+//             int trueCnt = __builtin_popcount(candidate & ab[i]);
+//             if (trueCnt >= k && r[i] != 'o')
+//                 ok = false;
+//             if (trueCnt < k && r[i] != 'x')
+//                 ok = false;
+//         }
+//         if (ok)
+//             ans++;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

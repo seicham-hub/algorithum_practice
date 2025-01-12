@@ -12,41 +12,143 @@ int main()
     int n, k;
     cin >> n >> k;
 
-    vector<pair<char, int>> rle;
-    rep(i, n)
-    {
-        char now;
-        cin >> now;
-        if (rle.size() && rle.back().first == now)
-            rle.back().second++;
-        else
-            rle.push_back({now, 1});
-    }
+    string s;
+    cin >> s;
 
-    int one = 0;
-    rep(i, rle.size())
+    vector<pair<char, int>> rle;
+
+    for (char &c : s)
     {
-        if (rle[i].first == '1')
+        if (rle.size() && rle.back().first == c)
         {
-            one++;
-            if (one == k)
-            {
-                swap(rle[i], rle[i - 1]);
-            }
+            rle.back().second++;
+        }
+        else
+        {
+            rle.emplace_back(c, 1);
         }
     }
 
-    string ans;
-
-    for (auto [c, len] : rle)
+    int cnt = 0;
+    int swapInd = 0;
+    rep(i, rle.size())
     {
-        rep(i, len) ans += c;
+        if (rle[i].first == '1')
+            cnt++;
+        if (cnt == k)
+        {
+            swapInd = i;
+            break;
+        }
     }
 
-    cout << ans << endl;
+    swap(rle[swapInd - 1], rle[swapInd]);
+
+    for (auto &r : rle)
+    {
+        rep(i, r.second) cout << r.first;
+    }
+    cout << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     string s;
+//     cin >> s;
+
+//     vector<pair<char, int>> rle;
+
+//     for (char &c : s)
+//     {
+//         if (rle.size() && rle.back().first == c)
+//         {
+//             rle.back().second++;
+//         }
+//         else
+//         {
+//             rle.push_back({c, 1});
+//         }
+//     }
+
+//     int oneCnt = 0;
+//     int swapInd = 0;
+//     rep(i, rle.size())
+//     {
+//         if (rle[i].first == '1')
+//             oneCnt++;
+//         if (oneCnt == k)
+//         {
+//             swapInd = i;
+//             break;
+//         }
+//     }
+
+//     swap(rle[swapInd - 1], rle[swapInd]);
+
+//     for (auto &ri : rle)
+//     {
+//         rep(i, ri.second)
+//         {
+//             cout << ri.first;
+//         }
+//     }
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     vector<pair<char, int>> rle;
+//     rep(i, n)
+//     {
+//         char now;
+//         cin >> now;
+//         if (rle.size() && rle.back().first == now)
+//             rle.back().second++;
+//         else
+//             rle.push_back({now, 1});
+//     }
+
+//     int one = 0;
+//     rep(i, rle.size())
+//     {
+//         if (rle[i].first == '1')
+//         {
+//             one++;
+//             if (one == k)
+//             {
+//                 swap(rle[i], rle[i - 1]);
+//             }
+//         }
+//     }
+
+//     string ans;
+
+//     for (auto [c, len] : rle)
+//     {
+//         rep(i, len) ans += c;
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
