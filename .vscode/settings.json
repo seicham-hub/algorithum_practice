@@ -88,6 +88,10 @@
     "valarray": "cpp",
     "variant": "cpp"
   },
-
+  "command-runner.commands": {
+    "oj test": "oj test -c ${fileDirname}/main -d ${fileDirname}/tests",
+    "acc submit": "cd ${fileDirname} && acc submit ${file} || cd ../../",
+    "acc add": "cd ${fileDirname}/.. && acc add --choice rest",
+  },
   "editor.formatOnSave": true
 }
