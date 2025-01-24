@@ -11,35 +11,32 @@ using ll = long long;
 
 int main()
 {
+
     int n;
     cin >> n;
-
     vector<int> a(n);
 
-    rep(i, n)
-    {
-        cin >> a[i];
-    }
+    rep(i, n) cin >> a[i];
 
     const ll INF = 1e18;
-
     vector<vector<ll>> dp(n + 1, vector<ll>(2, -INF));
     dp[0][0] = 0;
 
     rep(i, n)
     {
+
         int ni = i + 1;
         rep(j, 2)
         {
-
-            // 倒す場合
-            int nj = (j + 1) % 2;
-            ll X = nj == 0 ? 2 * a[i] : a[i];
-            dp[ni][nj] = max(dp[ni][nj], dp[i][j] + X);
-
-            // 倒さない場合
-            nj = j;
-            dp[ni][nj] = max(dp[ni][nj], dp[i][j]);
+            {
+                int nj = (j + 1) % 2;
+                ll X = nj == 0 ? 2 * a[i] : a[i];
+                dp[ni][nj] = max(dp[ni][nj], dp[i][j] + X);
+            }
+            {
+                int nj = j;
+                dp[ni][nj] = max(dp[ni][nj], dp[i][j]);
+            }
         }
     }
 
@@ -49,6 +46,92 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+
+//     rep(i, n) cin >> a[i];
+
+//     const ll INF = 1e18;
+//     vector<vector<ll>> dp(n + 1, vector<ll>(2, -INF));
+//     dp[0][0] = 0;
+
+//     rep(i, n)
+//     {
+//         int ni = i + 1;
+//         rep(j, 2)
+//         {
+//             int nj = (j + 1) % 2;
+
+//             const ll X = nj == 0 ? 2 * a[i] : a[i];
+//             dp[ni][nj] = max(dp[ni][nj], dp[i][j] + X);
+
+//             nj = j;
+//             dp[ni][nj] = max(dp[ni][nj], dp[i][j]);
+//         }
+//     }
+
+//     ll ans = max(dp[n][0], dp[n][1]);
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//     }
+
+//     const ll INF = 1e18;
+
+//     vector<vector<ll>> dp(n + 1, vector<ll>(2, -INF));
+//     dp[0][0] = 0;
+
+//     rep(i, n)
+//     {
+//         int ni = i + 1;
+//         rep(j, 2)
+//         {
+
+//             // 倒す場合
+//             int nj = (j + 1) % 2;
+//             ll X = nj == 0 ? 2 * a[i] : a[i];
+//             dp[ni][nj] = max(dp[ni][nj], dp[i][j] + X);
+
+//             // 倒さない場合
+//             nj = j;
+//             dp[ni][nj] = max(dp[ni][nj], dp[i][j]);
+//         }
+//     }
+
+//     ll ans = max(dp[n][0], dp[n][1]);
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
