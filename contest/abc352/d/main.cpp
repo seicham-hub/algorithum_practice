@@ -14,37 +14,76 @@ int main()
     cin >> n >> k;
 
     vector<int> p(n);
-    map<int, int> vtoind;
-
+    map<int, int> vtoi;
     rep(i, n)
     {
         cin >> p[i];
         p[i]--;
-        vtoind[p[i]] = i;
+        vtoi[p[i]] = i;
     }
 
-    set<int> st;
     int ans = n;
-
-    rep(i, n)
+    set<int> st;
+    rep(v, n)
     {
-        st.insert(vtoind[i]);
+
+        st.insert(vtoi[v]);
+
         if (st.size() == k)
         {
-            auto last = st.end();
-            last--;
-            auto start = st.begin();
+            int x = *st.rbegin() - *st.begin();
+            ans = min(ans, x);
 
-            int now = *last - *start;
-            ans = min(ans, now);
-
-            st.erase(vtoind[i - k + 1]);
+            st.erase(vtoi[v - k + 1]);
         }
     }
+
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, k;
+//     cin >> n >> k;
+
+//     vector<int> p(n);
+//     map<int, int> vtoind;
+
+//     rep(i, n)
+//     {
+//         cin >> p[i];
+//         p[i]--;
+//         vtoind[p[i]] = i;
+//     }
+
+//     set<int> st;
+//     int ans = n;
+
+//     rep(i, n)
+//     {
+//         st.insert(vtoind[i]);
+//         if (st.size() == k)
+//         {
+//             auto last = st.end();
+//             last--;
+//             auto start = st.begin();
+
+//             int now = *last - *start;
+//             ans = min(ans, now);
+
+//             st.erase(vtoind[i - k + 1]);
+//         }
+//     }
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

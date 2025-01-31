@@ -3,13 +3,13 @@
 // わからなかった.. TLE
 
 // 2025_01_26もう一度
+// 2025_01_31もう一度
 
-// お手本コード
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
-int di[] = {-1, 0, 1, 0};
-int dj[] = {0, -1, 0, 1};
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, -1, 0, 1};
 
 using P = pair<int, int>;
 
@@ -17,65 +17,71 @@ int main()
 {
     int h, w;
     cin >> h >> w;
-    vector<string> s(h);
 
-    rep(i, h) cin >> s[i];
+    vector<string> grid(h);
+    vector block(h, vector<bool>(w, false));
 
-    vector x(h, vector<bool>(w));
-
-    rep(i, h) rep(j, w) if (s[i][j] == '#')
+    rep(i, h)
     {
-        x[i][j] = true;
+        cin >> grid[i];
+    }
 
-        rep(v, 4)
+    rep(i, h) rep(j, w)
+    {
+        if (grid[i][j] == '#')
         {
-            int ni = i + di[v], nj = j + dj[v];
-            if (ni < 0 || ni >= h || nj < 0 || nj >= w)
-                continue;
-            x[ni][nj] = true;
+            block[i][j] = true;
+            rep(k, 4)
+            {
+                int ni = i + dx[k];
+                int nj = j + dy[k];
+
+                if (ni < 0 || ni >= h || nj < 0 || nj >= w)
+                    continue;
+                block[ni][nj] = true;
+            }
         }
     }
 
-    vector used(h, vector<bool>(w));
+    int ans = 1;
+    vector visited(h, vector<bool>(w, false));
     vector last(h, vector<int>(w));
     int tm = 0;
 
-    int ans = 1;
-    rep(si, h) rep(sj, w) if (!x[si][sj])
+    rep(i, h) rep(j, w)
     {
-        if (used[si][sj])
+        if (visited[i][j] || block[i][j])
             continue;
 
-        tm++;
         int cnt = 0;
         queue<P> q;
-        q.emplace(si, sj);
-        used[si][sj] = true;
+        q.emplace(i, j);
+        visited[i][j] = true;
+        tm++;
 
         while (!q.empty())
         {
-
-            auto [i, j] = q.front();
+            auto [x, y] = q.front();
             q.pop();
             cnt++;
 
-            rep(v, 4)
+            rep(k, 4)
             {
-                int ni = i + di[v], nj = j + dj[v];
-                if (ni < 0 || ni >= h || nj < 0 || nj >= w)
-                    continue;
-                if (used[ni][nj])
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+
+                if (nx < 0 || nx >= h || ny < 0 || ny >= w || visited[nx][ny])
                     continue;
 
-                if (x[ni][nj])
+                if (block[nx][ny])
                 {
-                    if (last[ni][nj] != tm)
-                        cnt++, last[ni][nj] = tm;
+                    if (last[nx][ny] != tm)
+                        cnt++, last[nx][ny] = tm;
                     continue;
                 }
 
-                q.emplace(ni, nj);
-                used[ni][nj] = true;
+                q.emplace(nx, ny);
+                visited[nx][ny] = true;
             }
         }
 
@@ -86,6 +92,89 @@ int main()
 
     return 0;
 }
+
+// お手本コード
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// int di[] = {-1, 0, 1, 0};
+// int dj[] = {0, -1, 0, 1};
+
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int h, w;
+//     cin >> h >> w;
+//     vector<string> s(h);
+
+//     rep(i, h) cin >> s[i];
+
+//     vector x(h, vector<bool>(w));
+
+//     rep(i, h) rep(j, w) if (s[i][j] == '#')
+//     {
+//         x[i][j] = true;
+
+//         rep(v, 4)
+//         {
+//             int ni = i + di[v], nj = j + dj[v];
+//             if (ni < 0 || ni >= h || nj < 0 || nj >= w)
+//                 continue;
+//             x[ni][nj] = true;
+//         }
+//     }
+
+//     vector used(h, vector<bool>(w));
+//     vector last(h, vector<int>(w));
+//     int tm = 0;
+
+//     int ans = 1;
+//     rep(si, h) rep(sj, w) if (!x[si][sj])
+//     {
+//         if (used[si][sj])
+//             continue;
+
+//         tm++;
+//         int cnt = 0;
+//         queue<P> q;
+//         q.emplace(si, sj);
+//         used[si][sj] = true;
+
+//         while (!q.empty())
+//         {
+
+//             auto [i, j] = q.front();
+//             q.pop();
+//             cnt++;
+
+//             rep(v, 4)
+//             {
+//                 int ni = i + di[v], nj = j + dj[v];
+//                 if (ni < 0 || ni >= h || nj < 0 || nj >= w)
+//                     continue;
+//                 if (used[ni][nj])
+//                     continue;
+
+//                 if (x[ni][nj])
+//                 {
+//                     if (last[ni][nj] != tm)
+//                         cnt++, last[ni][nj] = tm;
+//                     continue;
+//                 }
+
+//                 q.emplace(ni, nj);
+//                 used[ni][nj] = true;
+//             }
+//         }
+
+//         ans = max(ans, cnt);
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
