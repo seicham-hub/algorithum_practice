@@ -18,80 +18,166 @@ int main()
     int h, w;
     cin >> h >> w;
 
-    vector<string> grid(h);
-    vector block(h, vector<bool>(w, false));
+    vector<string> s(h);
 
-    rep(i, h)
-    {
-        cin >> grid[i];
-    }
+    rep(i, h) cin >> s[i];
+
+    vector block(h, vector<bool>(w, false));
 
     rep(i, h) rep(j, w)
     {
-        if (grid[i][j] == '#')
-        {
+        if (s[i][j] == '#')
             block[i][j] = true;
-            rep(k, 4)
-            {
-                int ni = i + dx[k];
-                int nj = j + dy[k];
 
-                if (ni < 0 || ni >= h || nj < 0 || nj >= w)
-                    continue;
-                block[ni][nj] = true;
-            }
+        rep(k, 4)
+        {
+            int ni = i + dx[k];
+            int nj = j + dy[k];
+
+            if (ni < 0 || ni >= h || nj < 0 || nj >= w)
+                continue;
+            if (s[ni][nj] == '#')
+                block[i][j] = true;
         }
     }
 
+    vector used(h, vector<bool>(w, false));
+    vector last(h, vector<int>(w, 0));
+
     int ans = 1;
-    vector visited(h, vector<bool>(w, false));
-    vector last(h, vector<int>(w));
-    int tm = 0;
+    int time = 0;
 
     rep(i, h) rep(j, w)
     {
-        if (visited[i][j] || block[i][j])
-            continue;
-
-        int cnt = 0;
         queue<P> q;
-        q.emplace(i, j);
-        visited[i][j] = true;
-        tm++;
+        if (!used[i][j] && !block[i][j])
+            q.emplace(i, j);
+        int tmp = 0;
+        time++;
 
         while (!q.empty())
         {
+
             auto [x, y] = q.front();
+            used[x][y] = true;
             q.pop();
-            cnt++;
+            tmp++;
 
             rep(k, 4)
             {
-                int nx = x + dx[k];
-                int ny = y + dy[k];
 
-                if (nx < 0 || nx >= h || ny < 0 || ny >= w || visited[nx][ny])
+                int nx = x + dx[k], ny = y + dy[k];
+                if (nx < 0 || nx >= h || ny < 0 || ny >= w)
+                    continue;
+                if (used[nx][ny])
                     continue;
 
                 if (block[nx][ny])
                 {
-                    if (last[nx][ny] != tm)
-                        cnt++, last[nx][ny] = tm;
+                    if (last[nx][ny] != time)
+                        tmp++, last[nx][ny] = time;
                     continue;
                 }
 
                 q.emplace(nx, ny);
-                visited[nx][ny] = true;
+                used[nx][ny] = true;
             }
         }
-
-        ans = max(ans, cnt);
+        ans = max(ans, tmp);
     }
 
     cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// int dx[] = {-1, 0, 1, 0};
+// int dy[] = {0, -1, 0, 1};
+
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int h, w;
+//     cin >> h >> w;
+
+//     vector<string> grid(h);
+//     vector block(h, vector<bool>(w, false));
+
+//     rep(i, h)
+//     {
+//         cin >> grid[i];
+//     }
+
+//     rep(i, h) rep(j, w)
+//     {
+//         if (grid[i][j] == '#')
+//         {
+//             block[i][j] = true;
+//             rep(k, 4)
+//             {
+//                 int ni = i + dx[k];
+//                 int nj = j + dy[k];
+
+//                 if (ni < 0 || ni >= h || nj < 0 || nj >= w)
+//                     continue;
+//                 block[ni][nj] = true;
+//             }
+//         }
+//     }
+
+//     int ans = 1;
+//     vector visited(h, vector<bool>(w, false));
+//     vector last(h, vector<int>(w));
+//     int tm = 0;
+
+//     rep(i, h) rep(j, w)
+//     {
+//         if (visited[i][j] || block[i][j])
+//             continue;
+
+//         int cnt = 0;
+//         queue<P> q;
+//         q.emplace(i, j);
+//         visited[i][j] = true;
+//         tm++;
+
+//         while (!q.empty())
+//         {
+//             auto [x, y] = q.front();
+//             q.pop();
+//             cnt++;
+
+//             rep(k, 4)
+//             {
+//                 int nx = x + dx[k];
+//                 int ny = y + dy[k];
+
+//                 if (nx < 0 || nx >= h || ny < 0 || ny >= w || visited[nx][ny])
+//                     continue;
+
+//                 if (block[nx][ny])
+//                 {
+//                     if (last[nx][ny] != tm)
+//                         cnt++, last[nx][ny] = tm;
+//                     continue;
+//                 }
+
+//                 q.emplace(nx, ny);
+//                 visited[nx][ny] = true;
+//             }
+//         }
+
+//         ans = max(ans, cnt);
+//     }
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // お手本コード
 // #include <bits/stdc++.h>
