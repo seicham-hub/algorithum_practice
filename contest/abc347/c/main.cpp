@@ -15,22 +15,20 @@ int main()
     cin >> n >> a >> b;
 
     int w = a + b;
-    vector<int> d(2 * n);
+
+    vector<int> d(n);
+    rep(i, n)
+    {
+        cin >> d[i];
+        d[i] %= w;
+    }
+    sort(d.begin(), d.end());
+    rep(i, n) d.push_back(d[i] + w);
 
     rep(i, n)
     {
-        int di;
-        cin >> di;
-        di--;
-
-        int diff = di % w;
-        d[i] = diff;
-        d[i + n] = diff + w;
-    }
-
-    rep(i, 2 * n - 1)
-    {
-        if (d[i + 1] - d[i] >= b + 1)
+        int l = d[i], r = d[i + n - 1];
+        if (r - l + 1 <= a)
         {
             cout << "Yes" << endl;
             return 0;
@@ -39,8 +37,57 @@ int main()
 
     cout << "No" << endl;
 
+    // rep(i, d.size() - 1)
+    // {
+    //     if (d[i + 1] - d[i] >= b + 1)
+    //     {
+    //         cout << "Yes" << endl;
+    //         return 0;
+    //     }
+    // }
+
+    // cout << "No" << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n, a, b;
+//     cin >> n >> a >> b;
+
+//     int w = a + b;
+//     vector<int> d(n);
+
+//     rep(i, n)
+//     {
+//         cin >> d[i];
+//         d[i]--;
+
+//         d[i] %= w;
+//     }
+//     sort(d.begin(), d.end());
+//     rep(i, n) d.push_back(d[i] + w);
+
+//     rep(i, d.size() - 1)
+//     {
+//         if (d[i + 1] - d[i] >= b + 1)
+//         {
+//             cout << "Yes" << endl;
+//             return 0;
+//         }
+//     }
+
+//     cout << "No" << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
