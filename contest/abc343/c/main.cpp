@@ -23,7 +23,7 @@ int main()
         bool isPalindrome = true;
         rep(i, converted.size() / 2)
         {
-            if (converted[i] != converted[converted.size() - 1 - i])
+            if (converted[i] != *(converted.rbegin() + i))
                 isPalindrome = false;
         }
 

@@ -9,7 +9,7 @@ using namespace std;
 using ll = long long;
 using P = pair<int, int>;
 
-ll c2(ll n)
+ll nc2(ll n)
 {
 
     return n * (n - 1) / 2;
@@ -21,23 +21,24 @@ int main()
     string s;
     cin >> s;
 
-    vector<int> al(26);
     int n = s.size();
+
+    vector<int> cnt(26);
 
     for (char c : s)
     {
-        al[c - 'a']++;
+        cnt[c - 'a']++;
     }
 
+    ll ans = nc2(n);
     ll same = 0;
     rep(i, 26)
     {
-        int tmpn = al[i];
-        same += c2(tmpn);
+        int tmpn = cnt[i];
+        same += nc2(tmpn);
     }
-    ll diff = c2(n) - same;
 
-    ll ans = diff;
+    ans -= same;
     if (same)
         ans++;
 
@@ -45,6 +46,49 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// ll c2(ll n)
+// {
+
+//     return n * (n - 1) / 2;
+// }
+
+// int main()
+// {
+
+//     string s;
+//     cin >> s;
+
+//     vector<int> al(26);
+//     int n = s.size();
+
+//     for (char c : s)
+//     {
+//         al[c - 'a']++;
+//     }
+
+//     ll same = 0;
+//     rep(i, 26)
+//     {
+//         int tmpn = al[i];
+//         same += c2(tmpn);
+//     }
+//     ll diff = c2(n) - same;
+
+//     ll ans = diff;
+//     if (same)
+//         ans++;
+
+//     cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
