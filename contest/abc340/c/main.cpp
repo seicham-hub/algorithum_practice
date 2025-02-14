@@ -9,27 +9,57 @@ using namespace std;
 using ll = long long;
 using P = pair<int, int>;
 
-unordered_map<ll, ll> memo;
-ll f(ll x)
+unordered_map<ll, ll> mp;
+
+ll f(ll n)
 {
-    if (x == 1)
+    if (n == 1)
         return 0;
 
-    if (memo.count(x))
-        return memo[x];
+    if (mp.count(n))
+        return mp[n];
 
-    ll res = f(x / 2) + f(x - x / 2) + x;
-    return memo[x] = res;
+    return mp[n] = f(n / 2) + f(n - n / 2) + n;
 }
 
 int main()
 {
+
     ll n;
     cin >> n;
 
     cout << f(n) << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// unordered_map<ll, ll> memo;
+// ll f(ll x)
+// {
+//     if (x == 1)
+//         return 0;
+
+//     if (memo.count(x))
+//         return memo[x];
+
+//     ll res = f(x / 2) + f(x - x / 2) + x;
+//     return memo[x] = res;
+// }
+
+// int main()
+// {
+//     ll n;
+//     cin >> n;
+
+//     cout << f(n) << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
