@@ -12,39 +12,74 @@ using P = pair<int, int>;
 
 int main()
 {
-
     int n;
     cin >> n;
 
-    vector<ll> repUnit;
+    vector<ll> rUni;
 
-    for (ll i = 1; i < 1e12; i = i * 10 + 1)
-        repUnit.push_back(i);
-
-    set<ll> cand;
-
-    rep(i, repUnit.size())
+    for (ll i = 1; i < 1e14; i = i * 10 + 1)
     {
-        rep(j, repUnit.size())
-        {
-            rep(k, repUnit.size())
-            {
-                cand.insert(repUnit[i] + repUnit[j] + repUnit[k]);
-            }
-        }
+        rUni.push_back(i);
     }
 
-    vector<ll> tmp;
-
-    for (auto c : cand)
+    set<ll> tmp;
+    vector<ll> ans;
+    rep(i, rUni.size()) rep(j, rUni.size()) rep(k, rUni.size())
     {
-        tmp.push_back(c);
+        tmp.insert(rUni[i] + rUni[j] + rUni[k]);
     }
 
-    cout << tmp[n - 1] << endl;
+    for (ll t : tmp)
+    {
+        ans.push_back(t);
+    }
+
+    cout << ans[n - 1] << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// int main()
+// {
+
+//     int n;
+//     cin >> n;
+
+//     vector<ll> repUnit;
+
+//     for (ll i = 1; i < 1e12; i = i * 10 + 1)
+//         repUnit.push_back(i);
+
+//     set<ll> cand;
+
+//     rep(i, repUnit.size())
+//     {
+//         rep(j, repUnit.size())
+//         {
+//             rep(k, repUnit.size())
+//             {
+//                 cand.insert(repUnit[i] + repUnit[j] + repUnit[k]);
+//             }
+//         }
+//     }
+
+//     vector<ll> tmp;
+
+//     for (auto c : cand)
+//     {
+//         tmp.push_back(c);
+//     }
+
+//     cout << tmp[n - 1] << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
