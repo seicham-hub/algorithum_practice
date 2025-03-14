@@ -11,46 +11,93 @@ using P = pair<int, int>;
 
 int main()
 {
-
     int n;
     cin >> n;
     vector<int> a(n);
-
     rep(i, n) cin >> a[i];
 
     vector<int> cnt(2e6);
 
     int r = 0;
+    bool mult = false;
+    int ans = 2e6;
 
-    const int INF = 2e6;
-    int mult = 0;
-    int ans = INF;
     rep(l, n)
     {
-
-        while (r < n && mult == 0)
+        while (r < n && !mult)
         {
             cnt[a[r]]++;
-
             if (cnt[a[r]] == 2)
-                mult++;
+                mult = true;
+
             r++;
         }
-        if (mult == 0)
+
+        if (!mult)
             break;
 
         ans = min(ans, r - l);
         if (cnt[a[l]] == 2)
-            mult--;
+            mult = false;
+
         cnt[a[l]]--;
     }
 
-    if (ans == INF)
+    if (ans == 2e6)
         cout << -1 << endl;
     else
         cout << ans << endl;
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// int main()
+// {
+
+//     int n;
+//     cin >> n;
+//     vector<int> a(n);
+
+//     rep(i, n) cin >> a[i];
+
+//     vector<int> cnt(2e6);
+
+//     int r = 0;
+
+//     const int INF = 2e6;
+//     int mult = 0;
+//     int ans = INF;
+//     rep(l, n)
+//     {
+
+//         while (r < n && mult == 0)
+//         {
+//             cnt[a[r]]++;
+
+//             if (cnt[a[r]] == 2)
+//                 mult++;
+//             r++;
+//         }
+//         if (mult == 0)
+//             break;
+
+//         ans = min(ans, r - l);
+//         if (cnt[a[l]] == 2)
+//             mult--;
+//         cnt[a[l]]--;
+//     }
+
+//     if (ans == INF)
+//         cout << -1 << endl;
+//     else
+//         cout << ans << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

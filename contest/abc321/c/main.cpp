@@ -15,14 +15,12 @@ int main()
     cin >> k;
 
     vector<ll> ans;
-
-    rep(s, 1 << 10)
+    rep(msk, 1 << 10)
     {
-
         ll x = 0;
         for (int i = 9; i >= 0; i--)
         {
-            if (s & 1 << i)
+            if (msk & 1 << i)
                 x = x * 10 + i;
         }
 
@@ -37,6 +35,40 @@ int main()
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int k;
+//     cin >> k;
+
+//     vector<ll> ans;
+
+//     rep(s, 1 << 10)
+//     {
+
+//         ll x = 0;
+//         for (int i = 9; i >= 0; i--)
+//         {
+//             if (s & 1 << i)
+//                 x = x * 10 + i;
+//         }
+
+//         if (x == 0)
+//             continue;
+//         ans.push_back(x);
+//     }
+
+//     sort(ans.begin(), ans.end());
+
+//     cout << ans[k - 1] << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
