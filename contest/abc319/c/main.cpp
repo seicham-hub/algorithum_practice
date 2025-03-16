@@ -18,12 +18,13 @@ int main()
     vector<int> p(9);
     rep(i, 9) p[i] = i;
 
-    int cnt = 0;
-    int total = 0;
+    double total = 0;
+    double cnt = 0;
 
     do
     {
         total++;
+
         bool isOk = true;
 
         auto f = [&](int i, int j, int k)
@@ -53,12 +54,68 @@ int main()
 
     } while (next_permutation(p.begin(), p.end()));
 
-    double ans = (double)cnt / (double)total;
-
-    printf("%.10f\n", ans);
+    printf("%.10f", cnt / total);
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// int main()
+// {
+
+//     vector<int> c(9);
+
+//     rep(i, 9) cin >> c[i];
+
+//     vector<int> p(9);
+//     rep(i, 9) p[i] = i;
+
+//     int cnt = 0;
+//     int total = 0;
+
+//     do
+//     {
+//         total++;
+//         bool isOk = true;
+
+//         auto f = [&](int i, int j, int k)
+//         {
+//             vector<P> th;
+//             th.emplace_back(p[i], c[i]);
+//             th.emplace_back(p[j], c[j]);
+//             th.emplace_back(p[k], c[k]);
+
+//             sort(th.begin(), th.end());
+
+//             if (th[0].second == th[1].second)
+//                 isOk = false;
+//         };
+
+//         f(0, 1, 2);
+//         f(3, 4, 5);
+//         f(6, 7, 8);
+//         f(0, 3, 6);
+//         f(1, 4, 7);
+//         f(2, 5, 8);
+//         f(0, 4, 8);
+//         f(2, 4, 6);
+
+//         if (isOk)
+//             cnt++;
+
+//     } while (next_permutation(p.begin(), p.end()));
+
+//     double ans = (double)cnt / (double)total;
+
+//     printf("%.10f\n", ans);
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

@@ -10,14 +10,13 @@ using ll = long long;
 
 int main()
 {
+
     int m;
     cin >> m;
-    vector<string> s(3);
+    string s1, s2, s3;
+    cin >> s1 >> s2 >> s3;
 
-    rep(i, 3) cin >> s[i];
-
-    const int INF = 1e4;
-    int ans = INF;
+    int ans = 2e7;
 
     rep(t1, 300) rep(t2, 300) rep(t3, 300)
     {
@@ -28,17 +27,54 @@ int main()
         if (t1 == t3)
             continue;
 
-        if (s[0][t1 % m] == s[1][t2 % m] && s[1][t2 % m] == s[2][t3 % m])
+        if (s1[t1 % m] == s2[t2 % m] && s2[t2 % m] == s3[t3 % m])
             ans = min(ans, max({t1, t2, t3}));
     }
 
-    if (ans == INF)
+    if (ans == 2e7)
         cout << -1 << endl;
     else
         cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int m;
+//     cin >> m;
+//     vector<string> s(3);
+
+//     rep(i, 3) cin >> s[i];
+
+//     const int INF = 1e4;
+//     int ans = INF;
+
+//     rep(t1, 300) rep(t2, 300) rep(t3, 300)
+//     {
+//         if (t1 == t2)
+//             continue;
+//         if (t2 == t3)
+//             continue;
+//         if (t1 == t3)
+//             continue;
+
+//         if (s[0][t1 % m] == s[1][t2 % m] && s[1][t2 % m] == s[2][t3 % m])
+//             ans = min(ans, max({t1, t2, t3}));
+//     }
+
+//     if (ans == INF)
+//         cout << -1 << endl;
+//     else
+//         cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
