@@ -3,10 +3,6 @@
 // 0806もう一度
 // 0809もう一度 ok
 
-/*
-9/26 やり直し分
-*/
-
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
@@ -14,41 +10,83 @@ using ll = long long;
 
 int main()
 {
+
     int n;
     cin >> n;
 
     vector<int> a(n);
 
-    ll sum = 0;
-
+    ll tot = 0;
     rep(i, n)
     {
         cin >> a[i];
-        sum += a[i];
+        tot += a[i];
     }
 
     sort(a.begin(), a.end());
 
-    int base = sum / n;
-    int plus = sum % n;
-
-    vector<int> com(n, base);
-    rep(i, plus)
-    {
-        com[n - 1 - i] += 1;
-    }
-
+    ll mean = tot / n;
+    ll plus = tot % n;
     ll ans = 0;
 
-    rep(i, n)
+    rep(i, n - plus)
     {
-        ans += abs(a[i] - com[i]);
+        ans += abs(mean - a[i]);
+    }
+    rep(i, plus)
+    {
+        ans += abs(mean + 1 - a[n - plus + i]);
     }
 
     cout << ans / 2 << endl;
-
-    return 0;
 }
+
+/*
+9/26 やり直し分
+*/
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// using ll = long long;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n);
+
+//     ll sum = 0;
+
+//     rep(i, n)
+//     {
+//         cin >> a[i];
+//         sum += a[i];
+//     }
+
+//     sort(a.begin(), a.end());
+
+//     int base = sum / n;
+//     int plus = sum % n;
+
+//     vector<int> com(n, base);
+//     rep(i, plus)
+//     {
+//         com[n - 1 - i] += 1;
+//     }
+
+//     ll ans = 0;
+
+//     rep(i, n)
+//     {
+//         ans += abs(a[i] - com[i]);
+//     }
+
+//     cout << ans / 2 << endl;
+
+//     return 0;
+// }
 
 // /*
 // 8/10やり直し分

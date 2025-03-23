@@ -4,60 +4,145 @@
 
 // 0730もう一度
 // 0801もう一度 ok
+// 2025_03_19もう一度
 
-/*
-8/2やり直し分
-*/
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
 
-#include <bits/stdc++.h>
-using namespace std;
-#define rep(i, n) for (int i = 0; i < n; ++i)
+// int main()
+// {
 
-int n, m;
-vector<int> a, b;
+//     int n, m;
+//     cin >> n >> m;
 
-bool check(int mid)
-{
-    auto buyI = upper_bound(a.begin(), a.end(), mid);
-    int buyP = buyI - a.begin();
+//     vector<int> a(n), b(m);
 
-    auto selI = lower_bound(b.begin(), b.end(), mid);
-    int selP = m - (selI - b.begin());
+//     rep(i, n) cin >> a[i];
+//     rep(i, m) cin >> b[i];
 
-    return (buyP - selP) >= 0;
-}
+//     sort(a.begin(), a.end());
+//     sort(b.begin(), b.end());
 
-int main()
-{
+//     auto check = [&](int x) -> bool
+//     {
+//         int seller = upper_bound(a.begin(), a.end(), x) - a.begin();
+//         int buyer = m - (lower_bound(b.begin(), b.end(), x) - b.begin());
 
-    cin >> n >> m;
+//         return seller >= buyer;
+//     };
 
-    a.resize(n);
-    b.resize(m);
+//     int left = 0;
+//     int right = 1e9 + 10;
 
-    rep(i, n) cin >> a[i];
-    rep(i, m) cin >> b[i];
+//     while (abs(left - right) != 1)
+//     {
 
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
+//         int mid = (left + right) / 2;
 
-    int left = 0;
-    int right = 1e9 + 1;
+//         if (check(mid))
+//             right = mid;
+//         else
+//             left = mid;
+//     }
 
-    while (abs(right - left) > 1)
-    {
-        int mid = (right + left) / 2;
+//     cout << right << endl;
 
-        if (check(mid))
-            right = mid;
-        else
-            left = mid;
-    }
+//     return 0;
+// }
 
-    cout << right << endl;
+// なぜ以下で解けないのかわからない→わかった
+// aの要素しか試していないが、買う人の数が変化するのはb[i]+1の時もあるので、これも考慮に入れなければならない
 
-    return 0;
-}
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<int> a(n), b(m);
+
+//     rep(i, n) cin >> a[i];
+//     rep(i, m) cin >> b[i];
+
+//     sort(a.begin(), a.end());
+//     sort(b.begin(), b.end());
+
+//     rep(i, n)
+//     {
+//         auto it = lower_bound(b.begin(), b.end(), a[i]);
+//         if (it == b.end())
+//             continue;
+//         int ind = it - b.begin();
+
+//         if (i + 1 >= m - ind)
+//         {
+//             cout << a[i] << endl;
+//             return 0;
+//         }
+//     }
+
+//     // cout << b.back() + 1 << endl;
+
+//     return 0;
+// }
+
+// /*
+// 8/2やり直し分
+// */
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+
+// int n, m;
+// vector<int> a, b;
+
+// bool check(int mid)
+// {
+//     auto buyI = upper_bound(a.begin(), a.end(), mid);
+//     int buyP = buyI - a.begin();
+
+//     auto selI = lower_bound(b.begin(), b.end(), mid);
+//     int selP = m - (selI - b.begin());
+
+//     return (buyP - selP) >= 0;
+// }
+
+// int main()
+// {
+
+//     cin >> n >> m;
+
+//     a.resize(n);
+//     b.resize(m);
+
+//     rep(i, n) cin >> a[i];
+//     rep(i, m) cin >> b[i];
+
+//     sort(a.begin(), a.end());
+//     sort(b.begin(), b.end());
+
+//     int left = 0;
+//     int right = 1e9 + 1;
+
+//     while (abs(right - left) > 1)
+//     {
+//         int mid = (right + left) / 2;
+
+//         if (check(mid))
+//             right = mid;
+//         else
+//             left = mid;
+//     }
+
+//     cout << right << endl;
+
+//     return 0;
+// }
 
 /*
 7/30やり直し分
