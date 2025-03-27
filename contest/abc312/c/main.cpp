@@ -6,6 +6,53 @@
 // 0801もう一度 ok
 // 2025_03_19もう一度
 
+#include <bits/stdc++.h>
+using namespace std;
+#define rep(i, n) for (int i = 0; i < n; ++i)
+using ll = long long;
+
+int main()
+{
+
+    int n, m;
+    cin >> n >> m;
+
+    vector<int> a(n), b(m);
+
+    rep(i, n) cin >> a[i];
+    rep(i, m) cin >> b[i];
+
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+
+    ll left = 0;
+    ll right = 1e9 + 1;
+
+    while (abs(left - right) > 1)
+    {
+
+        auto check = [&](ll x) -> bool
+        {
+            int cntA = upper_bound(a.begin(), a.end(), x) - a.begin();
+
+            int indB = lower_bound(b.begin(), b.end(), x) - b.begin();
+            int cntB = m - indB;
+
+            return cntA >= cntB;
+        };
+
+        ll mid = (left + right) / 2;
+        if (check(mid))
+            right = mid;
+        else
+            left = mid;
+    }
+
+    cout << right << endl;
+
+    return 0;
+}
+
 // #include <bits/stdc++.h>
 // using namespace std;
 // #define rep(i, n) for (int i = 0; i < n; ++i)
