@@ -10,34 +10,76 @@ using ll = long long;
 
 int main()
 {
-
     int m;
     cin >> m;
+
     string s1, s2, s3;
     cin >> s1 >> s2 >> s3;
 
-    int ans = 2e7;
+    int ans = 1e9;
 
-    rep(t1, 300) rep(t2, 300) rep(t3, 300)
+    rep(t1, 3 * m)
     {
-        if (t1 == t2)
-            continue;
-        if (t2 == t3)
-            continue;
-        if (t1 == t3)
-            continue;
+        rep(t2, 3 * m)
+        {
+            rep(t3, 3 * m)
+            {
+                if (t1 == t2)
+                    continue;
+                if (t2 == t3)
+                    continue;
+                if (t1 == t3)
+                    continue;
 
-        if (s1[t1 % m] == s2[t2 % m] && s2[t2 % m] == s3[t3 % m])
-            ans = min(ans, max({t1, t2, t3}));
+                if (s1[t1 % m] == s2[t2 % m] && s2[t2 % m] == s3[t3 % m])
+                    ans = min(ans, max({t1, t2, t3}));
+            }
+        }
     }
 
-    if (ans == 2e7)
+    if (ans == 1e9)
         cout << -1 << endl;
     else
         cout << ans << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+
+//     int m;
+//     cin >> m;
+//     string s1, s2, s3;
+//     cin >> s1 >> s2 >> s3;
+
+//     int ans = 2e7;
+
+//     rep(t1, 300) rep(t2, 300) rep(t3, 300)
+//     {
+//         if (t1 == t2)
+//             continue;
+//         if (t2 == t3)
+//             continue;
+//         if (t1 == t3)
+//             continue;
+
+//         if (s1[t1 % m] == s2[t2 % m] && s2[t2 % m] == s3[t3 % m])
+//             ans = min(ans, max({t1, t2, t3}));
+//     }
+
+//     if (ans == 2e7)
+//         cout << -1 << endl;
+//     else
+//         cout << ans << endl;
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

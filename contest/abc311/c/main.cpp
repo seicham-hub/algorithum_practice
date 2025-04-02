@@ -3,7 +3,6 @@
 // TLEで解けなかった　fuctional graph
 // 2025_03_22もう一度
 
-// 解答のコード(別解 functional graph)
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
@@ -14,37 +13,77 @@ int main()
     int n;
     cin >> n;
 
-    vector<int> a(n + 1);
+    vector<int> a(n);
+    rep(i, n) cin >> a[i], a[i]--;
 
-    rep(i, n) cin >> a[i + 1];
+    vector<int> ord(n, -1);
 
-    vector<int> id(n + 1);
-
-    int v = 1;
-    int i = 1;
-    while (id[v] == 0)
+    int i = 0;
+    int v = 0;
+    while (ord[v] == -1)
     {
-        id[v] = i;
+        ord[v] = i;
         v = a[v];
         i++;
     }
 
-    int len = i - id[v];
-
+    int len = i - ord[v];
     vector<int> ans;
 
     rep(j, len)
     {
-        ans.push_back(v);
+        ans.push_back(v + 1);
         v = a[v];
     }
 
     cout << ans.size() << endl;
-    for (auto ai : ans)
-        cout << ai << " ";
+    rep(i, ans.size()) cout << ans[i] << " ";
 
     return 0;
 }
+
+// 解答のコード(別解 functional graph)
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> a(n + 1);
+
+//     rep(i, n) cin >> a[i + 1];
+
+//     vector<int> id(n + 1);
+
+//     int v = 1;
+//     int i = 1;
+//     while (id[v] == 0)
+//     {
+//         id[v] = i;
+//         v = a[v];
+//         i++;
+//     }
+
+//     int len = i - id[v];
+
+//     vector<int> ans;
+
+//     rep(j, len)
+//     {
+//         ans.push_back(v);
+//         v = a[v];
+//     }
+
+//     cout << ans.size() << endl;
+//     for (auto ai : ans)
+//         cout << ai << " ";
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
