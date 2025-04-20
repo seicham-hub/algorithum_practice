@@ -5,33 +5,67 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+#define rep(i, n) for (int i = 0; i < n; ++i)
 
 int main()
 {
-    int n;
-    long long a[101];
-    string s[11];
 
-    int ind = 0;
-    int min = 500;
+    set<int> cand;
 
-    for (int i = 0; i < n; i++)
+    int n, x;
+    cin >> n >> x;
+
+    vector<int> a(n);
+
+    rep(i, n)
     {
-        cin >> s[i] >> a[i];
-        if (a[i] < min)
+        cin >> a[i];
+        cand.insert(x + a[i]);
+    }
+
+    rep(i, n)
+    {
+        if (cand.count(a[i]))
         {
-            min = a[i];
-            ind = i;
+            cout << "Yes" << endl;
+            return 0;
         }
     }
 
-    for (int i = ind; i < ind + n; i++)
-    {
-        cout << s[ind % n] << endl;
-    }
+    cout << "No" << endl;
 
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     int n;
+//     long long a[101];
+//     string s[11];
+
+//     int ind = 0;
+//     int min = 500;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> s[i] >> a[i];
+//         if (a[i] < min)
+//         {
+//             min = a[i];
+//             ind = i;
+//         }
+//     }
+
+//     for (int i = ind; i < ind + n; i++)
+//     {
+//         cout << s[ind % n] << endl;
+//     }
+
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;

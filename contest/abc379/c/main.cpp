@@ -16,40 +16,89 @@ int main()
 {
     int n, m;
     cin >> n >> m;
-
     vector<P> stones(m + 1);
     stones[0] = {0, 1};
 
     rep(i, m) cin >> stones[i + 1].first;
     rep(i, m) cin >> stones[i + 1].second;
 
+    stones.emplace_back(n + 1, 1);
+
     sort(stones.begin(), stones.end());
-    stones.push_back({n + 1, 1});
 
     ll ans = 0;
     rep(i, stones.size() - 1)
     {
-        ll L = stones[i + 1].first - stones[i].first;
-        ll C = stones[i].second;
+        ll diff = stones[i + 1].first - stones[i].first;
+        ll r = stones[i].second - diff;
 
-        if (C < L)
+        if (r < 0)
         {
             cout << -1 << endl;
             return 0;
         }
 
-        stones[i + 1].second += C - L;
+        ans += (diff - 1) * diff / 2;
+        ans += diff * r;
 
-        ans += L * (L - 1) / 2;
-        ans += (C - L) * L;
+        stones[i + 1].second += r;
+    }
+    if (stones.back().second > 1)
+    {
+        cout << -1 << endl;
+        return 0;
     }
 
-    if (stones.back().second > 1)
-        cout << -1 << endl;
-    else
-        cout << ans << endl;
+    cout
+        << ans << endl;
+
     return 0;
 }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// #define rep(i, n) for (int i = 0; i < n; ++i)
+// using ll = long long;
+// using P = pair<int, int>;
+
+// int main()
+// {
+//     int n, m;
+//     cin >> n >> m;
+
+//     vector<P> stones(m + 1);
+//     stones[0] = {0, 1};
+
+//     rep(i, m) cin >> stones[i + 1].first;
+//     rep(i, m) cin >> stones[i + 1].second;
+
+//     sort(stones.begin(), stones.end());
+//     stones.push_back({n + 1, 1});
+
+//     ll ans = 0;
+//     rep(i, stones.size() - 1)
+//     {
+//         ll L = stones[i + 1].first - stones[i].first;
+//         ll C = stones[i].second;
+
+//         if (C < L)
+//         {
+//             cout << -1 << endl;
+//             return 0;
+//         }
+
+//         stones[i + 1].second += C - L;
+
+//         ans += L * (L - 1) / 2;
+//         ans += (C - L) * L;
+//     }
+
+//     if (stones.back().second > 1)
+//         cout << -1 << endl;
+//     else
+//         cout << ans << endl;
+//     return 0;
+// }
 
 // #include <bits/stdc++.h>
 // using namespace std;
